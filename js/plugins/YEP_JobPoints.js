@@ -8,10 +8,11 @@ Imported.YEP_JobPoints = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.JP = Yanfly.JP || {};
+Yanfly.JP.version = 1.08;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 This plugin by itself doesn't do much, but it enables
+ * @plugindesc v1.08 This plugin by itself doesn't do much, but it enables
  * actors to acquire JP (job points) used for other plugins.
  * @author Yanfly Engine Plugins
  *
@@ -54,6 +55,11 @@ Yanfly.JP = Yanfly.JP || {};
  * @desc Adjusts how the gained JP text is shown after battle.
  * %1 - Actor     %2 Value     %3 JP
  * @default %1 gains %2%3!
+ *
+ * @param Alive Actors
+ * @desc Actors must be alive to receive JP earned from enemies.
+ * NO - false     YES - true
+ * @default true
  *
  * @param ---Menu---
  * @default
@@ -186,8 +192,23 @@ Yanfly.JP = Yanfly.JP || {};
  * Changelog
  * ============================================================================
  *
- * Version 1.04:
+ * Version 1.08:
+ * - Lunatic Mode fail safes added.
+ *
+ * Version 1.07:
+ * - Updated for RPG Maker MV version 1.1.0.
+ *
+ * Version 1.06:
+ * - Added 'Alive Actors' plugin parameter to prevent dead actors from gaining
+ * JP from enemies. Any JP that currently dead actors earned in battle from
+ * actions will still be 'earned' at the end of battle.
+ *
+ * Version 1.05:
+ * - Updated compatibility for Subclasses gaining JP.
+ *
+ * Version 1.04a:
  * - Added failsafes to prevent JP from turning into NaN midbattle.
+ * - Added failsafes to prevent no-target scopes from crashing the game.
  *
  * Version 1.03:
  * - Added 'Show Results' parameter to show/hide JP earned after battle for
@@ -219,8 +240,12 @@ Yanfly.Param.JpPerAction = String(Yanfly.Parameters['JP Per Action']);
 Yanfly.Param.JpPerEnemy = String(Yanfly.Parameters['JP Per Enemy']);
 Yanfly.Param.JpShowResults = eval(String(Yanfly.Parameters['Show Results']));
 Yanfly.Param.JpTextFormat = String(Yanfly.Parameters['JP Gained in Battle']);
+Yanfly.Param.JpAliveActors = eval(String(Yanfly.Parameters['Alive Actors']));
+
 Yanfly.Param.JpShowMenu = String(Yanfly.Parameters['Show In Menu']);
+Yanfly.Param.JpShowMenu = eval(Yanfly.Param.JpShowMenu);
 Yanfly.Param.JpMenuFormat = String(Yanfly.Parameters['Menu Format']);
+
 Yanfly.Param.JpPerLevel = String(Yanfly.Parameters['JP Per Level']);
 Yanfly.Param.JpEnableAftermath = String(Yanfly.Parameters['Enable Aftermath']);
 Yanfly.Param.JpAftermathText = String(Yanfly.Parameters['Aftermath Text']);
@@ -233,16 +258,19 @@ Yanfly.Param.JpAftermathEarn = String(Yanfly.Parameters['Aftermath JP Earned']);
 
 Yanfly.JP.DataManager_isDatabaseLoaded = DataManager.isDatabaseLoaded;
 DataManager.isDatabaseLoaded = function() {
-    if (!Yanfly.JP.DataManager_isDatabaseLoaded.call(this)) return false;
-		this.processJPNotetags1($dataActors);
-	  this.processJPNotetags2($dataSkills);
-	  this.processJPNotetags2($dataItems);
-		this.processJPNotetags3($dataEnemies);
-		this.processJPNotetags4($dataClasses);
-		this.processJPNotetags4($dataWeapons);
-		this.processJPNotetags4($dataArmors);
-		this.processJPNotetags4($dataStates);
-		return true;
+  if (!Yanfly.JP.DataManager_isDatabaseLoaded.call(this)) return false;
+  if (!Yanfly._loaded_YEP_JobPoints) {
+  	this.processJPNotetags1($dataActors);
+    this.processJPNotetags2($dataSkills);
+    this.processJPNotetags2($dataItems);
+  	this.processJPNotetags3($dataEnemies);
+  	this.processJPNotetags4($dataClasses);
+  	this.processJPNotetags4($dataWeapons);
+  	this.processJPNotetags4($dataArmors);
+  	this.processJPNotetags4($dataStates);
+    Yanfly._loaded_YEP_JobPoints = true;
+  }
+	return true;
 };
 
 DataManager.processJPNotetags1 = function(group) {
@@ -338,7 +366,12 @@ BattleManager.makeRewards = function() {
 BattleManager.gainJp = function() {
 		var jp = $gameTroop.jpTotal();
 		$gameMessage.newPage();
-		$gameParty.members().forEach(function(actor) {
+    if (Yanfly.Param.JpAliveActors) {
+      var members = $gameParty.aliveMembers();
+    } else {
+      var members = $gameParty.members();
+    }
+		members.forEach(function(actor) {
 			actor.gainJp(jp);
 		});
 };
@@ -451,6 +484,21 @@ Game_Actor.prototype.gainJp = function(value, classId) {
 			this._battleJp += value;
 		}
 		this.setJp(this.jp(classId) + value, classId);
+    if (classId === this.currentClass().id && this.isSublcassEarnJp()) {
+      this.gainJpSubclass(value);
+    }
+};
+
+Game_Actor.prototype.isSublcassEarnJp = function() {
+    if (!Imported.YEP_X_Subclass) return false;
+    if (!this.subclass()) return false;
+    return Yanfly.Param.SubclassJp;
+};
+
+Game_Actor.prototype.gainJpSubclass = function(value) {
+    var classId = this.subclass().id;
+    value = Math.round(value * Yanfly.Param.SubclassJp);
+    this.setJp(this.jp(classId) + value, classId);
 };
 
 Game_Actor.prototype.loseJp = function(value, classId) {
@@ -474,7 +522,18 @@ Yanfly.JP.Game_Actor_levelUp = Game_Actor.prototype.levelUp;
 Game_Actor.prototype.levelUp = function() {
     Yanfly.JP.Game_Actor_levelUp.call(this);
     if (this._preventJpLevelUpGain) return;
-    var value = eval(Yanfly.Param.JpPerLevel)
+    var user = this;
+    var target = this;
+    var a = this;
+    var b = this;
+    var level = this.level;
+    var code = Yanfly.Param.JpPerLevel;
+    try {
+      var value = eval(code)
+    } catch (e) {
+      var value = 0;
+      Yanfly.Util.displayError(e, code, 'LEVEL UP JP FORMULA ERROR');
+    }
 		this.gainJp(value, this.currentClass().id);
 };
 
@@ -483,7 +542,17 @@ Game_Actor.prototype.levelUp = function() {
 //=============================================================================
 
 Game_Enemy.prototype.jp = function() {
-    return eval(this.enemy().jp);
+    var user = this;
+    var target = this;
+    var a = this;
+    var b = this;
+    var code = this.enemy().jp;
+    try {
+      return eval(code);
+    } catch (e) {
+      Yanfly.Util.displayError(e, code, 'ENEMY JP FORMULA ERROR');
+      return 0;
+    }
 };
 
 //=============================================================================
@@ -494,7 +563,7 @@ Yanfly.JP.Game_Action_applyItemUserEffect =
     Game_Action.prototype.applyItemUserEffect;
 Game_Action.prototype.applyItemUserEffect = function(target) {
     Yanfly.JP.Game_Action_applyItemUserEffect.call(this, target);
-    this.applyItemJpEffect(target);
+    if (target) this.applyItemJpEffect(target);
 };
 
 Game_Action.prototype.applyItemJpEffect = function(target) {
@@ -560,7 +629,7 @@ Game_Interpreter.prototype.modifyJp = function(type, args) {
 
 Yanfly.JP.Window_Base_dASS = Window_Base.prototype.drawActorSimpleStatus;
 Window_Base.prototype.drawActorSimpleStatus = function(actor, wx, wy, ww) {
-    this._drawMenuJP = eval(Yanfly.Param.JpShowMenu);
+    this._drawMenuJP = Yanfly.Param.JpShowMenu;
     Yanfly.JP.Window_Base_dASS.call(this, actor, wx, wy, ww);
     this._drawMenuJP = undefined;
 };
@@ -597,7 +666,7 @@ Window_Base.prototype.textWidthEx = function(text) {
 // Window_VictoryJp
 //=============================================================================
 
-if (Imported.YEP_VictoryAftermath && eval(Yanfly.Param.JpEnableAftermath)) {
+if (Imported.YEP_VictoryAftermath && Yanfly.Param.JpEnableAftermath) {
 
 function Window_VictoryJp() {
     this.initialize.apply(this, arguments);
@@ -683,6 +752,17 @@ if (!Yanfly.Util.toGroup) {
 		Yanfly.Util.toGroup = function(inVal) {
 				return inVal;
 		}
+};
+
+Yanfly.Util.displayError = function(e, code, message) {
+  console.log(message);
+  console.log(code || 'NON-EXISTENT');
+  console.error(e);
+  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
+    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
+      require('nw.gui').Window.get().showDevTools();
+    }
+  }
 };
 
 //=============================================================================

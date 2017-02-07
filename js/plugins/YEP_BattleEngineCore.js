@@ -8,10 +8,11 @@ Imported.YEP_BattleEngineCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BEC = Yanfly.BEC || {};
+Yanfly.BEC.version = 1.43;
 
 //=============================================================================
  /*:
- * @plugindesc v1.25b Have more control over the flow of the battle system
+ * @plugindesc v1.43a Have more control over the flow of the battle system
  * with this plugin and alter various aspects to your liking.
  * @author Yanfly Engine Plugins
  *
@@ -117,7 +118,7 @@ Yanfly.BEC = Yanfly.BEC || {};
  * @param Home Position Y
  * @desc This formula determines the actor's home Y position.
  * Default: 280 + index * 48
- * @default screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 16
+ * @default screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 32
  *
  * @param Side Sprite Priority
  * @desc Give actor sprites the priority of always being on top?
@@ -186,12 +187,12 @@ Yanfly.BEC = Yanfly.BEC || {};
  * @param Timed States
  * @desc If the battle system is Tick-based, use time instead of
  * turns for states? NO - false   YES - true
- * @default true
+ * @default false
  *
  * @param Timed Buffs
  * @desc If the battle system is Tick-based, use time instead of
  * turns for buffs? NO - false   YES - true
- * @default true
+ * @default false
  *
  * @param Turn Time
  * @desc How many ticks must past to equal 1 turn?
@@ -237,6 +238,11 @@ Yanfly.BEC = Yanfly.BEC || {};
  *
  * @param ---Selection Help---
  * @default
+ *
+ * @param Mouse Over
+ * @desc Allows you to mouse over the enemies to auto-select them.
+ * OFF - false     ON - true
+ * @default true
  *
  * @param Select Help Window
  * @desc When selecting actors and enemies, show the help window?
@@ -419,6 +425,18 @@ Yanfly.BEC = Yanfly.BEC || {};
  *   This tag must be all caps in order for the battle log window to recognize
  *   it as an instruction to center the displayed battle text message.
  *
+ * There are a couple of notetags you can use to change the way certain skills
+ * and items will show up incase you don't want a name like 'Harold's Attack'
+ * to appear in the name.
+ *
+ * Skill and Item Notetags:
+ *
+ *   <Display Text: x>
+ *   This will change the text displayed to x.
+ *
+ *   <Display Icon: x>
+ *   This will change the icon displayed to x.
+ *
  * ============================================================================
  * Battle Windows
  * ============================================================================
@@ -547,7 +565,7 @@ Yanfly.BEC = Yanfly.BEC || {};
  * event you have a sideview battler that doesn't conform to those standards,
  * you can 'anchor' them a different way.
  *
- * Actor Notetags:
+ * Actor, Class, Weapon, Armor, State Notetags:
  *   <Anchor X: y.z>
  *   <Anchor Y: y.z>
  *   This sets the anchor location for the actor's sideview battler at y.z.
@@ -556,6 +574,18 @@ Yanfly.BEC = Yanfly.BEC || {};
  *   more than 0.5 to make the X anchor more towards the right. To raise the
  *   Y anchor, set the number value to less than 1.0. Keep adjusting until you
  *   find that perfect anchor setting.
+ *
+ * If an anchor has multiple traits that yield different anchors, it will be
+ * used in a priority list akin to this order:
+ *
+ *   States
+ *   Weapons
+ *   Armors
+ *   Class
+ *   Actor
+ *   Default
+ *
+ * The higher it is on the priority list, the higher its priority.
  *
  * ============================================================================
  * Enemy Attack Animation
@@ -597,6 +627,13 @@ Yanfly.BEC = Yanfly.BEC || {};
  *   upon applying the state, the state will be removed a random number of
  *   turns from x to y.
  *
+ * States with Action End have a unique trait to them where if the caster of
+ * the state is the current active battler (subject) and if the state is then
+ * applied on the user itself, they will gain a 'free turn'. The 'free turn' is
+ * to mitigate the user from losing 1 duration of the turn since with an Action
+ * End timing, they would lose the benefit of being under the state for that
+ * turn's timing.
+ *
  * ============================================================================
  * Action Sequences
  * ============================================================================
@@ -612,10 +649,128 @@ Yanfly.BEC = Yanfly.BEC || {};
  * Changelog
  * ============================================================================
  *
- * Version 1.25b:
+ * Version 1.43a:
+ * - Bug fixed to prevent crash if non-existent actions are used.
+ * - Optimization update.
+ *
+ * Version 1.42:
+ * - Optimization update.
+ *
+ * Version 1.41:
+ * - Fixed a bug that allowed certain sprites to remain in the active pool
+ * while party members were removed midway through battle.
+ *
+ * Version 1.40:
+ * - Updated for RPG Maker MV version 1.3.2.
+ *
+ * Version 1.39c:
+ * - Fixed a bug that caused dead actors to not be a part of action sequence
+ * targeting for "Not Focus".
+ * - Optimization update.
+ * - Updated "queueForceAction" to utilize both numbers and actual targets.
+ *
+ * Version 1.38a:
+ * - Optimization update.
+ * - Compatibility update for Selection Control v1.08.
+ * - Bug fixed for mirrored animations on enemies.
+ *
+ * Version 1.37:
+ * - Fixed a bug where if the enemy's size is too small, the enemy's name
+ * during selection will be cut off.
+ *
+ * Version 1.36d:
+ * - Made an update for the battle background image snaps when there is no
+ * battleback being used. This will prevent the player party and enemy troop
+ * from appearing in the background snapshot when entering menus mid-battle.
+ * - 'Death Break' action sequence now only triggers upon dead status and not
+ * an 'or 0 HP' condition.
+ * - Updated Forced Action sequencing for more efficiency.
+ * - 'Action Times+' traits now work properly for DTB again.
+ * - Optimized message displaying for battle log.
+ * - Optimized z sorting algorithm for sprites.
+ *
+ * Verison 1.35d:
+ * - Scopes that target a dead ally will automatically target the first dead
+ * ally now. Scopes that target all dead allies will lock onto the first dead
+ * ally. This will hopefully provide less confusion amongst playing.
+ * - Added anti-crash measure for sprite bitmaps.
+ * - Added anti-crash measure for faux actions.
+ * - Added anti-crash measure to prevent non-existant animations from playing.
+ * - Added a check that prevents hidden battlers from appearing when using
+ * certain action sequences.
+ *
+ * Version 1.34a:
+ * - Fixed a bug where 'NOT FOCUS' targets were not including dead members.
+ * - Fixed a bug where using NOT FOCUS would cause dead targets to be visible.
+ *
+ * Version 1.33:
+ * - Updated for RPG Maker MV version 1.1.0.
+ *
+ * Version 1.32d:
+ * - Fixed a bug that caused a crash when an actor died.
+ * - Added a motion engine to be used for future plugins.
+ * - Preparation for a future plugin.
+ * - <Anchor X: y.z> and <Anchor Y: y.z> notetags for actors are now extended
+ * to actors, classes, weapons, armors, and states.
+ * - Added <Display Text: x> and <Display Icon: x> notetags for skills and
+ * items. These notetags will alter the display name shown and icon shown
+ * respectively while performing a skill.
+ * - Switched Magic Reflect checking order with Counterattack checking order.
+ * This is to give priority to reflected actions over countered actions.
+ *
+ * Version 1.31b:
+ * - States with Action End now have a unique trait to them where if the caster
+ * of the state is the current active battler (subject) and if the state is
+ * then applied on the user itself, they will gain a 'free turn'. The 'free
+ * turn' is to mitigate the user from losing 1 duration of the turn since with
+ * an Action End timing, they would lose the benefit of being under the state
+ * for that turn's timing.
+ * - Added failsafes for Free Turns in case other plugins have overwritten the
+ * on battle start functions.
+ * - Added a compatibility update to Animated SV Enemies for dead motion.
+ *
+ * Version 1.30:
+ * - Optimization update.
+ * - Fixed a bug that prevented added state effects be unable to apply if they
+ * are an added Death state.
+ * - Battlelog lines are now able to display text codes.
+ *
+ * Version 1.29:
+ * - Fixed a bug with the 'else if' action sequences not working in the right
+ * order of sequence conditions.
+ *
+ * Version 1.28d:
+ * - Fixed a bug if instant casting a skill that would make an opponent battler
+ * to force an action to end incorrectly. Thanks to DoubleX for the fix.
+ * - Fixed a bug with mouse over not working properly.
+ * - Fixed a bug regarding forced actions that will cause the battle to freeze
+ * if the forced action causes the main active subject to leave the battle.
+ * - Fixed a bug with timed states not updating their turns properly.
+ * - Changed priority of IF action sequences to higher to no longer interfere
+ * other action sequences.
+ *
+ * Version 1.27:
+ * - Mechanic change. This will only affect those using turn-based state timing
+ * mechanics. Turn End state updates are now shifted from Turn End to occur at
+ * Regeneration timing to have a more synchronized aspect. The timings are very
+ * close so there's next to no notice in difference. Buff turn updates are also
+ * moved to the regeneration timing, too.
+ *
+ * Version 1.26:
+ * - Added 'Mouse Over' parameter to Selection Help. This parameter enables
+ * mouse users to simply hover over the enemy to select them rather than having
+ * to click an enemy twice to select them.
+ *
+ * Version 1.25f:
  * - Added failsafes for Forced Action queues.
  * - Added 'Show Select Box' parameter when selecting enemies.
  * - Fixed a bug that caused End Turn events to not function properly.
+ * - Battle animations, by default, are positioned relative to the base bitmap
+ * for its target sprite. However, actor sprites do not have a base bitmap and
+ * therefore, battle animations, regardless of position, will always target the
+ * actor sprite's feet. This update now gives actor sprites a base bitmap.
+ * - Readjusted sprite width and sprite height calculations.
+ * - Added a failsafe for when no sideview actor graphics are used.
  *
  * Version 1.24:
  * - Implemented a Forced Action queue list. This means if a Forced Action
@@ -776,14 +931,22 @@ Yanfly.Param.CastPhysical = Number(Yanfly.Parameters['Physical Animation']);
 Yanfly.Param.CastMagical = Number(Yanfly.Parameters['Magical Animation']);
 Yanfly.Param.EnemyAtkAni = Number(Yanfly.Parameters['Enemy Attack Animation']);
 Yanfly.Param.BECOptSpeed = String(Yanfly.Parameters['Optimize Speed']);
+Yanfly.Param.BECOptSpeed = eval(Yanfly.Param.BECOptSpeed);
 Yanfly.Param.BECEmergeText = String(Yanfly.Parameters['Show Emerge Text']);
+Yanfly.Param.BECEmergeText = eval(Yanfly.Param.BECEmergeText);
 Yanfly.Param.BECPreEmpText = String(Yanfly.Parameters['Show Pre-Emptive Text']);
+Yanfly.Param.BECPreEmpText = eval(Yanfly.Param.BECPreEmpText);
 Yanfly.Param.BECSurpText = String(Yanfly.Parameters['Show Surprise Text']);
+Yanfly.Param.BECSurpText = eval(Yanfly.Param.BECSurpText);
 Yanfly.Param.BECPopupOverlap = String(Yanfly.Parameters['Popup Overlap Rate']);
+Yanfly.Param.BECPopupOverlap = eval(Yanfly.Param.BECPopupOverlap);
 Yanfly.Param.BECNewPopBottom = String(Yanfly.Parameters['Newest Popup Bottom']);
+Yanfly.Param.BECNewPopBottom = eval(Yanfly.Param.BECNewPopBottom);
 Yanfly.Param.BECStartActCmd = String(Yanfly.Parameters['Start Actor Command']);
+Yanfly.Param.BECStartActCmd = eval(Yanfly.Param.BECStartActCmd);
 Yanfly.Param.BECCurMax = eval(String(Yanfly.Parameters['Current Max']));
 Yanfly.Param.BECSelectHelp = String(Yanfly.Parameters['Select Help Window']);
+Yanfly.Param.BECSelectHelp = eval(Yanfly.Param.BECSelectHelp);
 Yanfly.Param.BECHelpUserTx = String(Yanfly.Parameters['User Help Text']);
 Yanfly.Param.BECHelpAllyTx = String(Yanfly.Parameters['Ally Help Text']);
 Yanfly.Param.BECHelpAlliesTx = String(Yanfly.Parameters['Allies Help Text']);
@@ -794,50 +957,76 @@ Yanfly.Param.BECHelpRandTx = String(Yanfly.Parameters['Random Help Text']);
 Yanfly.Param.BECFrontPosX = String(Yanfly.Parameters['Front Position X']);
 Yanfly.Param.BECFrontPosY = String(Yanfly.Parameters['Front Position Y']);
 Yanfly.Param.BECFrontSprite = String(Yanfly.Parameters['Front Actor Sprite']);
+Yanfly.Param.BECFrontSprite = eval(Yanfly.Param.BECFrontSprite);
 Yanfly.Param.BECFrSpPrio = String(Yanfly.Parameters['Front Sprite Priority']);
 Yanfly.Param.BECHomePosX = String(Yanfly.Parameters['Home Position X']);
 Yanfly.Param.BECHomePosY = String(Yanfly.Parameters['Home Position Y']);
 Yanfly.Param.BECSideSpPrio = String(Yanfly.Parameters['Side Sprite Priority']);
+Yanfly.Param.BECSideSpPrio = eval(Yanfly.Param.BECSideSpPrio);
 Yanfly.Param.BECAnchorX = Number(Yanfly.Parameters['Default X Anchor']);
 Yanfly.Param.BECAnchorY = Number(Yanfly.Parameters['Default Y Anchor']);
 Yanfly.Param.BECStepDist = Number(Yanfly.Parameters['Step Distance']);
 Yanfly.Param.BECFlinchDist = Number(Yanfly.Parameters['Flinch Distance']);
 Yanfly.Param.BECShowShadows = String(Yanfly.Parameters['Show Shadows']);
-Yanfly.Param.BECPopupDur = String(Yanfly.Parameters['Popup Duration']);
+Yanfly.Param.BECShowShadows = eval(Yanfly.Param.BECShowShadows);
+Yanfly.Param.BECPopupDur = Number(Yanfly.Parameters['Popup Duration']);
 Yanfly.Param.BECCritPopup = String(Yanfly.Parameters['Critical Popup']);
-Yanfly.Param.BECCritDur = String(Yanfly.Parameters['Critical Duration']);
+Yanfly.Param.BECCritDur = Number(Yanfly.Parameters['Critical Duration']);
 Yanfly.Param.BECActionSpeed = String(Yanfly.Parameters['Action Speed']);
 Yanfly.Param.BECReflectAni = Number(Yanfly.Parameters['Reflect Animation']);
 Yanfly.Param.BECMotionWait = String(Yanfly.Parameters['Motion Waiting']);
+Yanfly.Param.BECMotionWait = eval(Yanfly.Param.BECMotionWait);
 Yanfly.Param.BECTimeStates = String(Yanfly.Parameters['Timed States']);
+Yanfly.Param.BECTimeStates = eval(Yanfly.Param.BECTimeStates);
 Yanfly.Param.BECTimeBuffs = String(Yanfly.Parameters['Timed Buffs']);
+Yanfly.Param.BECTimeBuffs = eval(Yanfly.Param.BECTimeBuffs);
 Yanfly.Param.BECTurnTime = Number(Yanfly.Parameters['Turn Time']);
 Yanfly.Param.BECAISelfTurn = eval(String(Yanfly.Parameters['AI Self Turns']));
 Yanfly.Param.BECLowerWindows = String(Yanfly.Parameters['Lower Windows']);
+Yanfly.Param.BECLowerWindows = eval(Yanfly.Param.BECLowerWindows);
+Yanfly.Param.BECSelectMouseOver = eval(String(Yanfly.Parameters['Mouse Over']));
 Yanfly.Param.BECEnemySelect = String(Yanfly.Parameters['Visual Enemy Select']);
+Yanfly.Param.BECEnemySelect = eval(Yanfly.Param.BECEnemySelect);
 Yanfly.Param.BECActorSelect = String(Yanfly.Parameters['Visual Actor Select']);
-Yanfly.Param.BECWindowRows = String(Yanfly.Parameters['Window Rows']);
+Yanfly.Param.BECActorSelect = eval(Yanfly.Param.BECActorSelect);
+Yanfly.Param.BECWindowRows = Number(Yanfly.Parameters['Window Rows']);
 Yanfly.Param.BECEnemyFontSize = Number(Yanfly.Parameters['Enemy Font Size']);
 Yanfly.Param.BECShowEnemyName = String(Yanfly.Parameters['Show Enemy Name']);
+Yanfly.Param.BECShowEnemyName = eval(Yanfly.Param.BECShowEnemyName);
 Yanfly.Param.BECShowSelectBox = String(Yanfly.Parameters['Show Select Box']);
+Yanfly.Param.BECShowSelectBox = eval(Yanfly.Param.BECShowSelectBox);
 Yanfly.Param.BECEnemyAutoSel = String(Yanfly.Parameters['Enemy Auto Select']);
 Yanfly.Param.BECCommandAlign = String(Yanfly.Parameters['Command Alignment']);
-Yanfly.Param.BECCommandRows = String(Yanfly.Parameters['Command Window Rows']);
-Yanfly.Param.BECAniBaseDel = String(Yanfly.Parameters['Animation Base Delay']);
-Yanfly.Param.BECAniNextDel = String(Yanfly.Parameters['Animation Next Delay']);
+Yanfly.Param.BECCommandRows = Number(Yanfly.Parameters['Command Window Rows']);
+Yanfly.Param.BECAniBaseDel = Number(Yanfly.Parameters['Animation Base Delay']);
+Yanfly.Param.BECAniNextDel = Number(Yanfly.Parameters['Animation Next Delay']);
+
 Yanfly.Param.BECFullActText = String(Yanfly.Parameters['Show Action Text']);
+Yanfly.Param.BECFullActText = eval(Yanfly.Param.BECFullActText);
 Yanfly.Param.BECShowCntText = String(Yanfly.Parameters['Show Counter Text']);
+Yanfly.Param.BECShowCntText = eval(Yanfly.Param.BECShowCntText);
 Yanfly.Param.BECShowRflText = String(Yanfly.Parameters['Show Reflect Text']);
+Yanfly.Param.BECShowRflText = eval(Yanfly.Param.BECShowRflText);
 Yanfly.Param.BECShowSubText = String(Yanfly.Parameters['Show Substitute Text']);
+Yanfly.Param.BECShowSubText = eval(Yanfly.Param.BECShowSubText);
 Yanfly.Param.BECShowFailText = String(Yanfly.Parameters['Show Fail Text']);
+Yanfly.Param.BECShowFailText = eval(Yanfly.Param.BECShowFailText);
 Yanfly.Param.BECShowCritText = String(Yanfly.Parameters['Show Critical Text']);
+Yanfly.Param.BECShowCritText = eval(Yanfly.Param.BECShowCritText);
 Yanfly.Param.BECShowMissText = String(Yanfly.Parameters['Show Miss Text']);
+Yanfly.Param.BECShowMissText = eval(Yanfly.Param.BECShowMissText);
 Yanfly.Param.BECShowEvaText = String(Yanfly.Parameters['Show Evasion Text']);
+Yanfly.Param.BECShowEvaText = eval(Yanfly.Param.BECShowEvaText);
 Yanfly.Param.BECShowHpText = String(Yanfly.Parameters['Show HP Text']);
+Yanfly.Param.BECShowHpText = eval(Yanfly.Param.BECShowHpText);
 Yanfly.Param.BECShowMpText = String(Yanfly.Parameters['Show MP Text']);
+Yanfly.Param.BECShowMpText = eval(Yanfly.Param.BECShowMpText);
 Yanfly.Param.BECShowTpText = String(Yanfly.Parameters['Show TP Text']);
+Yanfly.Param.BECShowTpText = eval(Yanfly.Param.BECShowTpText);
 Yanfly.Param.BECShowStateText = String(Yanfly.Parameters['Show State Text']);
+Yanfly.Param.BECShowStateText = eval(Yanfly.Param.BECShowStateText);
 Yanfly.Param.BECShowBuffText = String(Yanfly.Parameters['Show Buff Text']);
+Yanfly.Param.BECShowBuffText = eval(Yanfly.Param.BECShowBuffText);
 
 //=============================================================================
 // DataManager
@@ -845,7 +1034,8 @@ Yanfly.Param.BECShowBuffText = String(Yanfly.Parameters['Show Buff Text']);
 
 Yanfly.BEC.DataManager_isDatabaseLoaded = DataManager.isDatabaseLoaded;
 DataManager.isDatabaseLoaded = function() {
-    if (!Yanfly.BEC.DataManager_isDatabaseLoaded.call(this)) return false;
+  if (!Yanfly.BEC.DataManager_isDatabaseLoaded.call(this)) return false;
+  if (!Yanfly._loaded_YEP_BattleEngineCore) {
     this.processMELODYNotetags($dataSkills);
     this.processMELODYNotetags($dataItems);
     this.processBECNotetags1($dataSkills);
@@ -858,9 +1048,15 @@ DataManager.isDatabaseLoaded = function() {
     this.processBECNotetags4($dataArmors);
     this.processBECNotetags4($dataEnemies);
     this.processBECNotetags4($dataStates);
-    this.processBECNotetags5($dataActors);
+    this.processBECNotetags5($dataActors, true);
+    this.processBECNotetags5($dataClasses, false);
+    this.processBECNotetags5($dataWeapons, false);
+    this.processBECNotetags5($dataArmors, false);
+    this.processBECNotetags5($dataStates, false);
     this.processBECNotetags6($dataStates);
-    return true;
+    Yanfly._loaded_YEP_BattleEngineCore = true;
+  }
+  return true;
 };
 
 DataManager.processMELODYNotetags = function(group) {
@@ -922,7 +1118,7 @@ Yanfly.BEC.DefaultActionWhole = [
 Yanfly.BEC.DefaultActionTarget = [
     ['PERFORM ACTION'],
 ];
-if (eval(Yanfly.Param.BECMotionWait)) {
+if (Yanfly.Param.BECMotionWait) {
   Yanfly.BEC.DefaultActionWhole.push(['MOTION WAIT', ['USER']]);
   Yanfly.BEC.DefaultActionTarget.push(['MOTION WAIT', ['USER']]);
 } else {
@@ -1053,9 +1249,14 @@ DataManager.processBECNotetags1 = function(group) {
 DataManager.processBECNotetags2 = function(group) {
   var note1 = /<(?:ACTION COPY):[ ](.*):[ ]*(\d+)>/i;
   var note2 = /<(?:SPEED):[ ]([\+\-]\d+)>/i;
+  var note3 = /<(?:DISPLAY NAME|DISPLAY TEXT):[ ](.*)>/i;
+  var note4 = /<(?:DISPLAY ICON):[ ](\d+)>/i;
   for (var n = 1; n < group.length; n++) {
     var obj = group[n];
     var notedata = obj.note.split(/[\r\n]+/);
+
+    obj.battleDisplayText = obj.name;
+    obj.battleDisplayIcon = obj.iconIndex;
 
     for (var i = 0; i < notedata.length; i++) {
       var line = notedata[i];
@@ -1076,6 +1277,10 @@ DataManager.processBECNotetags2 = function(group) {
         }
       } else if (line.match(note2)) {
         obj.speed = parseInt(RegExp.$1);
+      } else if (line.match(note3)) {
+        obj.battleDisplayText = String(RegExp.$1);
+      } else if (line.match(note4)) {
+        obj.battleDisplayIcon = parseInt(RegExp.$1);
       }
     }
   }
@@ -1118,13 +1323,15 @@ DataManager.processBECNotetags4 = function(group) {
   }
 };
 
-DataManager.processBECNotetags5 = function(group) {
+DataManager.processBECNotetags5 = function(group, isActor) {
   for (var n = 1; n < group.length; n++) {
     var obj = group[n];
     var notedata = obj.note.split(/[\r\n]+/);
 
-    obj.anchorX = Yanfly.Param.BECAnchorX;
-    obj.anchorY = Yanfly.Param.BECAnchorY;
+    if (isActor) {
+      obj.anchorX = Yanfly.Param.BECAnchorX;
+      obj.anchorY = Yanfly.Param.BECAnchorY;
+    }
 
     for (var i = 0; i < notedata.length; i++) {
       var line = notedata[i];
@@ -1173,6 +1380,17 @@ DataManager.processBECNotetags6 = function(group) {
       }
     }
   }
+};
+
+//=============================================================================
+// TouchInput
+//=============================================================================
+
+Yanfly.BEC.TouchInput_onMouseMove = TouchInput._onMouseMove;
+TouchInput._onMouseMove = function(event) {
+    Yanfly.BEC.TouchInput_onMouseMove.call(this, event);
+    this._mouseOverX = Graphics.pageToCanvasX(event.pageX);
+    this._mouseOverY = Graphics.pageToCanvasY(event.pageY);
 };
 
 //=============================================================================
@@ -1236,8 +1454,20 @@ BattleManager.stopAllSelection = function() {
 Yanfly.BEC.BattleManager_makeEscapeRatio = BattleManager.makeEscapeRatio;
 BattleManager.makeEscapeRatio = function() {
     if (this.isDTB()) {
-      this._escapeRatio = eval(Yanfly.Param.BECEscRatio);
-      this._escapeFailBoost = eval(Yanfly.Param.BECEscFail);
+      var code = Yanfly.Param.BECEscRatio;
+      try {
+        this._escapeRatio = eval(code);
+      } catch (e) {
+        this._escapeRatio = 0;
+        Yanfly.Util.displayError(e, code, 'ESCAPE RATIO FORMULA ERROR');
+      }
+      var code = Yanfly.Param.BECEscFail;
+      try {
+        this._escapeFailBoost = eval(code);
+      } catch (e) {
+        this._escapeFailBoost = 0;
+        Yanfly.Util.displayError(e, code, 'ESCAPE FAIL BOOST FORMULA ERROR');
+      }
     } else {
       this._escapeFailBoost = 0.1;
       Yanfly.BEC.BattleManager_makeEscapeRatio.call(this);
@@ -1248,7 +1478,7 @@ BattleManager.timeBasedStates = function() {
     if (!$gameParty.inBattle()) return false;
     if (this.isTurnBased()) return false;
     if (this._timeBasedStates !== undefined) return this._timeBasedStates;
-    this._timeBasedStates = eval(Yanfly.Param.BECTimeStates);
+    this._timeBasedStates = Yanfly.Param.BECTimeStates;
     return this._timeBasedStates;
 };
 
@@ -1256,19 +1486,19 @@ BattleManager.timeBasedBuffs = function() {
     if (!$gameParty.inBattle()) return false;
     if (this.isTurnBased()) return false;
     if (this._timeBasedBuffs !== undefined) return this._timeBasedBuffs;
-    this._timeBasedBuffs = eval(Yanfly.Param.BECTimeBuffs);
+    this._timeBasedBuffs = Yanfly.Param.BECTimeBuffs;
     return this._timeBasedBuffs;
 };
 
 BattleManager.displayStartMessages = function() {
-    if (eval(Yanfly.Param.BECEmergeText)) {
+    if (Yanfly.Param.BECEmergeText) {
       $gameTroop.enemyNames().forEach(function(name) {
           $gameMessage.add(TextManager.emerge.format(name));
       });
     }
-    if (this._preemptive && eval(Yanfly.Param.BECPreEmpText)) {
+    if (this._preemptive && Yanfly.Param.BECPreEmpText) {
         $gameMessage.add(TextManager.preemptive.format($gameParty.name()));
-    } else if (this._surprise && eval(Yanfly.Param.BECSurpText)) {
+    } else if (this._surprise && Yanfly.Param.BECSurpText) {
         $gameMessage.add(TextManager.surprise.format($gameParty.name()));
     }
 };
@@ -1289,9 +1519,9 @@ BattleManager.getSprite = function(battler) {
 
 BattleManager.setSpritePriority = function() {
     if ($gameSystem.isSideView()) {
-      this._spritePriority = eval(Yanfly.Param.BECSideSpPrio);
+      this._spritePriority = Yanfly.Param.BECSideSpPrio;
     } else {
-      this._spritePriority = eval(Yanfly.Param.BECFrontSprite);
+      this._spritePriority = Yanfly.Param.BECFrontSprite;
     }
     if (this._spritePriority === false) this._spritePriority = 0;
     if (this._spritePriority === true) this._spritePriority = 1;
@@ -1354,8 +1584,8 @@ BattleManager.processEscape = function() {
     $gameParty.performEscape();
     SoundManager.playEscape();
     var success = this._preemptive ? true : (Math.random() < this._escapeRatio);
+    if ($gamePlayer.isDebugThrough()) success = true;
     if (success) {
-        $gameParty.removeBattleStates();
         $gameParty.performEscapeSuccess();
         this.displayEscapeSuccessMessage();
         this._escaped = true;
@@ -1367,6 +1597,17 @@ BattleManager.processEscape = function() {
         this.startTurn();
     }
     return success;
+};
+
+Yanfly.BEC.BattleManager_processAbort = BattleManager.processAbort;
+BattleManager.processAbort = function() {
+    $gameParty.removeBattleStates();
+    Yanfly.BEC.BattleManager_processAbort.call(this);
+};
+
+BattleManager.refreshAllMembers = function() {
+  $gameParty.refreshMembers();
+  $gameTroop.refreshMembers();
 };
 
 BattleManager.startTurn = function() {
@@ -1394,6 +1635,7 @@ BattleManager.endTurn = function() {
     }
     this._enteredEndPhase = true;
     Yanfly.BEC.BattleManager_endTurn.call(this);
+    BattleManager.refreshAllMembers();
 };
 
 BattleManager.getNextSubject = function() {
@@ -1465,8 +1707,55 @@ BattleManager.updateEvent = function() {
     return this.checkAbort();
 };
 
+BattleManager.queueForceAction = function(user, skillId, target) {
+    if (target === undefined) {
+      var targetIndex = 0;
+    } else if (typeof target === 'number') {
+      var targetIndex = target;
+    } else {
+      var targetIndex = target.index();
+    }
+    var param = [
+      user.isEnemy() ? 0 : 1,
+      user.isActor() ? user.actorId() : user.index(),
+      skillId,
+      targetIndex
+    ];
+    var command = {
+      code: 339,
+      indent: 0,
+      parameters: param
+    }
+    $gameTemp.forceActionQueue(command);
+    this.clearResults();
+    if (this.isTickBased()) this._phase = 'action';
+};
+
+BattleManager.addText = function(text, wait) {
+  if (!SceneManager._scene._logWindow) return;
+  wait = wait || 0;
+  SceneManager._scene._logWindow.addText(text);
+  if (wait <= 0) return;
+  var last = this._actionList[this._actionList.length - 1];
+  if (last && last[0] === 'WAIT') return;
+  this._actionList.push(['WAIT', [wait]]);
+};
+
+BattleManager.clearResults = function() {
+  var group = this.allBattleMembers();
+  var length = group.length;
+  for (var i = 0; i < length; ++i) {
+    var member = group[i];
+    if (member) member.clearResult();
+  }
+  this._allTargets = [];
+  this._targets = [];
+  this._target = undefined;
+};
+
 Yanfly.BEC.BattleManager_forceAction = BattleManager.forceAction;
 BattleManager.forceAction = function(battler) {
+    if (this._subject) this._subject.clearResult();
     this.createForceActionFailSafes();
     this.savePreForceActionSettings();
     Yanfly.BEC.BattleManager_forceAction.call(this, battler);
@@ -1483,7 +1772,12 @@ BattleManager.createForceActionFailSafes = function() {
 };
 
 BattleManager.savePreForceActionSettings = function() {
-    var settings = {
+    var settings = this.setPreForceActionSettings();
+    this._forceActionQueue.push(settings);
+};
+
+BattleManager.setPreForceActionSettings = function() {
+    return {
       subject: this._subject,
       action: JsonEx.makeDeepCopy(this._action),
       actionList: JsonEx.makeDeepCopy(this._actionList),
@@ -1496,27 +1790,31 @@ BattleManager.savePreForceActionSettings = function() {
       conditionFlags: JsonEx.makeDeepCopy(this._conditionFlags),
       trueFlags: JsonEx.makeDeepCopy(this._trueFlags)
     }
-    this._forceActionQueue.push(settings);
 };
 
 BattleManager.loadPreForceActionSettings = function() {
-    var settings = this._forceActionQueue.shift();
+    var settings = this._forceActionQueue[0];
     if (settings) {
-      this._subject = settings['subject'];
-      this._action = settings['action'];
-      this._actionList = settings['actionList'];
-      this._targets = settings['targets'];
-      this._allTargets = settings['allTargets'];
-      this._individualTargets = settings['indTargets'];
-      this._phaseSteps = settings['phaseSteps'];
-      this._returnPhase = settings['returnPhase'];
-      this._conditionFlags = settings['conditionFlags'];
-      this._trueFlags = settings['trueFlags'];
-      this._phase = settings['phase'];
-      return true;
+      this._forceActionQueue.shift();
+      this.resetPreForceActionSettings(settings);
+      return this._subject && this._subject.isAppeared();
     } else {
       return false;
     }    
+};
+
+BattleManager.resetPreForceActionSettings = function(settings) {
+    this._subject = settings['subject'];
+    this._action = settings['action'];
+    this._actionList = settings['actionList'];
+    this._targets = settings['targets'];
+    this._allTargets = settings['allTargets'];
+    this._individualTargets = settings['indTargets'];
+    this._phaseSteps = settings['phaseSteps'];
+    this._returnPhase = settings['returnPhase'];
+    this._conditionFlags = settings['conditionFlags'];
+    this._trueFlags = settings['trueFlags'];
+    this._phase = settings['phase'];   
 };
 
 Yanfly.BEC.BattleManager_processForcedAction =
@@ -1554,16 +1852,17 @@ BattleManager.updateAction = function() {
 };
 
 BattleManager.invokeAction = function(subject, target) {
-    if (!eval(Yanfly.Param.BECOptSpeed))  this._logWindow.push('pushBaseLine');
-    if (Math.random() < this._action.itemCnt(target)) {
-        this.invokeCounterAttack(subject, target);
-    } else if (Math.random() < this._action.itemMrf(target)) {
-        this.invokeMagicReflection(subject, target);
-    } else {
-        this.invokeNormalAction(subject, target);
-    }
-    subject.setLastTarget(target);
-    if (!eval(Yanfly.Param.BECOptSpeed)) this._logWindow.push('popBaseLine');
+  if (!Yanfly.Param.BECOptSpeed)  this._logWindow.push('pushBaseLine');
+  var normal = true;
+  if (Math.random() < this._action.itemMrf(target)) {
+    this.invokeMagicReflection(subject, target);
+  } else if (Math.random() < this._action.itemCnt(target)) {
+    this.invokeCounterAttack(subject, target);
+  } else {
+    this.invokeNormalAction(subject, target);
+  }
+  if (subject) subject.setLastTarget(target);
+  if (!Yanfly.Param.BECOptSpeed) this._logWindow.push('popBaseLine');
 };
 
 BattleManager.invokeCounterAttack = function(subject, target) {
@@ -1571,7 +1870,7 @@ BattleManager.invokeCounterAttack = function(subject, target) {
     this._logWindow.displayCounter(target);
     action.setAttack();
     action.apply(subject);
-    this._logWindow.displayActionResults(subject, subject);
+    this._logWindow.displayActionResults(target, subject);
     if (subject.isDead()) subject.performCollapse();
 };
 
@@ -1644,11 +1943,14 @@ BattleManager.createFinishActions = function() {
 
 Yanfly.BEC.BattleManager_endAction = BattleManager.endAction;
 BattleManager.endAction = function() {
+    if (this._subject) {
+      this._subject.onAllActionsEnd();
+    }
     if (this._processingForcedAction) {
+      this._subject.removeCurrentAction();
       this._phase = this._preForcePhase;
     }
     this._processingForcedAction = false;
-    if (this._subject) this._subject.onAllActionsEnd();
     if (this.loadPreForceActionSettings()) return;
     Yanfly.BEC.BattleManager_endAction.call(this);
 };
@@ -1659,7 +1961,7 @@ BattleManager.updateActionList = function() {
       if (this._actSeq) {
         if (!this.actionConditionsMet(this._actSeq)) continue;
         var seqName = this._actSeq[0].toUpperCase();
-        if (!this.processActionSequence(seqName, this._actSeq[1])) {
+        if (!this.processActionSequenceCheck(seqName, this._actSeq[1])) {
           break;
         }
       } else {
@@ -1675,7 +1977,7 @@ BattleManager.updateActionTargetList = function() {
       if (this._actSeq) {
         if (!this.actionConditionsMet(this._actSeq)) continue;
         var seqName = this._actSeq[0].toUpperCase();
-        if (!this.processActionSequence(seqName, this._actSeq[1])) {
+        if (!this.processActionSequenceCheck(seqName, this._actSeq[1])) {
           break;
         }
       } else if (this._individualTargets.length > 0) {
@@ -1700,7 +2002,7 @@ BattleManager.updateActionTargetList = function() {
       if (this._actSeq) {
         if (!this.actionConditionsMet(this._actSeq)) continue;
         var seqName = this._actSeq[0].toUpperCase();
-        if (!this.processActionSequence(seqName, this._actSeq[1])) {
+        if (!this.processActionSequenceCheck(seqName, this._actSeq[1])) {
           break;
         }
       } else if (this._individualTargets.length > 0) {
@@ -1721,8 +2023,11 @@ BattleManager.updateActionTargetList = function() {
 
 BattleManager.startAction = function() {
     var subject = this._subject;
+    if (!subject) return this.endAction();
     var action = subject.currentAction();
     this._action = action;
+    if (!this._action) return this.endAction();
+    if (!this._action.item()) return this.endAction();
     var targets = action.makeTargets();
     this.setTargets(targets);
     this._allTargets = targets.slice();
@@ -1734,6 +2039,14 @@ BattleManager.startAction = function() {
     subject.useItem(this._action.item());
     this._action.applyGlobal();
     this._logWindow.startAction(this._subject, this._action, this._targets);
+};
+
+BattleManager.processActionSequenceCheck = function(actionName, actionArgs) {
+    // IF condition
+    if (actionName.match(/IF[ ](.*)/i)) {
+      return this.actionIfConditions(actionName, actionArgs);
+    }
+    return this.processActionSequence(actionName, actionArgs)
 };
 
 BattleManager.processActionSequence = function(actionName, actionArgs) {
@@ -1772,10 +2085,6 @@ BattleManager.processActionSequence = function(actionName, actionArgs) {
     // DISPLAY ACTION
     if (actionName === 'DISPLAY ACTION') {
       return this.actionDisplayAction();
-    }
-    // IF condition
-    if (actionName.match(/IF[ ](.*)/i)) {
-      return this.actionIfConditions(actionName, actionArgs);
     }
     // IMMORTAL: targets, true/false
     if (actionName === 'IMMORTAL') {
@@ -1834,7 +2143,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._targets;
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1842,7 +2151,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameParty.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1850,7 +2159,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameParty.battleMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1866,7 +2175,9 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameParty.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject) targets.push(target);
+        if (target && target !== this._subject && target.isAppeared()) {
+          targets.push(target);
+        }
       }
       return targets;
     }
@@ -1875,7 +2186,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameTroop.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1883,7 +2194,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameTroop.members();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1900,23 +2211,25 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameTroop.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject) targets.push(target);
+        if (target && target !== this._subject && target.isAppeared()) {
+          targets.push(target);
+        }
       }
       return targets;
     }
     if (string.match(/ACTOR[ ](\d+)/i)) {
       var target = $gameParty.battleMembers()[parseInt(RegExp.$1)];
-      if (target) return [target];
+      if (target && target.isAppeared()) return [target];
     }
     if (string.match(/ENEMY[ ](\d+)/i)) {
       var target = $gameTroop.members()[parseInt(RegExp.$1)];
-      if (target) return [target];
+      if (target && target.isAppeared()) return [target];
     }
     if (['FRIEND', 'FRIENDS', 'ALLIES'].contains(string)) {
       var group = this._action.friendsUnit().aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1924,7 +2237,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.friendsUnit().members();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1932,7 +2245,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.friendsUnit().deadMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1940,7 +2253,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.opponentsUnit().aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1948,7 +2261,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.opponentsUnit().members();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1965,24 +2278,26 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.friendsUnit().aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject) targets.push(target);
+        if (target && target !== this._subject && target.isAppeared()) {
+          targets.push(target);
+        }
       }
       return targets;
     }
     if (string.match(/(?:FRIEND|ALLY)[ ](\d+)/i)) {
       var target = this._action.friendsUnit().members()[parseInt(RegExp.$1)];
-      if (target) return [target];
+      if (target && target.isAppeared()) return [target];
     }
     if (string.match(/(?:OPPONENT|FOE|RIVAL)[ ](\d+)/i)) {
       var target = this._action.opponentsUnit().members()[parseInt(RegExp.$1)]
-      if (target) return [target];
+      if (target && target.isAppeared()) return [target];
     }
     if (['ALL ALIVE'].contains(string)) {
       var group = this._action.friendsUnit().aliveMembers();
       group = group.concat(this._action.opponentsUnit().aliveMembers());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -1991,7 +2306,7 @@ BattleManager.makeActionTargets = function(string) {
       group = group.concat(this._action.opponentsUnit().members());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       return targets;
     }
@@ -2009,7 +2324,9 @@ BattleManager.makeActionTargets = function(string) {
       group = group.concat(this._action.opponentsUnit().aliveMembers());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject) targets.push(target);
+        if (target && target !== this._subject && target.isAppeared()) {
+          targets.push(target);
+        }
       }
       return targets;
     }
@@ -2017,19 +2334,35 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._targets;
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target) targets.push(target);
+        if (target && target.isAppeared()) targets.push(target);
       }
       if (!targets.contains(this._subject)) targets.push(this._subject);
       return targets;
     }
     if (['NOT FOCUS', 'NONPARTICIPANTS'].contains(string)) {
-      var group = this._action.friendsUnit().aliveMembers();
-      group = group.concat(this._action.opponentsUnit().aliveMembers());
+      var group = this._action.friendsUnit().members();
+      group = group.concat(this._action.opponentsUnit().members());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
         if (target) {
           if (target === this._subject) continue;
+          if (target.isHidden()) continue;
           if (this._targets.contains(target)) continue;
+
+          if (target.isDead()) {
+            if (Imported.YEP_X_AnimatedSVEnemies && target.isEnemy()) {
+              if (target.hasSVBattler() && !target.sideviewCollapse()) {
+                // Ignore
+              } else {
+                continue;
+              }
+            } else if (target.isActor()) {
+              // Ignore
+            } else {
+              continue;
+            }
+          }
+
           targets.push(target);
         }
       }
@@ -2042,48 +2375,57 @@ BattleManager.makeActionTargets = function(string) {
         return [actor];
       }
     }
+    if ('FIRST' === string.toUpperCase()) {
+      return [this._targets[0]];
+    }
     return targets;
 };
 
 BattleManager.actionConditionsMet = function(actSeq) {
-    var ci = this._conditionFlags.length - 1;
-    var actionName = actSeq[0];
-    var actionArgs = actSeq[1];
-    var subject = this._subject;
-    var user = this._subject;
-    var target = this._targets[0];
-    var targets = this._targets;
-    var action = this._action;
-    var item = this._action.item();
-    if (actionName.match(/ELSE[ ]*(.*)/i)) {
-      if (this._conditionFlags.length <= 0) return false;
-      if (this._conditionFlags[ci]) {
+  var ci = this._conditionFlags.length - 1;
+  var actionName = actSeq[0];
+  var actionArgs = actSeq[1];
+  var subject = this._subject;
+  var user = this._subject;
+  var target = this._targets[0];
+  var targets = this._targets;
+  var action = this._action;
+  var item = this._action.item();
+  if (actionName.match(/ELSE[ ]IF[ ](.*)/i)) {
+    if (this._conditionFlags.length <= 0) return false;
+    if (this._conditionFlags[ci]) {
+      this._conditionFlags[ci] = false;
+      this._trueFlags[ci] = true;
+    } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
+      var text = String(RegExp.$1);
+      try {
+        this._conditionFlags[ci] = eval(text);
+        this._trueFlags[ci] = eval(text);
+      } catch (e) {
+        Yanfly.Util.displayError(e, text, 'ACTION SEQUENCE IF CONDITION ERROR');
         this._conditionFlags[ci] = false;
-        this._trueFlags[ci] = true;
-      } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
-        this._conditionFlags[ci] = true;
-        this._trueFlags[ci] = true;
+        this._trueFlags[ci] = false;
       }
-      return false;
-    } else if (actionName.match(/ELSE[ ]IF[ ](.*)/i)) {
-      if (this._conditionFlags.length <= 0) return false;
-      if (this._conditionFlags[ci]) {
-        this._conditionFlags[ci] = false;
-        this._trueFlags[ci] = true;
-      } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
-        var text = String(RegExp.$1);
-        this._conditionFlags[ci] = eval('(' + text + ')');
-        this._trueFlags[ci] = eval('(' + text + ')');
-      }
-      return false;
-    } else if (actionName.toUpperCase() === 'END') {
-      if (this._conditionFlags.length <= 0) return false;
-      this._conditionFlags.pop();
-      this._trueFlags.pop();
-      return false;
     }
-    if (this._conditionFlags.length > 0) return this._conditionFlags[ci];
-    return true
+    return false;
+  } else if (actionName.match(/ELSE[ ]*(.*)/i)) {
+    if (this._conditionFlags.length <= 0) return false;
+    if (this._conditionFlags[ci]) {
+      this._conditionFlags[ci] = false;
+      this._trueFlags[ci] = true;
+    } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
+      this._conditionFlags[ci] = true;
+      this._trueFlags[ci] = true;
+    }
+    return false;
+  } else if (actionName.toUpperCase() === 'END') {
+    if (this._conditionFlags.length <= 0) return false;
+    this._conditionFlags.pop();
+    this._trueFlags.pop();
+    return false;
+  }
+  if (this._conditionFlags.length > 0) return this._conditionFlags[ci];
+  return true
 };
 
 BattleManager.actionActionAnimation = function(actionArgs) {
@@ -2164,7 +2506,7 @@ BattleManager.actionClearBattleLog = function() {
 };
 
 BattleManager.actionDeathBreak = function() {
-    if (this._subject.isDead() || this._subject.hp <= 0) {
+    if (this._subject.isDead()) {
       this._targets = [];
       this._actionList = [];
       this._individualTargets = [];
@@ -2189,7 +2531,12 @@ BattleManager.actionIfConditions = function(actionName, actionArgs) {
   var actionName = this._actSeq[0];
   if (actionName.match(/IF[ ](.*)/i)) {
     var text = String(RegExp.$1);
-    this._conditionFlags.push(eval(text));
+    try {
+      this._conditionFlags.push(eval(text));
+    } catch (e) {
+      this._conditionFlags.push(false);
+      Yanfly.Util.displayError(e, text, 'ACTION SEQUENCE IF CONDITION ERROR');
+    }
     this._trueFlags.push(false);
     var ci = this._conditionFlags.length;
   }
@@ -2199,7 +2546,11 @@ BattleManager.actionIfConditions = function(actionName, actionArgs) {
 BattleManager.actionImmortal = function(actionArgs) {
     var targets =
       this.makeActionTargets(actionArgs[0]).filter(Yanfly.Util.onlyUnique);
-    var value = eval(String(actionArgs[1]).toLowerCase());
+    try {
+      var value = eval(String(actionArgs[1]).toLowerCase());
+    } catch (e) {
+      var value = false;
+    }
     targets.forEach(function (target) {
       if (value) {
         target.addImmortal();
@@ -2276,6 +2627,22 @@ BattleManager.actionWaitForPopups = function() {
 };
 
 //=============================================================================
+// SceneManager
+//=============================================================================
+
+Yanfly.BEC.SceneManager_snapForBackground = SceneManager.snapForBackground;
+SceneManager.snapForBackground = function() {
+    if ($gameParty.inBattle()) {
+      var spriteset = this._scene._spriteset;
+      if (spriteset.battleback1Name() === '' && 
+      spriteset.battleback2Name() === '') {
+        return;
+      }
+    }
+    Yanfly.BEC.SceneManager_snapForBackground.call(this);
+};
+
+//=============================================================================
 // Sprite_Battler
 //=============================================================================
 
@@ -2324,16 +2691,16 @@ Sprite_Battler.prototype.setupDamagePopup = function() {
         sprite.setup(this._battler);
         this.pushDamageSprite(sprite);
         BattleManager._spriteset.addChild(sprite);
+        this._battler.clearResult();
       }
     } else {
       this._battler.clearDamagePopup();
-      this._battler.clearResult();
     }
 };
 
 Sprite_Battler.prototype.pushDamageSprite = function(sprite) {
-    var heightBuffer = eval(Yanfly.Param.BECPopupOverlap);
-    if (eval(Yanfly.Param.BECNewPopBottom)) {
+    var heightBuffer = Yanfly.Param.BECPopupOverlap;
+    if (Yanfly.Param.BECNewPopBottom) {
       this._damages.push(sprite);
       this._damages.forEach(function(spr) {
         for (var i = 0; i < spr.children.length; i++) {
@@ -2449,7 +2816,7 @@ Sprite_Actor.prototype.postSpriteInitialize = function() {
 Yanfly.BEC.Sprite_Actor_updateShadow = Sprite_Actor.prototype.updateShadow;
 Sprite_Actor.prototype.updateShadow = function() {
     if (this._hideShadows === undefined) {
-      this._hideShadows = eval(Yanfly.Param.BECShowShadows);
+      this._hideShadows = Yanfly.Param.BECShowShadows;
     }
     if (!this._hideShadows) return this._shadowSprite.visible = false;
     Yanfly.BEC.Sprite_Actor_updateShadow.call(this);
@@ -2464,11 +2831,35 @@ Sprite_Actor.prototype.setActorHome = function(index) {
     statusHeight *= Window_Base.prototype.lineHeight.call(this);
     statusHeight += Window_Base.prototype.standardPadding.call(this) * 2;
     if ($gameSystem.isSideView()) {
-      var homeX = eval(Yanfly.Param.BECHomePosX);
-      var homeY = eval(Yanfly.Param.BECHomePosY);
+      var code = Yanfly.Param.BECHomePosX;
+      try {
+        var homeX = eval(code);
+      } catch (e) {
+        var homeX = 0;
+        Yanfly.Util.displayError(e, code, 'SIDE VIEW HOME X FORMULA ERROR');
+      }
+      var code = Yanfly.Param.BECHomePosY;
+      try {
+        var homeY = eval(code);
+      } catch (e) {
+        var homeY = 0;
+        Yanfly.Util.displayError(e, code, 'SIDE VIEW HOME Y FORMULA ERROR');
+      }
     } else {
-      var homeX = eval(Yanfly.Param.BECFrontPosX);
-      var homeY = eval(Yanfly.Param.BECFrontPosY);
+      var code = Yanfly.Param.BECFrontPosX;
+      try {
+        var homeX = eval(code);
+      } catch (e) {
+        var homeX = 0;
+        Yanfly.Util.displayError(e, code, 'FRONT VIEW HOME X FORMULA ERROR');
+      }
+      var code = Yanfly.Param.BECFrontPosY;
+      try {
+        var homeY = eval(code);
+      } catch (e) {
+        var homeY = 0;
+        Yanfly.Util.displayError(e, code, 'FRONT VIEW HOME Y FORMULA ERROR');
+      }
     }
     this._checkAliveStatus = false;
     if ($gameParty.battleMembers()[index]) {
@@ -2537,13 +2928,53 @@ Sprite_Actor.prototype.adjustAnchor = function() {
     this._mainSprite.anchor.y = this._actor.anchorY();
 };
 
+Yanfly.BEC.Sprite_Actor_updateFrame = Sprite_Actor.prototype.updateFrame;
+Sprite_Actor.prototype.updateFrame = function() {
+    Yanfly.BEC.Sprite_Actor_updateFrame.call(this);
+    if (!this._mainSprite) return;
+    if (!this._mainSprite.bitmap) return;
+    if (this._mainSprite.bitmap.width > 0 && !this.bitmap) {
+      var sw = this._mainSprite.bitmap.width / 9;
+      var sh = this._mainSprite.bitmap.height / 6;
+      this.bitmap = new Bitmap(sw, sh);
+    }
+};
+
+Yanfly.BEC.Sprite_Actor_refreshMotion = Sprite_Actor.prototype.refreshMotion;
+Sprite_Actor.prototype.refreshMotion = function() {
+    var actor = this._actor;
+    if (!actor) return;
+    var motionGuard = Sprite_Actor.MOTIONS['guard'];
+    if (this._motion === motionGuard && !BattleManager.isInputting()) return;
+    var stateMotion = actor.stateMotionIndex();
+    if (actor.isInputting() || actor.isActing()) {
+      this.startMotion(actor.idleMotion());
+    } else if (stateMotion === 3) {
+      this.startMotion(actor.deadMotion());
+    } else if (stateMotion === 2) {
+      this.startMotion(actor.sleepMotion());
+    } else if (actor.isChanting()) {
+      this.startMotion(actor.chantMotion());
+    } else if (actor.isGuard() || actor.isGuardWaiting()) {
+      this.startMotion(actor.guardMotion());
+    } else if (stateMotion === 1) {
+      this.startMotion(actor.abnormalMotion());
+    } else if (actor.isDying()) {
+      this.startMotion(actor.dyingMotion());
+    } else if (actor.isUndecided()) {
+      this.startMotion(actor.idleMotion());
+    } else {
+      this.startMotion(actor.waitMotion());
+    }
+};
+
 //=============================================================================
 // Sprite_Enemy
 //=============================================================================
 
 Sprite_Enemy.prototype.preSpriteInitialize = function(battler) {
     Sprite_Battler.prototype.preSpriteInitialize.call(this, battler);
-    this._visualSelect = eval(Yanfly.Param.BECEnemySelect);
+    this._visualSelect = Yanfly.Param.BECEnemySelect;
     if (this._visualSelect) this.createVisualSelectWindow();
 };
 
@@ -2590,11 +3021,12 @@ Sprite_Weapon.prototype.setup = function(weaponImageId) {
 Yanfly.BEC.Sprite_Damage_initialize = Sprite_Damage.prototype.initialize;
 Sprite_Damage.prototype.initialize = function() {
     Yanfly.BEC.Sprite_Damage_initialize.call(this);
-    this._duration = eval(Yanfly.Param.BECPopupDur);
+    this._duration = Yanfly.Param.BECPopupDur;
 };
 
 Sprite_Damage.prototype.setup = function(target) {
-    var result = target.shiftDamagePopup();
+    this._result = target.shiftDamagePopup();
+    var result = this._result;
     if (result.missed || result.evaded) {
       this.createMiss();
     } else if (result.hpAffected) {
@@ -2609,7 +3041,7 @@ Sprite_Damage.prototype.setup = function(target) {
 
 Sprite_Damage.prototype.setupCriticalEffect = function() {
     this._flashColor = eval('[' + Yanfly.Param.BECCritPopup + ']');
-    this._flashDuration = eval(Yanfly.Param.BECCritDur);
+    this._flashDuration = Yanfly.Param.BECCritDur;
 };
 
 //=============================================================================
@@ -2657,12 +3089,22 @@ Spriteset_Battle.prototype.update = function() {
 };
 
 Spriteset_Battle.prototype.updateZCoordinates = function() {
-    this._battleField.children.sort(this.battleFieldDepthCompare);
+  if (Imported.YEP_ImprovedBattlebacks) {
+    this.updateBattlebackGroupRemove();
+  } else {
+    this._battleField.removeChild(this._back1Sprite);
+    this._battleField.removeChild(this._back2Sprite);
+  }
+  this._battleField.children.sort(this.battleFieldDepthCompare);
+  if (Imported.YEP_ImprovedBattlebacks) {
+    this.updateBattlebackGroupAdd();
+  } else {
+    this._battleField.addChildAt(this._back2Sprite, 0);
+    this._battleField.addChildAt(this._back1Sprite, 0);
+  }
 };
 
 Spriteset_Battle.prototype.battleFieldDepthCompare = function(a, b) {
-    if (a.tilePosition && !b.tilePosition) return -1;
-    if (b.tilePosition && !a.tilePosition) return 1;
     var priority = BattleManager.getSpritePriority();
     if (a._battler && b._battler && priority !== 0) {
       if (priority === 1) {
@@ -2686,11 +3128,56 @@ Spriteset_Battle.prototype.isPopupPlaying = function() {
     });
 };
 
+Yanfly.BEC.Spriteset_Battle_battlerSprites =
+  Spriteset_Battle.prototype.battlerSprites;
+Spriteset_Battle.prototype.battlerSprites = function() {
+  var sprites = Yanfly.BEC.Spriteset_Battle_battlerSprites.call(this);
+  var length = sprites.length;
+  var result = [];
+  for (var i = 0; i < length; ++i) {
+    var sprite = sprites[i];
+    if (!sprite) continue;
+    if (!sprite._battler) continue;
+    result.push(sprite);
+  }
+  return result;
+};
+
 //=============================================================================
 // Game_Temp
 //=============================================================================
 
 Game_Temp.prototype.clearActionSequenceSettings = function() {
+};
+
+Game_Temp.prototype.forceActionQueue = function(command) {
+  if (!this._forceActionQueue) {
+    this._forceActionQueue = JsonEx.makeDeepCopy($dataCommonEvents[1]);
+    this._forceActionQueue.list = [];
+  }
+  this._forceActionQueue.list.push(command);
+};
+
+Yanfly.BEC.Game_Temp_clearCommonEvent = Game_Temp.prototype.clearCommonEvent;
+Game_Temp.prototype.clearCommonEvent = function() {
+    this._forceActionQueue = undefined;
+    Yanfly.BEC.Game_Temp_clearCommonEvent.call(this);
+};
+
+Yanfly.BEC.Game_Temp_isCommonEventReserved =
+  Game_Temp.prototype.isCommonEventReserved;
+Game_Temp.prototype.isCommonEventReserved = function() {
+  if (this._forceActionQueue) return true;
+  return Yanfly.BEC.Game_Temp_isCommonEventReserved.call(this);
+};
+
+Yanfly.BEC.Game_Temp_reservedCommonEvent =
+  Game_Temp.prototype.reservedCommonEvent;
+Game_Temp.prototype.reservedCommonEvent = function() {
+  if (this._forceActionQueue) {
+    return this._forceActionQueue;
+  }
+  return Yanfly.BEC.Game_Temp_reservedCommonEvent.call(this);
 };
 
 //=============================================================================
@@ -2745,7 +3232,13 @@ Game_Action.prototype.speed = function() {
     var atk = user.atk; var def = user.def; var mat = user.mat;
     var int = user.mat; var mdf = user.mdf; var res = user.res;
     var agi = user.agi; var luk = user.luk;
-    var speed = eval(Yanfly.Param.BECActionSpeed);
+    var code = Yanfly.Param.BECActionSpeed;
+    try {
+      var speed = eval(code);
+    } catch (e) {
+      var speed = 0;
+      Yanfly.Util.displayError(e, code, 'ACTION SPEED FORMULA ERROR');
+    }
     if (this.item()) speed += this.item().speed;
     if (this.isAttack()) speed += this.subject().attackSpeed();
     return speed;
@@ -2763,6 +3256,22 @@ Game_Action.prototype.apply = function(target) {
       target.performResultEffects();
       if (target !== this.subject()) this.subject().startDamagePopup();
     }
+};
+
+Game_Action.prototype.itemEffectAddAttackState = function(target, effect) {
+    this.subject().attackStates().forEach(function(stateId) {
+        var chance = effect.value1;
+        chance *= target.stateRate(stateId);
+        chance *= this.subject().attackStatesRate(stateId);
+        chance *= this.lukEffectRate(target);
+        if (Math.random() < chance) {
+            if (stateId === target.deathStateId()) {
+              if (target.isImmortal()) target.removeImmortal();
+            }
+            target.addState(stateId);
+            this.makeSuccess(target);
+        }
+    }.bind(this), target);
 };
 
 Game_Action.prototype.itemEffectAddNormalState = function(target, effect) {
@@ -2818,6 +3327,7 @@ Game_BattlerBase.prototype.completetStatusRefreshRequest = function() {
 };
 
 Game_BattlerBase.prototype.updateStateTicks = function() {
+    var needRefresh = false;
     for (var i = 0; i < this._states.length; ++i) {
       var stateId = this._states[i];
       var state = $dataStates[stateId];
@@ -2825,9 +3335,13 @@ Game_BattlerBase.prototype.updateStateTicks = function() {
       if (state.autoRemovalTiming !== 2) continue;
       if (!this._stateTurns[stateId]) continue;
       var value = BattleManager.tickRate() / Yanfly.Param.BECTurnTime;
+      var shown1 = Math.ceil(this._stateTurns[stateId]);
       this._stateTurns[stateId] -= value;
+      var shown2 = Math.ceil(this._stateTurns[stateId]);
+      if (shown1 !== shown2) needRefresh = true;
       if (this._stateTurns[stateId] <= 0) this.removeState(stateId);
     }
+    if (needRefresh) this.refresh();
 };
 
 Game_BattlerBase.prototype.isBypassUpdateTurns = function() {
@@ -2842,13 +3356,19 @@ Game_BattlerBase.prototype.updateStateTurns = function() {
 Game_BattlerBase.prototype.updateStateTurnTiming = function(timing) {
     if (this.isBypassUpdateTurns()) return;
     var statesRemoved = [];
+    this._freeStateTurn = this._freeStateTurn || [];
     for (var i = 0; i < this._states.length; ++i) {
       var stateId = this._states[i];
       var state = $dataStates[stateId];
       if (!state) continue;
       if (state.autoRemovalTiming !== timing) continue;
       if (!this._stateTurns[stateId]) continue;
-      this._stateTurns[stateId] -= 1;
+      if (this._freeStateTurn.contains(stateId)) {
+        var index = this._freeStateTurn.indexOf(stateId);
+        this._freeStateTurn.splice(index, 1);
+      } else {
+        this._stateTurns[stateId] -= 1;
+      }
       if (this._stateTurns[stateId] <= 0) statesRemoved.push(stateId);
     }
     for (var i = 0; i < statesRemoved.length; ++i) {
@@ -2874,12 +3394,17 @@ Game_BattlerBase.prototype.updateStateTurnEnd = function() {
 };
 
 Game_BattlerBase.prototype.updateBuffTicks = function() {
+    var needRefresh = false;
     for (var i = 0; i < this._buffTurns.length; i++) {
       if (this._buffTurns[i] <= 0) continue;
       var value = BattleManager.tickRate() / Yanfly.Param.BECTurnTime;
+      var shown1 = Math.ceil(this._buffTurns[i]);
       this._buffTurns[i] -= value;
+      var shown2 = Math.ceil(this._buffTurns[i]);
+      if (shown1 !== shown2) needRefresh = true;
       if (this._buffTurns[i] <= 0) this.removeBuff(i);
     }
+    if (needRefresh) this.refresh();
 };
 
 Game_BattlerBase.prototype.timedTick = function() {
@@ -2911,6 +3436,7 @@ Game_BattlerBase.prototype.paySkillCost = function(skill) {
 Yanfly.BEC.Game_Battler_useItem = Game_Battler.prototype.useItem;
 Game_Battler.prototype.useItem = function(item) {
     Yanfly.BEC.Game_Battler_useItem.call(this, item);
+    this.refresh();
     if (!$gameParty.inBattle()) return;
     this.increaseSelfTurnCount();
     this.updateStateActionStart();
@@ -2919,6 +3445,7 @@ Game_Battler.prototype.useItem = function(item) {
 Yanfly.BEC.Game_Battler_onBattleStart = Game_Battler.prototype.onBattleStart;
 Game_Battler.prototype.onBattleStart = function() {
     Yanfly.BEC.Game_Battler_onBattleStart.call(this);
+    this._freeStateTurn = [];
     this._immortalState = false;
     this._selfTurnCount = 0;
 };
@@ -2926,6 +3453,7 @@ Game_Battler.prototype.onBattleStart = function() {
 Yanfly.BEC.Game_Battler_onBattleEnd = Game_Battler.prototype.onBattleEnd;
 Game_Battler.prototype.onBattleEnd = function() {
     Yanfly.BEC.Game_Battler_onBattleEnd.call(this);
+    this._freeStateTurn = [];
     this._immortalState = false;
 };
 
@@ -2946,8 +3474,14 @@ Game_Battler.prototype.isSelected = function() {
 
 Yanfly.BEC.Game_Battler_regenerateAll = Game_Battler.prototype.regenerateAll;
 Game_Battler.prototype.regenerateAll = function() {
+    this.clearResult();
     var lifeState = this.isAlive();
     Yanfly.BEC.Game_Battler_regenerateAll.call(this);
+    if (!BattleManager.timeBasedStates()) this.updateStateTurns();
+    if (!BattleManager.timeBasedBuffs()) {
+      this.updateBuffTurns();
+      this.removeBuffsAuto();
+    }
     if (this.isDead() && lifeState === true) {
       this.performCollapse();
     }
@@ -3008,7 +3542,7 @@ Yanfly.BEC.Game_Battler_performCollapse =
     Game_Battler.prototype.performCollapse;
 Game_Battler.prototype.performCollapse = function() {
     Yanfly.BEC.Game_Battler_performCollapse.call(this);
-    if ($gameParty.inBattle()) this.forceMotion('dead');
+    if ($gameParty.inBattle()) this.forceMotion(this.deadMotion());
 };
 
 Game_Battler.prototype.performResultEffects = function() {
@@ -3218,20 +3752,20 @@ Game_Battler.prototype.spritePosY = function() {
 };
 
 Game_Battler.prototype.spriteWidth = function() {
-    if ($gameSystem.isSideView() && this.battler()) {
-      return this.battler().width;
-    } else if (this.battler()) {
-      return this.battler().width;
+    if ($gameSystem.isSideView() && this.battler() && this.battler().bitmap) {
+      return this.battler().bitmap.width;
+    } else if (this.battler() && this.battler().bitmap) {
+      return this.battler().bitmap.width;
     } else {
       return 1;
     }
 };
 
 Game_Battler.prototype.spriteHeight = function() {
-    if ($gameSystem.isSideView() && this.battler()) {
-      return this.battler().height;
-    } else if (this.battler()) {
-      return this.battler().height;
+    if ($gameSystem.isSideView() && this.battler() && this.battler().bitmap) {
+      return this.battler().bitmap.height;
+    } else if (this.battler() && this.battler().bitmap) {
+      return this.battler().bitmap.height;
     } else {
       return 1;
     }
@@ -3330,10 +3864,11 @@ Game_Battler.prototype.forceMotionRefresh = function() {
 };
 
 Game_Battler.prototype.requestMotionRefresh = function() {
-    if (this.isDead() && this._motionType !== 'dead') {
-      this.requestMotion('dead');
+    var deadMotion = this.deadMotion();
+    if (this.isDead() && this._motionType !== deadMotion) {
+      this.requestMotion(deadMotion);
     }
-    if (this.isDead() && this._motionType === 'dead') return;
+    if (this.isDead() && this._motionType === deadMotion) return;
     if (this._motionType === 'victory') return;
     if (this._motionType === 'escape' && !BattleManager.isInputting()) return;
     if (this._motionType === 'guard' && !BattleManager.isInputting()) return;
@@ -3354,8 +3889,6 @@ Game_Battler.prototype.onTurnEnd = function() {
     } else if (BattleManager.isTickBased() && !BattleManager.isTurnEnd()) {
       this.regenerateAll();
     }
-    if (!BattleManager.timeBasedStates()) this.updateStateTurns();
-    if (!BattleManager.timeBasedBuffs()) this.updateBuffTurns();
     this.removeStatesAuto(2);
 };
 
@@ -3389,19 +3922,80 @@ Game_Battler.prototype.createActions = function() {
     this.makeActions();
 };
 
+Yanfly.BEC.Game_Battler_addState = Game_Battler.prototype.addState;
+Game_Battler.prototype.addState = function(stateId) {
+    Yanfly.BEC.Game_Battler_addState.call(this, stateId);
+    if (this.canAddStateFreeTurn(stateId)) this.setStateFreeTurn(stateId);
+};
+
+Game_Battler.prototype.canAddStateFreeTurn = function(stateId) {
+    if (!$gameParty.inBattle()) return false;
+    if (BattleManager._subject !== this) return false;
+    if ($dataStates[stateId].autoRemovalTiming !== 1) return false;
+    if (Imported.YEP_BuffsStatesCore) {
+      if ($dataStates[stateId].reapplyRules === 0) return false;
+    }
+    return true;
+};
+
+Game_Battler.prototype.setStateFreeTurn = function(stateId) {
+    this._freeStateTurn = this._freeStateTurn || [];
+    this._freeStateTurn.push(stateId);
+};
+
+Game_Battler.prototype.idleMotion = function() {
+    return 'walk';
+};
+
+Game_Battler.prototype.deadMotion = function() {
+    return 'dead';
+};
+
+Game_Battler.prototype.sleepMotion = function() {
+    return 'sleep';
+};
+
+Game_Battler.prototype.chantMotion = function() {
+    return 'chant';
+};
+
+Game_Battler.prototype.guardMotion = function() {
+    return 'guard';
+};
+
+Game_Battler.prototype.abnormalMotion = function() {
+    return 'abnormal';
+};
+
+Game_Battler.prototype.dyingMotion = function() {
+    return 'dying';
+};
+
+Game_Battler.prototype.waitMotion = function() {
+    return 'wait';
+};
+
+Yanfly.BEC.Game_Battler_startAnimation = Game_Battler.prototype.startAnimation;
+Game_Battler.prototype.startAnimation = function(animationId, mirror, delay) {
+  if (!$dataAnimations[animationId]) return;
+  Yanfly.BEC.Game_Battler_startAnimation.call(this, animationId, mirror, delay);
+};
+
 //=============================================================================
 // Game_Actor
 //=============================================================================
 
 Yanfly.BEC.Game_Actor_refresh = Game_Actor.prototype.refresh;
 Game_Actor.prototype.refresh = function() {
+    this._anchorX = undefined;
+    this._anchorY = undefined;
     Yanfly.BEC.Game_Actor_refresh.call(this);
     if ($gameParty.inBattle()) this.requestStatusRefresh();
 };
 
 Game_Actor.prototype.isSpriteVisible = function() {
     if ($gameSystem.isSideView()) return true;
-    return eval(Yanfly.Param.BECFrontSprite);
+    return Yanfly.Param.BECFrontSprite;
 };
 
 Game_Actor.prototype.reflectAnimationId = function() {
@@ -3447,11 +4041,55 @@ Game_Actor.prototype.spriteHeight = function() {
 };
 
 Game_Actor.prototype.anchorX = function() {
-    return this.actor().anchorX;
+    if (this._anchorX !== undefined) return this._anchorX;
+    var length = this.states().length;
+    for (var i = 0; i < length; ++i) {
+      var obj = this.states()[i];
+      if (obj && obj.anchorX !== undefined) {
+        this._anchorX = obj.anchorX;
+        return this._anchorX;
+      }
+    }
+    length = this.equips().length;
+    for (var i = 0; i < length; ++i) {
+      var obj = this.equips()[i];
+      if (obj && obj.anchorX !== undefined) {
+        this._anchorX = obj.anchorX;
+        return this._anchorX;
+      }
+    }
+    if (this.currentClass().anchorX !== undefined) {
+      this._anchorX = this.currentClass().anchorX;
+      return this._anchorX;
+    }
+    this._anchorX = this.actor().anchorX;
+    return this._anchorX;
 };
 
 Game_Actor.prototype.anchorY = function() {
-    return this.actor().anchorY;
+    if (this._anchorY !== undefined) return this._anchorY;
+    var length = this.states().length;
+    for (var i = 0; i < length; ++i) {
+      var obj = this.states()[i];
+      if (obj && obj.anchorY !== undefined) {
+        this._anchorY = obj.anchorY;
+        return this._anchorY;
+      }
+    }
+    length = this.equips().length;
+    for (var i = 0; i < length; ++i) {
+      var obj = this.equips()[i];
+      if (obj && obj.anchorY !== undefined) {
+        this._anchorY = obj.anchorY;
+        return this._anchorY;
+      }
+    }
+    if (this.currentClass().anchorY !== undefined) {
+      this._anchorY = this.currentClass().anchorY;
+      return this._anchorY;
+    }
+    this._anchorY = this.actor().anchorY;
+    return this._anchorY;
 };
 
 Game_Actor.prototype.spriteFacePoint = function(pointX, pointY) {
@@ -3513,6 +4151,17 @@ Game_Actor.prototype.performEscapeSuccess = function() {
 // Game_Enemy
 //=============================================================================
 
+if (!Game_Enemy.prototype.skills) {
+Game_Enemy.prototype.skills = function() {
+  var skills = []
+  for (var i = 0; i < this.enemy().actions.length; ++i) {
+    var skill = $dataSkills[this.enemy().actions[i].skillId]
+    if (skill) skills.push(skill);
+  }
+  return skills;
+}
+}; // (!Game_Enemy.prototype.skills)
+
 Game_Enemy.prototype.performActionStart = function(action) {
     Game_Battler.prototype.performActionStart.call(this, action);
     if (!$gameSystem.isSideView() || !this.spriteCanMove()) {
@@ -3532,6 +4181,14 @@ Game_Enemy.prototype.performDamage = function() {
 
 Game_Enemy.prototype.attackAnimationId = function() {
     return this.enemy().attackAnimationId;
+};
+
+Game_Enemy.prototype.attackAnimationId1 = function() {
+    return this.attackAnimationId();
+};
+
+Game_Enemy.prototype.attackAnimationId2 = function() {
+    return this.attackAnimationId();
 };
 
 Game_Enemy.prototype.reflectAnimationId = function() {
@@ -3579,7 +4236,10 @@ Game_Unit.prototype.onTurnStart = function() {
     var max = this.members().length;
     for (var i = 0; i < max; ++i) {
       var member = this.members()[i];
-      if (member) member.onTurnStart();
+      if (member) {
+        member.onTurnStart();
+        member.refresh();
+      }
     }
 };
 
@@ -3588,6 +4248,15 @@ Game_Unit.prototype.updateTick = function() {
     for (var i = 0; i < max; ++i) {
       var member = this.members()[i];
       if (member) member.updateTick();
+    }
+};
+
+Game_Unit.prototype.refreshMembers = function() {
+    var group = this.allMembers();
+    var length = group.length;
+    for (var i = 0; i < length; ++i) {
+      var member = group[i];
+      if (member) member.refresh();
     }
 };
 
@@ -3600,6 +4269,14 @@ Game_Party.prototype.performEscapeSuccess = function() {
       var member = this.members()[i];
       if (member) member.performEscapeSuccess();
     }
+};
+
+//=============================================================================
+// Game_Troop
+//=============================================================================
+
+Game_Troop.prototype.allMembers = function() {
+  return this.members();
 };
 
 //=============================================================================
@@ -3622,7 +4299,7 @@ Yanfly.BEC.Scene_Battle_createSkillWindow =
     Scene_Battle.prototype.createSkillWindow;
 Scene_Battle.prototype.createSkillWindow = function() {
     Yanfly.BEC.Scene_Battle_createSkillWindow.call(this);
-    if (eval(Yanfly.Param.BECLowerWindows)) {
+    if (Yanfly.Param.BECLowerWindows) {
       this.adjustLowerWindow(this._skillWindow);
     }
 };
@@ -3631,7 +4308,7 @@ Yanfly.BEC.Scene_Battle_createItemWindow =
     Scene_Battle.prototype.createItemWindow;
 Scene_Battle.prototype.createItemWindow = function() {
     Yanfly.BEC.Scene_Battle_createItemWindow.call(this);
-    if (eval(Yanfly.Param.BECLowerWindows)) {
+    if (Yanfly.Param.BECLowerWindows) {
       this.adjustLowerWindow(this._itemWindow);
     }
 };
@@ -3641,7 +4318,7 @@ Yanfly.BEC.Scene_Battle_createActorWindow =
 Scene_Battle.prototype.createActorWindow = function() {
     Yanfly.BEC.Scene_Battle_createActorWindow.call(this);
     this._actorWindow.x = Graphics.boxWidth - this._actorWindow.width;
-    if (eval(Yanfly.Param.BECSelectHelp)) {
+    if (Yanfly.Param.BECSelectHelp) {
       this._actorWindow.setHelpWindow(this._helpWindow);
     }
 };
@@ -3650,13 +4327,13 @@ Yanfly.BEC.Scene_Battle_createEnemyWindow =
     Scene_Battle.prototype.createEnemyWindow;
 Scene_Battle.prototype.createEnemyWindow = function() {
     Yanfly.BEC.Scene_Battle_createEnemyWindow.call(this);
-    if (eval(Yanfly.Param.BECSelectHelp)) {
+    if (Yanfly.Param.BECSelectHelp) {
       this._enemyWindow.setHelpWindow(this._helpWindow);
     }
 };
 
 Scene_Battle.prototype.adjustLowerWindow = function(win) {
-    win.height = win.fittingHeight(eval(Yanfly.Param.BECWindowRows));
+    win.height = win.fittingHeight(Yanfly.Param.BECWindowRows);
     win.y = Graphics.boxHeight - win.height;
 };
 
@@ -3672,7 +4349,7 @@ Scene_Battle.prototype.startPartyCommandSelection = function() {
 
 Scene_Battle.prototype.isStartActorCommand = function() {
     if (this._isStartActorCommand === undefined) {
-      this._isStartActorCommand = eval(Yanfly.Param.BECStartActCmd)
+      this._isStartActorCommand = Yanfly.Param.BECStartActCmd;
     }
     return this._isStartActorCommand;
 };
@@ -3723,7 +4400,7 @@ Scene_Battle.prototype.startActorCommandSelection = function() {
 Yanfly.BEC.Scene_Battle_selectActorSelection =
     Scene_Battle.prototype.selectActorSelection;
 Scene_Battle.prototype.selectActorSelection = function() {
-    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.show();
+    if (Yanfly.Param.BECSelectHelp) this._helpWindow.show();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_selectActorSelection.call(this);
     this._actorWindow.autoSelect();
@@ -3731,7 +4408,7 @@ Scene_Battle.prototype.selectActorSelection = function() {
 
 Yanfly.BEC.Scene_Battle_onActorCancel = Scene_Battle.prototype.onActorCancel;
 Scene_Battle.prototype.onActorCancel = function() {
-    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.hide();
+    if (Yanfly.Param.BECSelectHelp) this._helpWindow.hide();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_onActorCancel.call(this);
     BattleManager.stopAllSelection();
@@ -3741,7 +4418,7 @@ Scene_Battle.prototype.onActorCancel = function() {
 Yanfly.BEC.Scene_Battle_selectEnemySelection =
     Scene_Battle.prototype.selectEnemySelection;
 Scene_Battle.prototype.selectEnemySelection = function() {
-    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.show();
+    if (Yanfly.Param.BECSelectHelp) this._helpWindow.show();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_selectEnemySelection.call(this);
     this._enemyWindow.autoSelect();
@@ -3749,7 +4426,7 @@ Scene_Battle.prototype.selectEnemySelection = function() {
 
 Yanfly.BEC.Scene_Battle_onEnemyCancel = Scene_Battle.prototype.onEnemyCancel;
 Scene_Battle.prototype.onEnemyCancel = function() {
-    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.hide();
+    if (Yanfly.Param.BECSelectHelp) this._helpWindow.hide();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_onEnemyCancel.call(this);
     BattleManager.stopAllSelection();
@@ -3758,10 +4435,10 @@ Scene_Battle.prototype.onEnemyCancel = function() {
 
 Yanfly.BEC.Scene_Battle_onSelectAction = Scene_Battle.prototype.onSelectAction;
 Scene_Battle.prototype.onSelectAction = function() {
-    if (eval(Yanfly.Param.BECSelectHelp)) BattleManager.forceSelection();
+    if (Yanfly.Param.BECSelectHelp) BattleManager.forceSelection();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_onSelectAction.call(this);
-    if (eval(Yanfly.Param.BECSelectHelp)) BattleManager.resetSelection();
+    if (Yanfly.Param.BECSelectHelp) BattleManager.resetSelection();
 };
 
 Yanfly.BEC.Scene_Battle_onSkillOk =
@@ -3818,6 +4495,7 @@ Window_Help.prototype.clear = function() {
 Window_Help.prototype.setBattler = function(battler) {
     this.contents.clear();
     this.clear();
+    this.resetFontSettings();
     if (!$gameParty.inBattle()) return;
     if (!battler) return;
     var action = BattleManager.inputtingAction();
@@ -3887,6 +4565,16 @@ Window_BattleActor.prototype.autoSelect = function() {
       this._inputLock = true;
     } else if (action.isForDeadFriend()) {
       this._selectDead = true;
+      this.autoSelectFirstDeadActor();
+      if (action.isForAll()) this._inputLock = true;
+    }
+};
+
+Window_BattleActor.prototype.autoSelectFirstDeadActor = function() {
+    var length = $gameParty.members().length;
+    for (var i = 0; i < length; ++i) {
+      var member = $gameParty.members()[i];
+      if (member && member.isDead()) return this.select(i);
     }
 };
 
@@ -3903,7 +4591,7 @@ Window_BattleActor.prototype.updateHelp = function() {
 Yanfly.BEC.Window_BattleActor_processTouch =
     Window_BattleActor.prototype.processTouch;
 Window_BattleActor.prototype.processTouch = function() {
-    if (eval(Yanfly.Param.BECActorSelect) && this.isOpenAndActive()) {
+    if (Yanfly.Param.BECActorSelect && this.isOpenAndActive()) {
       if (TouchInput.isTriggered() && !this.isTouchedInsideFrame()) {
         if (this.getClickedActor() >= 0) {
           var index = this.getClickedActor();
@@ -3922,6 +4610,13 @@ Window_BattleActor.prototype.processTouch = function() {
             SoundManager.playCursor();
             return this.select(index);
           }
+        }
+      }
+      if (Yanfly.Param.BECSelectMouseOver) {
+        var index = this.getMouseOverActor();
+        if (index >= 0 && this.index() !== index) {
+          SoundManager.playCursor();
+          return this.select(index);
         }
       }
     }
@@ -3945,8 +4640,38 @@ Window_BattleActor.prototype.isClickedActor = function(actor) {
     if (!actor) return false;
     if (!actor.isSpriteVisible()) return false;
     if (!actor.isAppeared()) return false;
+    if ($gameTemp._disableMouseOverSelect) return false;
     var x = TouchInput.x;
     var y = TouchInput.y;
+    var rect = new Rectangle();
+    rect.width = actor.spriteWidth();
+    rect.height = actor.spriteHeight();
+    rect.x = actor.spritePosX() - rect.width / 2;
+    rect.y = actor.spritePosY() - rect.height;
+    return (x >= rect.x && y >= rect.y && x < rect.x + rect.width &&
+      y < rect.y + rect.height);
+};
+
+Window_BattleActor.prototype.getMouseOverActor = function() {
+    for (var i = 0; i < $gameParty.battleMembers().length; ++i) {
+      var actor = $gameParty.battleMembers().reverse()[i];
+      if (!actor) continue;
+      if (this.isMouseOverActor(actor)) {
+        if (this._selectDead && !actor.isDead()) continue;
+        if (this._inputLock && actor.index() !== this.index()) continue;
+        return actor.index();
+      }
+    }
+    return -1;
+};
+
+Window_BattleActor.prototype.isMouseOverActor = function(actor) {
+    if (!actor) return false;
+    if (!actor.isSpriteVisible()) return false;
+    if (!actor.isAppeared()) return false;
+    if ($gameTemp._disableMouseOverSelect) return false;
+    var x = TouchInput._mouseOverX;
+    var y = TouchInput._mouseOverY;
     var rect = new Rectangle();
     rect.width = actor.spriteWidth();
     rect.height = actor.spriteHeight();
@@ -3965,7 +4690,7 @@ Yanfly.DisableWebGLMask = false;
 Yanfly.BEC.Window_BattleEnemy_initialize =
     Window_BattleEnemy.prototype.initialize;
 Window_BattleEnemy.prototype.initialize = function(x, y) {
-    if (eval(Yanfly.Param.BECEnemySelect)) {
+    if (Yanfly.Param.BECEnemySelect) {
       x -= Graphics.boxWidth * 200;
       y -= Graphics.boxHeight * 200;
     };
@@ -3982,7 +4707,7 @@ WindowLayer.prototype._webglMaskWindow = function(renderSession, win) {
 Yanfly.BEC.Window_BattleEnemy_maxCols =
     Window_BattleEnemy.prototype.maxCols;
 Window_BattleEnemy.prototype.maxCols = function() {
-    if (eval(Yanfly.Param.BECEnemySelect)) return this.allowedTargets().length;
+    if (Yanfly.Param.BECEnemySelect) return this._enemies.length;
     return Yanfly.BEC.Window_BattleEnemy_maxCols.call(this);
 };
 
@@ -3993,7 +4718,7 @@ Window_BattleEnemy.prototype.allowedTargets = function() {
 };
 
 Window_BattleEnemy.prototype.refresh = function() {
-    this._enemies = $gameTroop.aliveMembers();
+    this._enemies = this.allowedTargets();
     this.sortTargets();
     Window_Selectable.prototype.refresh.call(this);
 };
@@ -4024,7 +4749,7 @@ Window_BattleEnemy.prototype.updateHelp = function() {
 Yanfly.BEC.Window_BattleEnemy_processTouch =
     Window_BattleEnemy.prototype.processTouch;
 Window_BattleEnemy.prototype.processTouch = function() {
-    if (eval(Yanfly.Param.BECEnemySelect) && this.isOpenAndActive()) {
+    if (Yanfly.Param.BECEnemySelect && this.isOpenAndActive()) {
       if (TouchInput.isTriggered() && !this.isTouchedInsideFrame()) {
         if (this.getClickedEnemy() >= 0) {
           var index = this.getClickedEnemy();
@@ -4043,6 +4768,13 @@ Window_BattleEnemy.prototype.processTouch = function() {
             SoundManager.playCursor();
             return this.select(index);
           }
+        }
+      }
+      if (Yanfly.Param.BECSelectMouseOver) {
+        var index = this.getMouseOverEnemy();
+        if (index >= 0 && this.index() !== index) {
+          SoundManager.playCursor();
+          return this.select(index);
         }
       }
     };
@@ -4066,8 +4798,38 @@ Window_BattleEnemy.prototype.getClickedEnemy = function() {
 Window_BattleEnemy.prototype.isClickedEnemy = function(enemy) {
     if (!enemy) return false;
     if (!enemy.isSpriteVisible()) return false;
+    if ($gameTemp._disableMouseOverSelect) return false;
     var x = TouchInput.x;
     var y = TouchInput.y;
+    var rect = new Rectangle();
+    rect.width = enemy.spriteWidth();
+    rect.height = enemy.spriteHeight();
+    rect.x = enemy.spritePosX() - rect.width / 2;
+    rect.y = enemy.spritePosY() - rect.height;
+    return (x >= rect.x && y >= rect.y && x < rect.x + rect.width &&
+      y < rect.y + rect.height);
+};
+
+Window_BattleEnemy.prototype.getMouseOverEnemy = function() {
+    for (var i = 0; i < this._enemies.length; ++i) {
+      var enemy = this._enemies[i];
+      if (!enemy) continue;
+      if (this.isMouseOverEnemy(enemy)) {
+        if (this._selectDead && !enemy.isDead()) continue;
+        var index = this._enemies.indexOf(enemy)
+        if (this._inputLock && index !== this.index()) continue;
+        return index;
+      }
+    }
+    return -1;
+};
+
+Window_BattleEnemy.prototype.isMouseOverEnemy = function(enemy) {
+    if (!enemy) return false;
+    if (!enemy.isSpriteVisible()) return false;
+    if ($gameTemp._disableMouseOverSelect) return false;
+    var x = TouchInput._mouseOverX;
+    var y = TouchInput._mouseOverY;
     var rect = new Rectangle();
     rect.width = enemy.spriteWidth();
     rect.height = enemy.spriteHeight();
@@ -4093,8 +4855,8 @@ Window_EnemyVisualSelect.prototype.initialize = function() {
     this._battler = null;
     this._battlerName = '';
     this._requestRefresh = false;
-    this._showSelectCursor = eval(Yanfly.Param.BECShowSelectBox);
-    this._showEnemyName = eval(Yanfly.Param.BECShowEnemyName);
+    this._showSelectCursor = Yanfly.Param.BECShowSelectBox;
+    this._showEnemyName = Yanfly.Param.BECShowEnemyName;
     this.contentsOpacity = 0;
     this.opacity = 0;
 };
@@ -4124,20 +4886,37 @@ Window_EnemyVisualSelect.prototype.updateBattlerName = function() {
     if (this._battlerName !== this._battler.name())
     this._battlerName = this._battler.name();
     this._requestRefresh = true;
+    this._nameTextWidth = undefined;
 };
 
 Window_EnemyVisualSelect.prototype.updateWindowSize = function() {
     var spriteWidth = this._battler.spriteWidth();
     this.contents.fontSize = Yanfly.Param.BECEnemyFontSize;
-    var textWidth = this.textWidth(this._battler.name());
+    if (this._nameTextWidth === undefined) {
+      this._nameTextWidth = this.textWidth(this._battler.name());
+    }
+    var textWidth = this._nameTextWidth;
     textWidth += this.textPadding() * 2;
     var width = Math.max(spriteWidth, textWidth) + this.standardPadding() * 2;
+    width = Math.ceil(width);
     var height = this._battler.spriteHeight() + this.standardPadding() * 2;
+    height = Math.ceil(height);
+    height = Math.max(height, this.lineHeight() + this.standardPadding() * 2);
     if (width === this.width && height === this.height) return;
     this.width = width;
     this.height = height;
     this.createContents();
     this._requestRefresh = true;
+    this.makeWindowBoundaries();
+};
+
+Window_EnemyVisualSelect.prototype.makeWindowBoundaries = function() {
+    if (!this._requestRefresh) return;
+    this._minX = -1 * this.standardPadding();
+    this._maxX = Graphics.boxWidth - this.width + this.standardPadding();
+    this._minY = -1 * this.standardPadding();
+    this._maxY = Graphics.boxHeight - this.height + this.standardPadding();
+    this._maxY -= SceneManager._scene._statusWindow.height;
 };
 
 Window_EnemyVisualSelect.prototype.updateWindowPosition = function() {
@@ -4146,6 +4925,8 @@ Window_EnemyVisualSelect.prototype.updateWindowPosition = function() {
     this.y = -1 * this.height + this.standardPadding();
     this.x += this._battler.spritePosX();
     this.y += this._battler.spritePosY();
+    this.x = this.x.clamp(this._minX, this._maxX);
+    this.y = this.y.clamp(this._minY, this._maxY);
 };
 
 Window_EnemyVisualSelect.prototype.updateOpacity = function() {
@@ -4165,7 +4946,7 @@ Window_EnemyVisualSelect.prototype.isShowWindow = function() {
     if (this._battler.isDead()) {
       return enemyWindow._selectDead;
     }
-    return true;
+    return enemyWindow._enemies.contains(this._battler);
 };
 
 Window_EnemyVisualSelect.prototype.updateCursor = function() {
@@ -4212,7 +4993,7 @@ Window_PartyCommand.prototype.itemTextAlign = function() {
 };
 
 Window_PartyCommand.prototype.numVisibleRows = function() {
-    return eval(Yanfly.Param.BECCommandRows);
+    return Yanfly.Param.BECCommandRows;
 };
 
 //=============================================================================
@@ -4224,7 +5005,7 @@ Window_ActorCommand.prototype.itemTextAlign = function() {
 };
 
 Window_ActorCommand.prototype.numVisibleRows = function() {
-    return eval(Yanfly.Param.BECCommandRows);
+    return Yanfly.Param.BECCommandRows;
 };
 
 //=============================================================================
@@ -4232,7 +5013,7 @@ Window_ActorCommand.prototype.numVisibleRows = function() {
 //=============================================================================
 
 Window_BattleStatus.prototype.numVisibleRows = function() {
-    return eval(Yanfly.Param.BECCommandRows);
+    return Yanfly.Param.BECCommandRows;
 };
 
 Window_BattleStatus.prototype.updateStatusRequests = function() {
@@ -4251,6 +5032,10 @@ Window_BattleStatus.prototype.processStatusRefresh = function(index) {
     this.contents.clearRect(rect.x, rect.y, rect.width, rect.height);
     this.drawItem(index);
     actor.completetStatusRefreshRequest();
+};
+
+Window_BattleStatus.prototype.update = function() {
+    Window_Selectable.prototype.update.call(this);
 };
 
 if (!Yanfly.Param.BECCurMax) {
@@ -4274,7 +5059,7 @@ Window_BattleStatus.prototype.drawCurrentAndMax = function(current, max, x, y,
 Yanfly.BEC.Window_BattleLog_isFastForward =
     Window_BattleLog.prototype.isFastForward;
 Window_BattleLog.prototype.isFastForward = function() {
-    if (eval(Yanfly.Param.BECOptSpeed)) return true;
+    if (Yanfly.Param.BECOptSpeed) return true;
     return Yanfly.BEC.Window_BattleLog_isFastForward.call(this);
 };
 
@@ -4290,11 +5075,11 @@ Window_BattleLog.prototype.updateWaitCount = function() {
 };
 
 Window_BattleLog.prototype.animationBaseDelay = function() {
-    return eval(Yanfly.Param.BECAniBaseDel);
+    return Yanfly.Param.BECAniBaseDel;
 };
 
 Window_BattleLog.prototype.animationNextDelay = function() {
-    return eval(Yanfly.Param.BECAniNextDel);
+    return Yanfly.Param.BECAniNextDel;
 };
 
 Window_BattleLog.prototype.updateWaitMode = function() {
@@ -4340,21 +5125,32 @@ Window_BattleLog.prototype.waitForPopups = function() {
 Yanfly.BEC.Window_BattleLog_displayAction =
     Window_BattleLog.prototype.displayAction;
 Window_BattleLog.prototype.displayAction = function(subject, item) {
-    if (eval(Yanfly.Param.BECFullActText)) {
+    if (Yanfly.Param.BECFullActText) {
       Yanfly.BEC.Window_BattleLog_displayAction.call(this, subject, item);
     } else {
-      this._actionIcon = item.iconIndex;
-      this.push('addText', '<SIMPLE>' + item.name);
+      this._actionIcon = this.displayIcon(item);
+      var text = this.displayText(item);
+      this.push('addText', '<SIMPLE>' + text);
       if (item.message2) {
-        this.push('addText', '<CENTER>' + item.message2.format(item.name));
+        this.push('addText', '<CENTER>' + item.message2.format(text));
       }
     }
+};
+
+Window_BattleLog.prototype.displayIcon = function(item) {
+    if (!item) return 0;
+    return item.battleDisplayIcon;
+};
+
+Window_BattleLog.prototype.displayText = function(item) {
+    if (!item) return '';
+    return item.battleDisplayText;
 };
 
 Yanfly.BEC.Window_BattleLog_displayActionResults =
     Window_BattleLog.prototype.displayActionResults;
 Window_BattleLog.prototype.displayActionResults = function(subject, target) {
-    if (eval(Yanfly.Param.BECOptSpeed)) {
+    if (Yanfly.Param.BECOptSpeed) {
       if (target.result().used) {
           this.displayCritical(target);
           this.displayDamage(target);
@@ -4380,11 +5176,18 @@ Window_BattleLog.prototype.drawLineText = function(index) {
     }
 };
 
+Window_BattleLog.prototype.textWidthEx = function(text) {
+    return this.drawTextEx(text, 0, this.contents.height + this.lineHeight());
+};
+
 Window_BattleLog.prototype.drawCenterLine = function(index) {
     var text = this._lines[index].replace('<CENTER>', '');
     var rect = this.itemRectForText(index);
     this.contents.clearRect(rect.x, rect.y, rect.width, rect.height);
-    this.drawText(text, rect.x, rect.y, Graphics.boxWidth, 'center');
+    var tw = this.textWidthEx(text);
+    var wx = rect.x + (rect.width - tw) / 2;
+    this.resetFontSettings();
+    this.drawTextEx(text, wx, rect.y);
 };
 
 Window_BattleLog.prototype.drawSimpleActionLine = function(index) {
@@ -4400,7 +5203,7 @@ Window_BattleLog.prototype.drawSimpleActionLine = function(index) {
 };
 
 Window_BattleLog.prototype.displayCounter = function(target) {
-    if (eval(Yanfly.Param.BECShowCntText)) {
+    if (Yanfly.Param.BECShowCntText) {
       this.addText(TextManager.counterAttack.format(target.name()));
     }
     target.performCounter();
@@ -4409,7 +5212,7 @@ Window_BattleLog.prototype.displayCounter = function(target) {
 };
 
 Window_BattleLog.prototype.displayReflection = function(target) {
-    if (eval(Yanfly.Param.BECShowRflText)) {
+    if (Yanfly.Param.BECShowRflText) {
       this.addText(TextManager.magicReflection.format(target.name()));
     }
     target.performReflection();
@@ -4419,7 +5222,7 @@ Window_BattleLog.prototype.displayReflection = function(target) {
 };
 
 Window_BattleLog.prototype.displaySubstitute = function(substitute, target) {
-    if (eval(Yanfly.Param.BECShowSubText)) {
+    if (Yanfly.Param.BECShowSubText) {
       var substName = substitute.name();
       this.addText(TextManager.substitute.format(substName, target.name()));
     }
@@ -4429,77 +5232,77 @@ Window_BattleLog.prototype.displaySubstitute = function(substitute, target) {
 Yanfly.BEC.Window_BattleLog_displayFailure =
     Window_BattleLog.prototype.displayFailure;
 Window_BattleLog.prototype.displayFailure = function(target) {
-    if (!eval(Yanfly.Param.BECShowFailText)) return;
+    if (!Yanfly.Param.BECShowFailText) return;
     Yanfly.BEC.Window_BattleLog_displayFailure.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayCritical =
     Window_BattleLog.prototype.displayCritical;
 Window_BattleLog.prototype.displayCritical = function(target) {
-    if (!eval(Yanfly.Param.BECShowCritText)) return;
+    if (!Yanfly.Param.BECShowCritText) return;
     Yanfly.BEC.Window_BattleLog_displayCritical.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayMiss =
     Window_BattleLog.prototype.displayMiss;
 Window_BattleLog.prototype.displayMiss = function(target) {
-    if (!eval(Yanfly.Param.BECShowMissText)) return;
+    if (!Yanfly.Param.BECShowMissText) return;
     Yanfly.BEC.Window_BattleLog_displayMiss.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayEvasion =
     Window_BattleLog.prototype.displayEvasion;
 Window_BattleLog.prototype.displayEvasion = function(target) {
-    if (!eval(Yanfly.Param.BECShowEvaText)) return;
+    if (!Yanfly.Param.BECShowEvaText) return;
     Yanfly.BEC.Window_BattleLog_displayEvasion.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayHpDamage =
     Window_BattleLog.prototype.displayHpDamage;
 Window_BattleLog.prototype.displayHpDamage = function(target) {
-    if (!eval(Yanfly.Param.BECShowHpText)) return;
+    if (!Yanfly.Param.BECShowHpText) return;
     Yanfly.BEC.Window_BattleLog_displayHpDamage.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayMpDamage =
     Window_BattleLog.prototype.displayMpDamage;
 Window_BattleLog.prototype.displayMpDamage = function(target) {
-    if (!eval(Yanfly.Param.BECShowMpText)) return;
+    if (!Yanfly.Param.BECShowMpText) return;
     Yanfly.BEC.Window_BattleLog_displayMpDamage.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayTpDamage =
     Window_BattleLog.prototype.displayTpDamage;
 Window_BattleLog.prototype.displayTpDamage = function(target) {
-    if (!eval(Yanfly.Param.BECShowTpText)) return;
+    if (!Yanfly.Param.BECShowTpText) return;
     Yanfly.BEC.Window_BattleLog_displayTpDamage.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayCurrentState =
     Window_BattleLog.prototype.displayCurrentState;
 Window_BattleLog.prototype.displayCurrentState = function(subject) {
-    if (!eval(Yanfly.Param.BECShowStateText)) return;
+    if (!Yanfly.Param.BECShowStateText) return;
     Yanfly.BEC.Window_BattleLog_displayCurrentState.call(this, subject);
 };
 
 Yanfly.BEC.Window_BattleLog_displayAddedStates =
     Window_BattleLog.prototype.displayAddedStates;
 Window_BattleLog.prototype.displayAddedStates = function(target) {
-    if (!eval(Yanfly.Param.BECShowStateText)) return;
+    if (!Yanfly.Param.BECShowStateText) return;
     Yanfly.BEC.Window_BattleLog_displayAddedStates.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayRemovedStates =
     Window_BattleLog.prototype.displayRemovedStates;
 Window_BattleLog.prototype.displayRemovedStates = function(target) {
-    if (!eval(Yanfly.Param.BECShowStateText)) return;
+    if (!Yanfly.Param.BECShowStateText) return;
     Yanfly.BEC.Window_BattleLog_displayRemovedStates.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayChangedBuffs =
     Window_BattleLog.prototype.displayChangedBuffs;
 Window_BattleLog.prototype.displayChangedBuffs = function(target) {
-    if (!eval(Yanfly.Param.BECShowBuffText)) return;
+    if (!Yanfly.Param.BECShowBuffText) return;
     Yanfly.BEC.Window_BattleLog_displayChangedBuffs.call(this, target);
 };
 
@@ -4520,8 +5323,12 @@ function(subject, targets) {
 };
 
 Window_BattleLog.prototype.showActorAtkAniMirror = function(subject, targets) {
+  if (subject.isActor()) {
     this.showNormalAnimation(targets, subject.attackAnimationId1(), true);
     this.showNormalAnimation(targets, subject.attackAnimationId2(), false);
+  } else {
+    this.showNormalAnimation(targets, subject.attackAnimationId1(), true)
+  }
 };
 
 //=============================================================================
@@ -4529,6 +5336,17 @@ Window_BattleLog.prototype.showActorAtkAniMirror = function(subject, targets) {
 //=============================================================================
 
 Yanfly.Util = Yanfly.Util || {};
+
+Yanfly.Util.displayError = function(e, code, message) {
+  console.log(message);
+  console.log(code || 'NON-EXISTENT');
+  console.error(e);
+  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
+    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
+      require('nw.gui').Window.get().showDevTools();
+    }
+  }
+};
 
 if (!Yanfly.Util.toGroup) {
     Yanfly.Util.toGroup = function(inVal) {

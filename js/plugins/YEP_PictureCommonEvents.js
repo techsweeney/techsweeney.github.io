@@ -8,10 +8,11 @@ Imported.YEP_PictureCommonEvents = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.PCE = Yanfly.PCE || {};
+Yanfly.PCE.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 Causes common events to run when certain pictures
+ * @plugindesc v1.05 Causes common events to run when certain pictures
  * are clicked while on the map.
  * @author Yanfly Engine Plugins
  *
@@ -2430,6 +2431,21 @@ Yanfly.PCE = Yanfly.PCE || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.05:
+ * - Added bug fixes found by Splendith:
+ * - Bug fixed for events that allow the player to move immediately after
+ * pressing the picture common event.
+ * - Bug fixed for 'HidePictureCommonEvents' and 'ShowPictureCommonEvents'
+ * plugin command that caused normal pictures to hide/show, too.
+ *
+ * Version 1.04:
+ * - Fixed a bug that caused the 'HidePictureCommonEvents' plugin command to
+ * not function properly.
+ *
+ * Version 1.03:
+ * - Disabling Touch Move now also disables the Right Click button and
+ * on-screen Two Finger tap to prevent random menu calls.
+ *
  * Version 1.02:
  * - Fixed a bug that prevented the MovePlayer commands from working without a
  * dependency on the YEP_RegionEvents plugin.
@@ -2605,7 +2621,11 @@ Game_Map.prototype.moveAfterCommonEvent = function() {
     }
     for (var i = 0; i < list.length; ++i) {
       var code = list[i].code;
-      if ([201, 205, 230, 232, 261, 301].contains(code)) return false;
+      var exceptionCodes = [];
+      exceptionCodes.push(101, 102, 103, 104, 105);
+      exceptionCodes.push(201, 205, 230, 232, 261);
+      exceptionCodes.push(301);
+      if (exceptionCodes.contains(code)) return false;
     }
     return true;
 };
@@ -2675,11 +2695,13 @@ Game_Picture.prototype.isRelatedPictureCommonEvent = function() {
 
 Yanfly.PCE.Game_Picture_opacity = Game_Picture.prototype.opacity;
 Game_Picture.prototype.opacity = function() {
-    if ($gameMessage.isBusy() && this.isRelatedPictureCommonEvent()) {
-      if ($gameSystem.isPictureHidden()) return 0;
-      if ($gameSystem.isPictureHiddenDuringMessage()) return 0;
+  if (this.isRelatedPictureCommonEvent()) {
+    if ($gameSystem.isPictureHidden()) return 0;
+    if ($gameMessage.isBusy() && $gameSystem.isPictureHiddenDuringMessage()) {
+      return 0;
     }
-    return Yanfly.PCE.Game_Picture_opacity.call(this);
+  }
+  return Yanfly.PCE.Game_Picture_opacity.call(this);
 };
 
 //=============================================================================
@@ -2824,6 +2846,15 @@ Scene_Map.prototype.getTriggeredPictureCommonEvent = function(check) {
       if (picture.isTriggered()) return picture;
     }
     return null;
+};
+
+Yanfly.PCE.Scene_Map_isMenuCalled = Scene_Map.prototype.isMenuCalled;
+Scene_Map.prototype.isMenuCalled = function() {
+    if ($gameSystem.isTouchMoveEnabled()) {
+      return Yanfly.PCE.Scene_Map_isMenuCalled.call(this);
+    } else {
+      return Input.isTriggered('menu');
+    }
 };
 
 //=============================================================================

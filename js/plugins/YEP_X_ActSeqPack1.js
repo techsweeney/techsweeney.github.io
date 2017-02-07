@@ -8,10 +8,11 @@ Imported.YEP_X_ActSeqPack1 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP1 = Yanfly.ASP1 || {};
+Yanfly.ASP1.version = 1.11;
 
 //=============================================================================
  /*:
- * @plugindesc v1.09 (Requires YEP_BattleEngineCore.js) Basic functions are
+ * @plugindesc v1.11 (Requires YEP_BattleEngineCore.js) Basic functions are
  * added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
@@ -174,7 +175,8 @@ Yanfly.ASP1 = Yanfly.ASP1 || {};
  * Plays the common event found within the skill's/item's traits list. This
  * will only play the last common event on the list, following the game
  * engine's original process. Nothing else will continue on the action list
- * until the common event is finished.
+ * until the common event is finished (unless it is a forced action, in which
+ * case, it will wait until the action is complete first).
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: action common event
  *=============================================================================
@@ -363,7 +365,8 @@ Yanfly.ASP1 = Yanfly.ASP1 || {};
  * COMMON EVENT: X
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Plays common event X at that point in the action sequence. Nothing else
- * will continue until the common event is finished.
+ * will continue until the common event is finished (unless it is a forced
+ * action, in which case, it will wait until the action is complete first).
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: common event: 1
  *=============================================================================
@@ -705,6 +708,15 @@ Yanfly.ASP1 = Yanfly.ASP1 || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.11:
+ * - Lunatic Mode fail safes added.
+ *
+ * Version 1.10a:
+ * - Changed the 'Change Variable' action sequence to read more effectively.
+ * - Documentation update for 'Action Common Event' and 'Common Event' to
+ * indicate that they will not work immediately if used as a forced action
+ * since another event is already running.
  *
  * Version 1.09:
  * - Fixed a bug that didn't allow for HP and MP buff/debuff removal.
@@ -1068,7 +1080,15 @@ BattleManager.actionCollapse = function(actionArgs) {
 };
 
 BattleManager.actionCommonEvent = function(id) {
-  $gameTemp.reserveCommonEvent(id);
+  if ($gameTroop.isEventRunning()) {
+    var ev = $dataCommonEvents[id];
+    if (!ev) return;
+    var list = ev.list;
+    var interpreter = $gameTroop._interpreter;
+    interpreter.setupChild(list, 0);
+  } else {
+    $gameTemp.reserveCommonEvent(id);
+  }
   return false;
 };
 
@@ -1113,7 +1133,7 @@ BattleManager.actionChangeSwitch = function(actionName, actionArgs) {
 BattleManager.actionChangeVariable = function(actionName) {
   var cV1 =
   /CHANGE[ ](?:VARIABLE|VAR)[ ](\d+)[ ](.*)[ ](?:VARIABLE|VAR)[ ](\d+)/i;
-  var cV2 = /CHANGE[ ](?:VARIABLE|VAR)[ ](\d+)[ ](.*)[ ](.*)/i;
+  var cV2 = /CHANGE[ ](?:VARIABLE|VAR)[ ](\d+)[ ](.*?)[ ](.*)/i;
   var subject = this._subject;
   var user = this._subject;
   var target = this._targets[0];
@@ -1160,7 +1180,11 @@ BattleManager.actionEval = function(actionArgs) {
     for (var i = 1; i < actionArgs.length; ++i) {
         text = text + ', ' + String(actionArgs[i]);
     }
-    eval(text);
+    try {
+      eval(text);
+    } catch (e) {
+      Yanfly.Util.displayError(e, text, 'ACTION SEQUENCE EVAL ERROR');
+    }
     return false;
 };
 
@@ -1487,6 +1511,23 @@ BattleManager.actionTpModify = function(actionName, actionArgs) {
       }
     }, this);
     return true;
+};
+
+//=============================================================================
+// Utilities
+//=============================================================================
+
+Yanfly.Util = Yanfly.Util || {};
+
+Yanfly.Util.displayError = function(e, code, message) {
+  console.log(message);
+  console.log(code || 'NON-EXISTENT');
+  console.error(e);
+  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
+    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
+      require('nw.gui').Window.get().showDevTools();
+    }
+  }
 };
 
 //=============================================================================
