@@ -8,11 +8,11 @@ Imported.YEP_X_ClassBaseParam = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CBP = Yanfly.CBP || {};
-Yanfly.CBP.version = 1.03;
+Yanfly.CBP.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_BaseParamControl) Allow you to use
+ * @plugindesc v1.04 (Requires YEP_BaseParamControl) Allow you to use
  * formulas for class parameter growth.
  * @author Yanfly Engine Plugins
  *
@@ -83,6 +83,9 @@ Yanfly.CBP.version = 1.03;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.

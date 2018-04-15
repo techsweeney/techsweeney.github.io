@@ -8,6 +8,7 @@ Imported.YEP_X_CEMSetupPack1 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CEMSP1 = Yanfly.CEMSP1 || {};
+Yanfly.CEMSP1.version = 1.00
 
 //=============================================================================
  /*:

@@ -8,11 +8,11 @@ Imported.YEP_MessageCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Message = Yanfly.Message || {};
-Yanfly.Message.version = 1.18;
+Yanfly.Message.version = 1.19;
 
 //=============================================================================
  /*:
- * @plugindesc v1.18 Adds more features to the Message Window to customized
+ * @plugindesc v1.19 Adds more features to the Message Window to customized
  * the way your messages appear and functions.
  * @author Yanfly Engine Plugins
  *
@@ -20,45 +20,71 @@ Yanfly.Message.version = 1.18;
  * @default
  *
  * @param Default Rows
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc This is default amount of rows the message box will have.
  * Default: 4
  * @default 4
  *
  * @param Default Width
+ * @parent ---General---
  * @desc This is default width for the message box in pixels.
  * Default: Graphics.boxWidth
  * @default Graphics.boxWidth
  *
  * @param Face Indent
+ * @parent ---General---
  * @desc If using a face graphic, this is how much text indents by.
  * Default: Window_Base._faceWidth + 24
  * @default Window_Base._faceWidth + 24
  *
  * @param Fast Forward Key
+ * @parent ---General---
  * @desc This is the key used for fast forwarding.
  * @default pagedown
  *
  * @param Enable Fast Forward
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Enable fast forward button for your messages by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Word Wrapping
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Use this to enable or disable word wrapping by default.
  * OFF - false     ON - true
  * @default false
  *
  * @param Description Wrap
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Enable or disable word wrapping for descriptions.
  * OFF - false     ON - true
  * @default false
  *
  * @param Word Wrap Space
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Insert a space with manual line breaks?
  * NO - false     YES - true
  * @default false
  *
  * @param Tight Wrap
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If true and using a face for the message, the message will
  * wrap tighter. NO - false     YES - true
  * @default false
@@ -67,46 +93,68 @@ Yanfly.Message.version = 1.18;
  * @default
  *
  * @param Font Name
+ * @parent ---Font---
  * @desc This is the default font used for the Message Window.
  * Default: GameFont
  * @default GameFont
  *
  * @param Font Name CH
+ * @parent ---Font---
  * @desc This is the default font used for the Message Window for Chinese.
  * Default: SimHei, Heiti TC, sans-serif
  * @default SimHei, Heiti TC, sans-serif
  *
  * @param Font Name KR
+ * @parent ---Font---
  * @desc This is the default font used for the Message Window for Korean.
  * Default: Dotum, AppleGothic, sans-serif
  * @default Dotum, AppleGothic, sans-serif
  *
  * @param Font Size
+ * @parent ---Font---
+ * @type number
+ * @min 1
  * @desc This is the default font size used for the Message Window.
  * Default: 28
  * @default 28
  *
  * @param Font Size Change
+ * @parent ---Font---
+ * @type number
+ * @min 1
  * @desc Whenever \{ and \} are used, they adjust by this value.
  * Default: 12
  * @default 12
  *
  * @param Font Changed Max
+ * @parent ---Font---
+ * @type number
+ * @min 1
  * @desc This is the maximum size achieved by \{.
  * Default: 96
  * @default 96
  *
  * @param Font Changed Min
+ * @parent ---Font---
+ * @type number
+ * @min 1
  * @desc This is the minimum size achieved by \{.
  * Default: 12
  * @default 12
  *
  * @param Font Outline
+ * @parent ---Font---
+ * @type number
+ * @min 0
  * @desc This is the default font outline width for messages.
  * Default: 4
  * @default 4
  *
  * @param Maintain Font
+ * @parent ---Font---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc When changing the font name or size, maintain for following
  * messages. NO - false     YES - true
  * @default false
@@ -115,32 +163,50 @@ Yanfly.Message.version = 1.18;
  * @default
  *
  * @param Name Box Buffer X
+ * @parent ---Name Box---
+ * @type number
  * @desc This is the buffer for the x location of the Name Box.
  * @default -28
  *
  * @param Name Box Buffer Y
+ * @parent ---Name Box---
+ * @type number
  * @desc This is the buffer for the y location of the Name Box.
  * @default 0
  *
  * @param Name Box Padding
+ * @parent ---Name Box---
  * @desc This is the value for the padding of the Name Box.
  * @default this.standardPadding() * 4
  *
  * @param Name Box Color
+ * @parent ---Name Box---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used for the Name Box.
  * @default 0
  *
  * @param Name Box Clear
+ * @parent ---Name Box---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Do you wish for the Name Box window to be clear?
  * NO - false     YES - true
  * @default false
  *
  * @param Name Box Added Text
+ * @parent ---Name Box---
  * @desc This text is always added whenever the name box is used.
  * This can be used to automatically set up colors.
  * @default \c[6]
  *
  * @param Name Box Auto Close
+ * @parent ---Name Box---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Close the message window each time the namebox displays a
  * different name? YES - true     NO - false
  * @default false
@@ -320,6 +386,9 @@ Yanfly.Message.version = 1.18;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.19:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.18:
  * - Added new plugin parameters: 'Font Name CH' and 'Font Name KR'.
@@ -645,7 +714,11 @@ Window_Base.prototype.setWordWrap = function(text) {
       var replace = Yanfly.Param.MSGWrapSpace ? ' ' : '';
       text = text.replace(/[\n\r]+/g, replace);
     }
-    text = text.replace(/<(?:BR|line break)>/gi, '\n');
+    if (this._wordWrap) {
+      text = text.replace(/<(?:BR|line break)>/gi, '\n');
+    } else {
+      text = text.replace(/<(?:BR|line break)>/gi, '');
+    }
     return text;
 };
 

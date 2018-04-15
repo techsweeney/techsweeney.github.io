@@ -8,6 +8,7 @@ Imported.YEP_ElementCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Ele = Yanfly.Ele || {};
+Yanfly.Ele.version = 1.03;
 
 //=============================================================================
  /*:
@@ -16,6 +17,17 @@ Yanfly.Ele = Yanfly.Ele || {};
  * @author Yanfly Engine Plugins
  *
  * @param Multi-Element Rulings
+ * @type select
+ * @option Lowest
+ * @value 0
+ * @option Add
+ * @value 1
+ * @option Multiply
+ * @value 2
+ * @option Highest
+ * @value 3
+ * @option Average
+ * @value 4
  * @desc If a skill/item has multiple elements, then use these rules:
  * 0 - Lowest; 1 - Add; 2 - Multiply; 3 - Highest; 4 - Average
  * @default 2
@@ -182,6 +194,9 @@ Yanfly.Ele = Yanfly.Ele || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Added <Element x Magnify: +y%>, <Element x Magnify: -y%> notetags. These

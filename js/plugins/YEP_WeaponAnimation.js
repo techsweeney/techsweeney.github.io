@@ -8,11 +8,11 @@ Imported.YEP_WeaponAnimation = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.WA = Yanfly.WA || {};
-Yanfly.WA.version = 1.04;
+Yanfly.WA.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 This plugin allows you to go past the standard
+ * @plugindesc v1.05 This plugin allows you to go past the standard
  * weapon images and even using custom images.
  * @author Yanfly Engine Plugins
  *
@@ -21,11 +21,33 @@ Yanfly.WA.version = 1.04;
  * @default img/weapons/
  *
  * @param Image Smoothing
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable image smoothing for weapons?
  * NO - false     YES - true
  * @default false
  *
  * @param Default Motion
+ * @type combo
+ * @option swing
+ * @option thrust
+ * @option missile
+ * @option walk
+ * @option wait
+ * @option chant
+ * @option guard
+ * @option damage
+ * @option evade
+ * @option skill
+ * @option spell
+ * @option item
+ * @option escape
+ * @option victory
+ * @option dying
+ * @option abnormal
+ * @option sleep
+ * @option dead
  * @desc Default motion used for custom weapon images.
  * @default swing
  *
@@ -134,6 +156,9 @@ Yanfly.WA.version = 1.04;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Added a new system which loads numeric weapon sheets from the 'system'

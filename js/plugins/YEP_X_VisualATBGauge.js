@@ -8,37 +8,54 @@ Imported.YEP_X_VisualATBGauge = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.VATB = Yanfly.VATB || {};
+Yanfly.VATB.version = 1.04
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_BattleSysATB.js) Provides a visible ATB
+ * @plugindesc v1.04 (Requires YEP_BattleSysATB.js) Provides a visible ATB
  * gauge for your enemies!
  * @author Yanfly Engine Plugins
  *
  * @param Show Gauges
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show individual gauges?
  * NO - false     YES - true
  * @default true
  *
  * @param Minimum Gauge Width
+ * @type number
+ * @min 1
  * @desc This is the minimum width in pixels for ATB Gauges.
  * @default 144
  *
  * @param Always Show
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Always show ATB Gauge or hide them during actions?
  * HIDE - false     SHOW - true
  * @default true
  *
  * @param Gauge Position
+ * @type boolean
+ * @on Above
+ * @off Below
  * @desc Where do you wish to show the ATB gauge?
  * BELOW - false     ABOVE - true
  * @default false
  *
  * @param Y Buffer
+ * @type number
+ * @min 0
  * @desc How much do you wish to shift the gauge Y position?
  * @default -32
  *
  * @param Use Thick Gauges
+ * @type boolean
+ * @on Thick
+ * @off Normal
  * @desc Use the thick gauges provided by this plugin?
  * Default - false     Thick - true
  * @default true
@@ -75,6 +92,9 @@ Yanfly.VATB = Yanfly.VATB || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Updated for RPG Maker MV version 1.1.0.

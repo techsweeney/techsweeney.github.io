@@ -8,11 +8,11 @@ Imported.YEP_X_EquipRequirements = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EqReq = Yanfly.EqReq || {};
-Yanfly.EqReq.version = 1.06;
+Yanfly.EqReq.version = 1.08;
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 (Requires YEP_EquipCore.js) Place requirements on
+ * @plugindesc v1.08 (Requires YEP_EquipCore.js) Place requirements on
  * pieces of equipment before actors can use them!
  * @author Yanfly Engine Plugins
  *
@@ -20,11 +20,19 @@ Yanfly.EqReq.version = 1.06;
  * @default
  *
  * @param Requirement Window
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Add the requirement window for the Equip menu?
  * NO - false     YES - true
  * @default true
  *
  * @param Battle Test Ignore
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Ignore equip requirements during battle test?
  * NO - false     YES - true
  * @default true
@@ -33,60 +41,102 @@ Yanfly.EqReq.version = 1.06;
  * @default
  *
  * @param Requirement Title
+ * @parent ---Window---
  * @desc The title used for equipment requirements.
  * @default Requirements
  *
  * @param No Requirement
+ * @parent ---Window---
  * @desc The text used to display no requirements needed.
  * @default No Requirements!
  *
  * @param Positive Color
+ * @parent ---Window---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color used for positive color.
  * @default 24
  *
  * @param Negative Color
+ * @parent ---Window---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color used for positive color.
  * @default 25
  *
  * @param At Least Text
+ * @parent ---Window---
  * @desc The text used to describe >= a parameter.
  * %1 - Parameter   %2 - Requirement   %3 - Compare
  * @default \c[16]Minimum %1:\c[0] %2 (%3)
  *
  * @param At Most Text
+ * @parent ---Window---
  * @desc The text used to describe >= a parameter.
  * %1 - Parameter   %2 - Requirement   %3 - Compare
  * @default \c[16]Maximum %1:\c[0] %2 (%3)
  *
  * @param Draw Classes
+ * @parent ---Window---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Draw the classes required?
  * NO - false     YES - true
  * @default true
  *
  * @param Class Style
+ * @parent ---Window---
+ * @type select
+ * @option Name Only
+ * @value 0
+ * @option Icon Only
+ * @value 1
+ * @option Icon and Name
+ * @value 2
  * @desc If classes are drawn, what style to draw them in?
  * 0 - Name Only     1 - Icon Only     2 - Icon and Name
  * @default 0
  *
  * @param Class Text
+ * @parent ---Window---
  * @desc Text displayed to say what class is allowed.
  * @default Class:
  *
  * @param Draw Skills
+ * @parent ---Window---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Draw the skills required?
  * NO - false     YES - true
  * @default true
  *
  * @param Skill Style
+ * @parent ---Window---
+ * @type select
+ * @option Name Only
+ * @value 0
+ * @option Icon Only
+ * @value 1
+ * @option Icon and Name
+ * @value 2
  * @desc If skills are drawn, what style to draw them in?
  * 0 - Name Only     1 - Icon Only     2 - Icon and Name
  * @default 2
  *
  * @param Skill Text
+ * @parent ---Window---
  * @desc Text displayed to say what skills are needed.
  * @default Skill:
  *
  * @param Draw Switches
+ * @parent ---Window---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Draw the switch names required?
  * NO - false     YES - true
  * @default true
@@ -207,6 +257,12 @@ Yanfly.EqReq.version = 1.06;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.08:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.07:
+ * - Fixed a bug that caused unique equipment to not work properly.
  *
  * Version 1.06:
  * - Lunatic Mode fail safes added.
@@ -514,7 +570,7 @@ Game_BattlerBase.prototype.meetEquipSwitchRequirements = function(item) {
 };
 
 Game_BattlerBase.prototype.meetEquipUniqueRequirements = function(item) {
-  if (this.equips().contains(item)) return true;
+  if (!this.equips().contains(item)) return true;
   var requirements = item.equipRequirements;
   if (!requirements['unique']) return true;
   var length = this.equips().length;

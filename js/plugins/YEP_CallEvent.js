@@ -8,10 +8,11 @@ Imported.YEP_CallEvent = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CallEvent = Yanfly.CallEvent || {};
+Yanfly.CallEvent.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 A lost utility command from RPG Maker 2000 and
+ * @plugindesc v1.01 A lost utility command from RPG Maker 2000 and
  * RPG Maker 2003 has been remade for RPG Maker MV!
  * @author Yanfly Engine Plugins
  *
@@ -61,6 +62,16 @@ Yanfly.CallEvent = Yanfly.CallEvent || {};
  * *Note2: If any of the events, pages, and/or maps do not exist, then no
  * events will be called and the plugin will skip forward as if nothing has
  * happened. Be cautious about how you call these call events.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

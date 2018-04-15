@@ -8,11 +8,11 @@ Imported.YEP_X_AttachAugments = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Augment = Yanfly.Augment || {};
-Yanfly.Augment.version = 1.09;
+Yanfly.Augment.version = 1.10;
 
 //=============================================================================
  /*:
- * @plugindesc v1.09 (Requires YEP_ItemCore.js) Players can attach and
+ * @plugindesc v1.10 (Requires YEP_ItemCore.js) Players can attach and
  * detach augments to independent equipment.
  * @author Yanfly Engine Plugins
  *
@@ -20,21 +20,31 @@ Yanfly.Augment.version = 1.09;
  * @default
  *
  * @param Weapon Slots
+ * @parent ---Default---
  * @desc The default augment slots your weapon uses.
  * Separate each slot with a comma.
  * @default Glyph, Mark, Orb, Orb
  *
  * @param Armor Slots
+ * @parent ---Default---
  * @desc The default augment slots your weapon uses.
  * Separate each slot with a comma.
  * @default Sphere, Orb, Orb, Orb
  *
  * @param Enable Augments
+ * @parent ---Default---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable augments by default at game start in action window?
  * NO - false     YES - true
  * @default true
  *
  * @param Show Augments
+ * @parent ---Default---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show augments by default at game start in info window?
  * NO - false     YES - true
  * @default true
@@ -43,15 +53,18 @@ Yanfly.Augment.version = 1.09;
  * @default
  *
  * @param Augment Slot Format
+ * @parent ---Command Window---
  * @desc This is how the augment slots will appear:
  * %1 - Slot Name     %2 - Equipment Name
  * @default \c[16]%1:\c[0] %2
  *
  * @param No Augment Text
+ * @parent ---Command Window---
  * @desc This is how a slot appears if it has no augments.
  * @default \c[7]- None -
  *
  * @param Remove Augment
+ * @parent ---Command Window---
  * @desc Text used to remove augments from item.
  * @default \i[16]Detach Augment
  *
@@ -59,15 +72,25 @@ Yanfly.Augment.version = 1.09;
  * @default
  *
  * @param Show Augment Info
+ * @parent ---Info Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show Augments in the info window?
  * NO - false     YES - true
  * @default true
  *
  * @param Info Title
+ * @parent ---Info Window---
  * @desc Text used to display augments.
  * @default Augments
  *
  * @param Title Alignment
+ * @parent ---Info Window---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc What alignment do you want to use for the title?
  * left     center     right
  * @default center
@@ -409,6 +432,9 @@ Yanfly.Augment.version = 1.09;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.10:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.09:
  * - Lunatic Mode fail safes added.

@@ -8,10 +8,11 @@ Imported.YEP_X_TickBasedRegen = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.TBR = Yanfly.TBR || {};
+Yanfly.TBR.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Req YEP_BattleEngineCore & YEP_BuffsStatesCore)
+ * @plugindesc v1.04 (Req YEP_BattleEngineCore & YEP_BuffsStatesCore)
  * Tick-Based Battle system regeneration.
  * @author Yanfly Engine Plugins
  *
@@ -57,6 +58,9 @@ Yanfly.TBR = Yanfly.TBR || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Added anti-crash method for actors that are joining mid-party.

@@ -8,10 +8,11 @@ Imported.YEP_X_NewGamePlus = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.NGP = Yanfly.NGP || {};
+Yanfly.NGP.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_SaveCore.js) Allow your players to have
+ * @plugindesc v1.02 (Requires YEP_SaveCore.js) Allow your players to have
  * a New Game+ mode that allows carrying over save data.
  * @author Yanfly Engine Plugins
  *
@@ -19,100 +20,160 @@ Yanfly.NGP = Yanfly.NGP || {};
  * @default
  *
  * @param Command Text
+ * @parent ---General---
  * @desc The command text that appears on the save menu for
  * the New Game+ option.
  * @default New Game+
  *
  * @param Command Help
+ * @parent ---General---
  * @desc The help text that appears on the save menu for
  * the New Game+ option.
  * @default Start a new game carrying over data from this saved game.
  *
- * @param --New Game+ Data--
+ * @param ---New Game+ Data---
  * @default
  *
  * @param Carried Switches
+ * @parent ---New Game+ Data---
  * @desc This is a list of the switch data that's carried over.
  * Separate each switch ID with a comma.
  * @default 0
  *
  * @param Carried Variables
+ * @parent ---New Game+ Data---
  * @desc This is a list of the switch data that's carried over.
  * Separate each switch ID with a comma.
  * @default 0
  *
  * @param Playtime
+ * @parent ---New Game+ Data---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the playtime for the New Game+?
  * NO - false     YES - true
  * @default true
  *
  * @param Save Count
+ * @parent ---New Game+ Data---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the save count for the New Game+?
  * NO - false     YES - true
  * @default true
  *
  * @param Step Count
+ * @parent ---New Game+ Data---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the step count for the New Game+?
  * NO - false     YES - true
  * @default true
  *
  * @param Battle Count
+ * @parent ---New Game+ Data---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the battle count for the New Game+?
  * NO - false     YES - true
  * @default true
  *
  * @param Victory Count
+ * @parent ---New Game+ Data---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the victory count for the New Game+?
  * NO - false     YES - true
  * @default true
  *
  * @param Escape Count
+ * @parent ---New Game+ Data---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the escape count for the New Game+?
  * NO - false     YES - true
  * @default true
  *
- * @param --New Game+ Actors--
+ * @param ---New Game+ Actors---
  * @default
  *
  * @param Copy Actor
+ * @parent ---New Game+ Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over all of the actor's settings?
  * NO - false   YES - true
  * @default true
  *
  * @param EXP
+ * @parent ---New Game+ Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over each actor's exp?
  * NO - false     YES - true
  * @default true
  *
  * @param JP
+ * @parent ---New Game+ Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Requires YEP_JobPoints.js: Carry over each actor's JP?
  * NO - false     YES - true
  * @default true
  *
  * @param Skills
+ * @parent ---New Game+ Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over each actor's skills?
  * NO - false     YES - true
  * @default true
  *
- * @param --New Game+ Party--
+ * @param ---New Game+ Party---
  * @default
  *
  * @param Gold
+ * @parent ---New Game+ Party---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the party's gold?
  * NO - false     YES - true
  * @default true
  *
  * @param Items
+ * @parent ---New Game+ Party---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the party's items?
  * NO - false     YES - true
  * @default true
  *
  * @param Weapons
+ * @parent ---New Game+ Party---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the party's weapons?
  * NO - false     YES - true
  * @default true
  *
  * @param Armors
+ * @parent ---New Game+ Party---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over the party's armors?
  * NO - false     YES - true
  * @default true
@@ -160,6 +221,19 @@ Yanfly.NGP = Yanfly.NGP || {};
  *   DisableNewGamePlus
  *   - This will disable the New Game+ option for saves made after this plugin
  *   command has run. The "Load" option will appear instead of "New Game+".
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.01:
+ * - Bug fixed where the DisableNewGamePlus plugin command didn't work.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -456,7 +530,7 @@ Game_System.prototype.isNewGamePlusEnabled = function() {
 
 Game_System.prototype.setNewGamePlusEnabled = function(value) {
   if (this._newGamePlusEnabled === undefined) this.initNewGamePlusSettings();
-  this._newGamePlusEnabled = true;
+  this._newGamePlusEnabled = value;
 };
 
 Game_System.prototype.getNewGamePlusLoops = function() {
@@ -476,7 +550,7 @@ Game_System.prototype.isNewGamePlusLoaded = function() {
 
 Game_System.prototype.setNewGamePlusLoaded = function(value) {
   if (this._newGamePlusLoaded === undefined) this.initNewGamePlusSettings();
-  this._newGamePlusLoaded = true;
+  this._newGamePlusLoaded = value;
 };
 
 //=============================================================================

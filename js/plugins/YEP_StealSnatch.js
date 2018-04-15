@@ -8,11 +8,11 @@ Imported.YEP_StealSnatch = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Steal = Yanfly.Steal || {};
-Yanfly.Steal.version = 1.08;
+Yanfly.Steal.version = 1.09;
 
 //=============================================================================
  /*:
- * @plugindesc v1.08 Allows your actors to be able to steal and snatch
+ * @plugindesc v1.09 Allows your actors to be able to steal and snatch
  * items from enemies.
  * @author Yanfly Engine Plugins
  *
@@ -20,6 +20,7 @@ Yanfly.Steal.version = 1.08;
  * @default
  *
  * @param Bonus Formula
+ * @parent ---General---
  * @desc The custom formula used to determine stealing bonus rates.
  * @default (user.luk / (512 + user.luk)) / 3
  *
@@ -27,36 +28,64 @@ Yanfly.Steal.version = 1.08;
  * @default
  *
  * @param Gold Drop
+ * @parent ---Auto Setup---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Automatically include enemy gold drop into stealable items?
  * NO - false     YES - true
  * @default true
  *
  * @param Gold Rate
+ * @parent ---Auto Setup---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc If automatically include gold drop, what is the steal rate?
  * 0.00 - 0%     1.00 - 100%
  * @default 0.50
  *
  * @param Gold Removal
+ * @parent ---Auto Setup---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If using automatic gold, remove the rewards from the
  * enemy gold when defeated? NO - false   YES - true
  * @default true
  *
  * @param Drop Items
+ * @parent ---Auto Setup---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Automatically include drop items into stealable items?
  * NO - false     YES - true
  * @default true
  *
  * @param Drop Rates
+ * @parent ---Auto Setup---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc If drop items are included, adjust the rate by this much.
  * 0.00 - 0%     1.00 - 100%
  * @default 0.80
  *
  * @param Drop Removal
+ * @parent ---Auto Setup---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If using automatic drops, remove the rewards from the
  * enemy drops when defeated? NO - false   YES - true
  * @default true
  *
  * @param Automatic Debuff
+ * @parent ---Auto Setup---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If a weapon or armor gets stolen, automatically debuff the
  * enemy by the equipment's stats? NO - false   YES - true
  * @default true
@@ -65,31 +94,42 @@ Yanfly.Steal.version = 1.08;
  * @default
  *
  * @param Center Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If you're using Battle Engine Core, center text?
  * NO - false     YES - true
  * @default true
  *
  * @param Fail Text
+ * @parent ---Battle Log---
  * @desc Text shown if failed to steal an item.
  * %1 - Actor     %2 - Target
  * @default %1 couldn't steal from %2.
  *
  * @param Success Text
+ * @parent ---Battle Log---
  * @desc Text shown if successfully stole an item.
  * %1 - Actor   %2 - Target   %3 - Item   %4 - Icon
  * @default %1 steals %4%3 from %2!
  *
  * @param Steal Empty
+ * @parent ---Battle Log---
  * @desc Text shown if target has nothing left to steal.
  * %1 - Target
  * @default %1 has nothing left to steal.
  *
  * @param Gold Format
+ * @parent ---Battle Log---
  * @desc How the gold format will look when it's stolen.
  * %1 - Amount     %2 - Gold
  * @default %1 %2
  *
  * @param Steal Wait
+ * @parent ---Battle Log---
+ * @type number
+ * @min 0
  * @desc If using the Battle Engine Core, this is how many frames
  * the message will wait.
  * @default 60
@@ -98,20 +138,28 @@ Yanfly.Steal.version = 1.08;
  * @default
  *
  * @param Gold Help Text
+ * @parent ---Snatch Window---
  * @desc Text used for gold in the Help Window.
  * %1 - Amount     %2 - Gold
  * @default There's %1 %2 for you to steal!
  *
  * @param Success Font Size
+ * @parent ---Snatch Window---
+ * @type number
+ * @min 1
  * @desc Font size used for the success rate.
  * Default: 28
  * @default 20
  *
  * @param Decimal Places
+ * @parent ---Snatch Window---
+ * @type number
+ * @min 0
  * @desc The amount of decimal places to display for rate.
  * @default 0
  *
  * @param Already Stolen
+ * @parent ---Snatch Window---
  * @desc Text used for already stolen items.
  * @default Stolen
  *
@@ -119,104 +167,146 @@ Yanfly.Steal.version = 1.08;
  * @default
  *
  * @param Failure Sound
+ * @parent ---Sound Effects---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Sound effect played when failed to steal.
  * If you don't want to play a sound effect, leave this empty.
  * @default Buzzer2
  *
  * @param Failure Volume
+ * @parent ---Sound Effects---
  * @desc Volume for this sound effect.
  * @default 80
  *
  * @param Failure Pitch
+ * @parent ---Sound Effects---
  * @desc Pitch for this sound effect.
  * @default 120
  * 
  * @param Failure Pan
+ * @parent ---Sound Effects---
  * @desc Pan for this sound effect.
  * @default 0
  *
  * @param Empty Sound
+ * @parent ---Sound Effects---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Sound effect played when there is nothing to steal.
  * If you don't want to play a sound effect, leave this empty.
  * @default Evasion1
  *
  * @param Empty Volume
+ * @parent ---Sound Effects---
  * @desc Volume for this sound effect.
  * @default 80
  *
  * @param Empty Pitch
+ * @parent ---Sound Effects---
  * @desc Pitch for this sound effect.
  * @default 120
  * 
  * @param Empty Pan
+ * @parent ---Sound Effects---
  * @desc Pan for this sound effect.
  * @default 0
  *
  * @param Item Sound
+ * @parent ---Sound Effects---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Sound effect played when stolen an item.
  * If you don't want to play a sound effect, leave this empty.
  * @default Item1
  *
  * @param Item Volume
+ * @parent ---Sound Effects---
  * @desc Volume for this sound effect.
  * @default 80
  *
  * @param Item Pitch
+ * @parent ---Sound Effects---
  * @desc Pitch for this sound effect.
  * @default 120
  * 
  * @param Item Pan
+ * @parent ---Sound Effects---
  * @desc Pan for this sound effect.
  * @default 0
  *
  * @param Weapon Sound
+ * @parent ---Sound Effects---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Sound effect played when stolen a weapon.
  * If you don't want to play a sound effect, leave this empty.
  * @default Equip1
  *
  * @param Weapon Volume
+ * @parent ---Sound Effects---
  * @desc Volume for this sound effect.
  * @default 80
  *
  * @param Weapon Pitch
+ * @parent ---Sound Effects---
  * @desc Pitch for this sound effect.
  * @default 120
  * 
  * @param Weapon Pan
+ * @parent ---Sound Effects---
  * @desc Pan for this sound effect.
  * @default 0
  *
  * @param Armor Sound
+ * @parent ---Sound Effects---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Sound effect played when stolen an armor.
  * If you don't want to play a sound effect, leave this empty.
  * @default Equip2
  *
  * @param Armor Volume
+ * @parent ---Sound Effects---
  * @desc Volume for this sound effect.
  * @default 80
  *
  * @param Armor Pitch
+ * @parent ---Sound Effects---
  * @desc Pitch for this sound effect.
  * @default 150
  * 
  * @param Armor Pan
+ * @parent ---Sound Effects---
  * @desc Pan for this sound effect.
  * @default 0
  *
  * @param Gold Sound
+ * @parent ---Sound Effects---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Sound effect played when stolen gold.
  * If you don't want to play a sound effect, leave this empty.
  * @default Shop2
  *
  * @param Gold Volume
+ * @parent ---Sound Effects---
  * @desc Volume for this sound effect.
  * @default 80
  *
  * @param Gold Pitch
+ * @parent ---Sound Effects---
  * @desc Pitch for this sound effect.
  * @default 120
  * 
  * @param Gold Pan
+ * @parent ---Sound Effects---
  * @desc Pan for this sound effect.
  * @default 0
  *
@@ -432,6 +522,9 @@ Yanfly.Steal.version = 1.08;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.09:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.08:
  * - Lunatic Mode fail safes added.

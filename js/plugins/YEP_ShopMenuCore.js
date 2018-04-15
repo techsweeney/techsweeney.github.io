@@ -8,10 +8,11 @@ Imported.YEP_ShopMenuCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Shop = Yanfly.Shop || {};
+Yanfly.Shop.version = 1.05
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 Revamps the shop menu appearance and provides the
+ * @plugindesc v1.05 Revamps the shop menu appearance and provides the
  * framework for many new shop options.
  * @author Yanfly Engine Plugins
  *
@@ -19,16 +20,23 @@ Yanfly.Shop = Yanfly.Shop || {};
  * @default
  *
  * @param Command Order
+ * @parent ---General---
  * @desc This is the order in which the command menu will appear. Use
  * a space to separate the individual commands.
  * @default Buy Sell Equip Custom Cancel
  *
  * @param Shop List Width
+ * @parent ---General---
  * @desc This allows you to adjust the formula to determine the window width
  * for the main shop list windows.
  * @default Graphics.boxWidth / 2 + Graphics.boxWidth / 10
  *
  * @param Command Alignment
+ * @parent ---General---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Text alignment used for the command windows.
  * left     center     right
  * @default center
@@ -37,25 +45,38 @@ Yanfly.Shop = Yanfly.Shop || {};
  * @default
  *
  * @param Default Mode
+ * @parent ---Status Window---
+ * @type combo
+ * @option default
+ * @option actor
  * @desc Display a comparison for all actors per stat or per actor?
  * default - All Actors     actor - Individual Actors
  * @default actor
  *
  * @param Stat Switching
+ * @parent ---Status Window---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable stat comparison switching by pressing left/right?
  * NO - false     YES - true
  * @default true
  *
  * @param Cannot Equip
+ * @parent ---Status Window---
  * @desc If an actor cannot equip an item, this text is shown.
  * @default Can't Equip
  *
  * @param Stat Font Size
+ * @parent ---Status Window---
  * @desc The font size used for stat comparisons.
  * Default: 28
  * @default 20
  *
  * @param Cannot Equip Font Size
+ * @parent ---Status Window---
+ * @type number
+ * @min 1
  * @desc The font size used for cannot equip text.
  * Default: 28
  * @default 20
@@ -64,41 +85,59 @@ Yanfly.Shop = Yanfly.Shop || {};
  * @default
  *
  * @param Show Icon
+ * @parent ---Info Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the icon in the info window?
  * NO - false     YES - true
  * @default true
  *
  * @param Icon Size
+ * @parent ---Info Window---
+ * @type number
+ * @min 0
  * @desc This will be the width and height of the icon to be drawn.
  * This is normally 4x the default Icon Width and Icon Height.
  * @default 128
  *
  * @param Font Size
+ * @parent ---Info Window---
+ * @type number
+ * @min 1
  * @desc This changes the font size for description items.
  * Default: 28
  * @default 20
  *
  * @param Recovery Format
+ * @parent ---Info Window---
  * @desc This is the text format for HP/MP Recovery.
  * @default %1 Heal
  *
  * @param Add State
+ * @parent ---Info Window---
  * @desc This is the text for adding states.
  * @default +State
  *
  * @param Add Buff
+ * @parent ---Info Window---
  * @desc This is the text for adding buffs.
  * @default +Buff
  *
  * @param Remove State
+ * @parent ---Info Window---
  * @desc This is the text for remove states.
  * @default -State
  *
  * @param Remove Buff
+ * @parent ---Info Window---
  * @desc This is the text for remove buffs.
  * @default -Buff
  *
  * @param Maximum Icons
+ * @parent ---Info Window---
+ * @type number
+ * @min 0
  * @desc Maximum number of icons drawn for states and buffs.
  * @default 4
  *
@@ -166,6 +205,12 @@ Yanfly.Shop = Yanfly.Shop || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.04:
+ * - Compatibility Update with YEP_X_ItemPictureImg.js
  *
  * Version 1.03:
  * - Updated for RPG Maker MV version 1.1.0.
@@ -400,6 +445,58 @@ Window_ShopInfo.prototype.drawItemEntry = function() {
 Window_ShopInfo.prototype.drawItemIcon = function() {
     this.drawLargeIcon();
 };
+
+if (Imported.YEP_X_ItemPictureImg) {
+
+Yanfly.IPI.Window_ShopInfo_drawItemIcon =
+  Window_ShopInfo.prototype.drawItemIcon;
+Window_ShopInfo.prototype.drawItemIcon = function() {
+  if (this.itemHasPictureImage()) {
+    this.readyItemPictureImage(this._item);
+  } else {
+    Yanfly.IPI.Window_ShopInfo_drawItemIcon.call(this);
+  }
+};
+
+Window_ShopInfo.prototype.itemHasPictureImage = function() {
+  if (!this._item) return false;
+  var filename = ItemManager.getItemPictureImageFilename(this._item);
+  return filename !== '';
+};
+
+Window_ShopInfo.prototype.readyItemPictureImage = function(item) {
+  if (item !== this._item) return;
+  var bitmap = ItemManager.getItemPictureImage(item);
+  if (bitmap.width <= 0) {
+    return setTimeout(this.readyItemPictureImage.bind(this, item), 250);
+  } else {
+    this.drawItemPictureImage(bitmap);
+  }
+};
+
+Window_ShopInfo.prototype.drawItemPictureImage = function(bitmap) {
+  var pw = bitmap.width;
+  var ph = bitmap.height;
+  var sx = 0;
+  var sy = 0;
+  var dw = pw;
+  var dh = ph;
+  if (dw > Yanfly.Param.ItemImageMaxWidth) {
+    var rate = Yanfly.Param.ItemImageMaxWidth / dw;
+    dw = Math.floor(dw * rate);
+    dh = Math.floor(dh * rate);
+  }
+  if (dh > Yanfly.Param.ItemImageMaxHeight) {
+    var rate = Yanfly.Param.ItemImageMaxHeight / dh;
+    dw = Math.floor(dw * rate);
+    dh = Math.floor(dh * rate);
+  }
+  var dx = (Window_Base._faceWidth - dw) / 2;
+  var dy = (Window_Base._faceHeight - dh) / 2;
+  this.contents.blt(bitmap, sx, sy, pw, ph, dx, dy, dw, dh);
+};
+
+}; // Imported.YEP_X_ItemPictureImg
 
 Window_ShopInfo.prototype.drawLargeIcon = function() {
     var iconIndex = this._item.iconIndex;

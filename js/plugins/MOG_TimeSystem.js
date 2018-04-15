@@ -3,7 +3,7 @@
 //=============================================================================
 
 /*:
- * @plugindesc (v1.3) Sistema dinámico de tempo. 
+ * @plugindesc (v1.5) Sistema dinámico de tempo. 
  * @author Moghunter
  *
  * @param >> MAIN ===================
@@ -263,7 +263,7 @@
  *
  * @help  
  * =============================================================================
- * +++ MOG Time System (v1.3) +++
+ * +++ MOG Time System (v1.5) +++
  * By Moghunter 
  * https://atelierrgss.wordpress.com/
  * =============================================================================
@@ -344,6 +344,9 @@
  * =============================================================================
  * HISTÓRICO
  * =============================================================================
+ * v1.5 - Correção dos script commands ao resetar os parâmetros após ultrapassar
+ *        o valor máximo da variável de tempo. 
+ * v1.4 - Correção de ativar a tonalidade da tela através do plugin command.  
  * v1.3 - Correção do parâmetros iniciais e setup do Plugin. 
  * v1.2 - Correção do efeito blinking da janela durante os dialogos.
  *      - Adição de comandos de Plugin de ativar ou desativar o sistema de tempo. 
@@ -707,8 +710,11 @@ Game_System.prototype.set_base_time_phase = function() {
 //==============================
 Game_System.prototype.time_system_clear = function() {
 	this.set_base_time_phase();
-    $gameScreen._tone = this.set_tint_phase()
-	$gameScreen.startTint(this.set_tint_phase(),1)
+    var preTone = $gameScreen._tone
+	if (this.allow_tint_screen()) {
+		$gameScreen._tone = this.set_tint_phase();
+		$gameScreen.startTint(this.set_tint_phase(),1);
+	};
 	this._refresh_window_time = true;
 };
 
@@ -809,6 +815,7 @@ Game_System.prototype.set_season = function(value) {
 // * Add Minute
 //==============================
 Game_System.prototype.add_minute = function(value) {
+   if (value <= 0) {return};
    $gameVariables._data[this._min_variableId] += value;
    if ($gameVariables._data[this._min_variableId]  >= this.max_time(this._min_variableId)) {this.refresh_time(1,this._minute_variableId)};
    this.check_max_time(this._min_variableId);   
@@ -819,6 +826,7 @@ Game_System.prototype.add_minute = function(value) {
 // * Add Hour
 //==============================
 Game_System.prototype.add_hour = function(value) {
+   if (value <= 0) {return};
    $gameVariables._data[this._hour_variableId] += value;
    if ($gameVariables._data[this._hour_variableId]  >= this.max_time(this._hour_variableId)) {this.refresh_time(1,this._hour_variableId)};
    this.check_max_time(this._hour_variableId);   
@@ -829,6 +837,7 @@ Game_System.prototype.add_hour = function(value) {
 // * Add Day
 //==============================
 Game_System.prototype.add_day = function(value) {
+   if (value <= 0) {return};
    $gameVariables._data[this._day_variableId] += value;
    if ($gameVariables._data[this._day_variableId]  >= this.max_time(this._day_variableId)) {this.refresh_time(1,this._day_variableId);};
    this.check_max_time(this._day_variableId);   
@@ -839,12 +848,12 @@ Game_System.prototype.add_day = function(value) {
 // * Add Month
 //==============================
 Game_System.prototype.add_month = function(value) {
-   $gameVariables._data[this._month_variableId] += value;
-   this._season_interval[0] += value - 1;
-   this.set_season_par()
-   if ($gameVariables._data[this._month_variableId]  >= this.max_time(this._month_variableId)) {this.refresh_time(1,this._month_variableId)};
-   this.check_max_time(this._month_variableId);   
-   this.time_system_clear();
+	if (value <= 0) {return};
+    $gameVariables._data[this._month_variableId] += value;
+    for (var i = 0; i < value; i++) {this.set_season_par()}
+    if ($gameVariables._data[this._month_variableId]  >= this.max_time(this._month_variableId)) {this.refresh_time(1,this._month_variableId)};
+    this.check_max_time(this._month_variableId);   
+    this.time_system_clear();
 };
 
 //==============================
@@ -951,7 +960,7 @@ Game_System.prototype.refresh_season = function() {
 };	
 
 //==============================
-// * Set Day Week
+// * Total Days
 //==============================
 Game_System.prototype.total_days = function() {
 	var months = ($gameVariables._data[this._month_variableId] * this.max_time(this._day_variableId));
@@ -1051,7 +1060,7 @@ Game_System.prototype.day_phase_transition_speed = function() {
 };
 
 //==============================
-// * Time Flow
+// * Update Seconds
 //==============================
 Game_System.prototype.update_seconds = function() {
 	$gameVariables._data[this._sec_variableId] += this.time_speed();
@@ -1096,8 +1105,18 @@ Game_System.prototype.refresh_time = function(value,parameter) {
 // * Check Max Time
 //==============================
 Game_System.prototype.check_max_time = function(parameter) {
-	if ($gameVariables._data[parameter] >= this.max_time(parameter) || $gameVariables._data[parameter] < 0) {$gameVariables._data[parameter] = 0;
-	    if (parameter == this._day_variableId) {$gameVariables._data[parameter] = 1};
+	if ($gameVariables._data[parameter] >= this.max_time(parameter) || $gameVariables._data[parameter] < 0) {
+		if (this._hour_variableId === parameter || this._month_variableId === parameter) {
+			var dif = $gameVariables._data[parameter] - this.max_time(parameter)
+		    $gameVariables._data[parameter] = dif - 1;
+		} else if (this._day_variableId === parameter) {
+			var dif = $gameVariables._data[parameter] - this.max_time(parameter)
+		    $gameVariables._data[parameter] = dif;
+			if ($gameVariables._data[parameter] <= 0) {$gameVariables._data[parameter] = 1};
+		} else {
+	    	$gameVariables._data[parameter] = 0;
+		};
+        if ($gameVariables._data[parameter]  < 0) {$gameVariables._data[parameter] = 0};
 		this.set_day_phase();
 		this._refresh_window_time = true;
 	};
@@ -1149,7 +1168,7 @@ Game_System.prototype.day_phase_effect = function() {
 };
 
 //==============================
-// * Day Phase Effect
+// * Set Tint Phase
 //==============================
 Game_System.prototype.set_tint_phase = function() {
 	if (this._day_phase_tone[this.day_phase()]) {
@@ -1163,7 +1182,7 @@ Game_System.prototype.set_tint_phase = function() {
 };
 
 //==============================
-// * Day Phase Effect
+// * Set Switch Phase
 //==============================
 Game_System.prototype.set_switch_phase = function() {
 	for (var i = 0; i < this._day_phase_switches.length; i++) {$gameSwitches._data[Number(this._day_phase_switches[i])] = false;};	

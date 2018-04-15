@@ -8,10 +8,11 @@ Imported.YEP_LoadCustomFonts = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.LCF = Yanfly.LCF || {};
+Yanfly.LCF.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Load custom fonts from the /fonts/ folder. This will
+ * @plugindesc v1.01 Load custom fonts from the /fonts/ folder. This will
  * allow you to use custom fonts without installing them.
  * @author Yanfly Engine Plugins
  *
@@ -49,6 +50,16 @@ Yanfly.LCF = Yanfly.LCF || {};
  * font family and 'ds-pixel-cyr.ttf' will use 'DS Pixel Cyr'. For the plugins
  * that use font names such as YEP's Message Core, you will be using the Font
  * Family name instead of the filename.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

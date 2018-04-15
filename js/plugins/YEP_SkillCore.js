@@ -8,11 +8,11 @@ Imported.YEP_SkillCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Skill = Yanfly.Skill || {};
-Yanfly.Skill.version = 1.11;
+Yanfly.Skill.version = 1.12;
 
 //=============================================================================
 /*:
- * @plugindesc v1.11 Skills are now given more functions and the ability
+ * @plugindesc v1.12 Skills are now given more functions and the ability
  * to require different types of costs.
  * @author Yanfly Engine Plugins
  *
@@ -20,16 +20,27 @@ Yanfly.Skill.version = 1.11;
  * @default
  *
  * @param Cost Padding
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc If a skill has multiple costs, this is the amount of pixels
  * used as padding in between the costs.
  * @default 4
  *
  * @param Command Alignment
+ * @parent ---General---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Adjusts the text alignment of the skill type window.
  * left     center     right
  * @default center
  *
  * @param Window Columns
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc Choose how many columns to use for the skill window.
  * Default: 2
  * @default 2
@@ -38,21 +49,32 @@ Yanfly.Skill.version = 1.11;
  * @default
  *
  * @param HP Format
+ * @parent ---HP Costs---
  * @desc Adjusts the way HP cost appears in the skill list window.
  * %1 - Cost     %2 - HP
  * @default %1%2
  *
  * @param HP Font Size
+ * @parent ---HP Costs---
+ * @type number
+ * @min 1
  * @desc Adjusts the font size used to display HP.
  * Default: 28
  * @default 20
  *
  * @param HP Text Color
+ * @parent ---HP Costs---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Adjusts the text color used from the Window skin for HP.
  * Default: 21
  * @default 18
  *
  * @param HP Icon
+ * @parent ---HP Costs---
+ * @type number
+ * @min 0
  * @desc Choose what icon to use to represent HP costs.
  * Use 0 if you wish to not use an icon.
  * @default 162
@@ -61,21 +83,32 @@ Yanfly.Skill.version = 1.11;
  * @default
  *
  * @param MP Format
+ * @parent ---MP Costs---
  * @desc Adjusts the way MP cost appears in the skill list window.
  * %1 - Cost     %2 - MP
  * @default %1%2
  *
  * @param MP Font Size
+ * @parent ---MP Costs---
+ * @type number
+ * @min 1
  * @desc Adjusts the font size used to display MP.
  * Default: 28
  * @default 20
  *
  * @param MP Text Color
+ * @parent ---MP Costs---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Adjusts the text color used from the Window skin for MP.
  * Default: 23
  * @default 23
  *
  * @param MP Icon
+ * @parent ---MP Costs---
+ * @type number
+ * @min 0
  * @desc Choose what icon to use to represent MP costs.
  * Use 0 if you wish to not use an icon.
  * @default 165
@@ -84,21 +117,32 @@ Yanfly.Skill.version = 1.11;
  * @default
  *
  * @param TP Format
+ * @parent ---TP Costs---
  * @desc Adjusts the way TP cost appears in the skill list window.
  * %1 - Cost     %2 - TP
  * @default %1%2
  *
  * @param TP Font Size
+ * @parent ---TP Costs---
+ * @type number
+ * @min 1
  * @desc Adjusts the font size used to display TP.
  * Default: 28
  * @default 20
  *
  * @param TP Text Color
+ * @parent ---TP Costs---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Adjusts the text color used from the Window skin for TP.
  * Default: 29
  * @default 29
  *
  * @param TP Icon
+ * @parent ---TP Costs---
+ * @type number
+ * @min 0
  * @desc Choose what icon to use to represent TP costs.
  * Use 0 if you wish to not use an icon.
  * @default 164
@@ -324,12 +368,12 @@ Yanfly.Skill.version = 1.11;
  *   <Post-Damage Eval>
  *    code
  *    code
- *   <Post-Damage Eval>
+ *   </Post-Damage Eval>
  *
  *   <After Eval>
  *    code
  *    code
- *   <After Eval>
+ *   </After Eval>
  *   If you wish to use custom effects for your skill, you can insert the
  *   respective notetags into the skill (or item) noteboxes and it will run the
  *   code that appears in between the tags. However, using any form of comments
@@ -344,8 +388,13 @@ Yanfly.Skill.version = 1.11;
  * Changelog
  * ============================================================================
  *
- * Version 1.11:
+ * Version 1.12:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.11a:
  * - Lunatic Mode fail safes added.
+ * - Documentation fix for the help file. Lunatic Mode tags didn't end right.
+ * The help file is now updated to show the correct notetags.
  *
  * Version 1.10b:
  * - Fixed a visual bug when using text code font changing for custom skill

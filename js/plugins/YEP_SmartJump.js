@@ -8,10 +8,11 @@ Imported.YEP_SmartJump = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Jump = Yanfly.Jump || {};
+Yanfly.Jump.version = 1.03
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 Adds a plugin command that enables smart jumping
+ * @plugindesc v1.03 Adds a plugin command that enables smart jumping
  * where the player cannot jump into illegal areas.
  * @author Yanfly Engine Plugins
  *
@@ -20,10 +21,22 @@ Yanfly.Jump = Yanfly.Jump || {};
  * or past. Separate each region with a space.
  * @default 0
  *
+ * @param Illegal Regions List
+ * @type number[]
+ * @desc These are the region ID's the player cannot jump on
+ * or past. Use with MV 1.5.0+
+ * @default []
+ *
  * @param Equal Regions
  * @desc These are region ID's the player can only jump onto if
  * the tile they're standing on matches the target region.
  * @default 0
+ *
+ * @param Equal Regions List
+ * @type number[]
+ * @desc These are region ID's the player can only jump onto if
+ * the tile they're standing matches the target. 1.5.0+
+ * @default []
  *
  * @help
  * ============================================================================
@@ -93,6 +106,11 @@ Yanfly.Jump = Yanfly.Jump || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added 'Illegal Regions List' and 'Equal Regions List' parameters for 1.5.0
+ * simplified usage.
+ *
  * Version 1.02:
  * - Fixed a bug that allowed you to perform a smart jump from above a tile
  * that requires equal regions.
@@ -123,11 +141,24 @@ Yanfly.createSmartJumpRegions = function() {
     for (var i = 0; i < length; ++i) {
       Yanfly.Param.JumpIllegalRegion[i] = parseInt(regions[i]);
     }
+
+    var data = JSON.parse(Yanfly.Parameters['Illegal Regions List'] || '[]');
+    var length = data.length;
+    for (var i = 0; i < length; ++i) {
+      Yanfly.Param.JumpIllegalRegion.push(parseInt(data[i]));
+    }
+
     var regions = Yanfly.Param.JumpEqualRegion.split(' ');
     var length = regions.length;
     Yanfly.Param.JumpEqualRegion = [];
     for (var i = 0; i < length; ++i) {
       Yanfly.Param.JumpEqualRegion[i] = parseInt(regions[i]);
+    }
+
+    var data = JSON.parse(Yanfly.Parameters['Equal Regions List'] || '[]');
+    var length = data.length;
+    for (var i = 0; i < length; ++i) {
+      Yanfly.Param.JumpEqualRegion.push(parseInt(data[i]));
     }
 };
 

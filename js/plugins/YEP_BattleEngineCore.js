@@ -8,11 +8,11 @@ Imported.YEP_BattleEngineCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BEC = Yanfly.BEC || {};
-Yanfly.BEC.version = 1.43;
+Yanfly.BEC.version = 1.45;
 
 //=============================================================================
  /*:
- * @plugindesc v1.43a Have more control over the flow of the battle system
+ * @plugindesc v1.45 Have more control over the flow of the battle system
  * with this plugin and alter various aspects to your liking.
  * @author Yanfly Engine Plugins
  *
@@ -20,11 +20,22 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Action Speed
+ * @parent ---General---
  * @desc This is the formula used for an action's base speed.
  * Default: agi + Math.randomInt(Math.floor(5 + agi / 4))
  * @default agi
  *
  * @param Default System
+ * @parent ---General---
+ * @type select
+ * @option Default Turn Battle
+ * @value dtb
+ * @option Active Turn Battle (plugin required)
+ * @value atb
+ * @option Charge Turn Battle (plugin required)
+ * @value ctb
+ * @option Standard Turn Battle (plugin required)
+ * @value stb
  * @desc This is the default battle system your game uses.
  * Default: dtb
  * @default dtb
@@ -33,53 +44,82 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Escape Ratio
+ * @parent ---Escape---
  * @desc This is the formula used to determine escape success.
  * Default: 0.5 * $gameParty.agility() / $gameTroop.agility()
  * @default 0.5 * $gameParty.agility() / $gameTroop.agility()
  *
  * @param Fail Escape Boost
+ * @parent ---Escape---
+ * @type number
+ * @decimals 2
  * @desc Each time the player fails escape, increase the success
- * rate by this much. Default: 0.1
- * @default 0.1
+ * rate by this much. Default: 0.10
+ * @default 0.10
  *
  * @param ---Animation---
  * @default
  *
  * @param Animation Base Delay
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc This sets the base delay in between animations.
  * Default: 8
  * @default 0
  *
  * @param Animation Next Delay
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc This sets the sequential delay in between animations.
  * Default: 12
  * @default 0
  *
  * @param Certain Hit Animation
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc Default animation to play for certain hit skills.
  * Use 0 if you wish for no animation.
- * @default 120
+ * @default 0
  *
  * @param Physical Animation
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc Default animation to play for physical skills.
  * Use 0 if you wish for no animation.
  * @default 52
  *
  * @param Magical Animation
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc Default animation to play for magical skills.
  * Use 0 if you wish for no animation.
  * @default 51
  *
  * @param Enemy Attack Animation
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc This is the default attack animation played by enemies.
  * Default: 0
  * @default 39
  *
  * @param Reflect Animation
+ * @parent ---Animation---
+ * @type number
+ * @min 0
  * @desc The animation used when magic attacks are reflected.
  * @default 42
  *
  * @param Motion Waiting
+ * @parent ---Animation---
+ * @type boolean
+ * @on After
+ * @off During
  * @desc Play animations after performing an action or during?
  * During - false     After - true     Default: false
  * @default false
@@ -88,21 +128,35 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Front Position X
+ * @parent ---Frontview---
  * @desc This formula determines the actor's home X position.
  * Default: 0
  * @default Graphics.boxWidth / 8 + Graphics.boxWidth / 4 * index
  *
  * @param Front Position Y
+ * @parent ---Frontview---
  * @desc This formula determines the actor's home Y position.
  * Default: 0
  * @default Graphics.boxHeight - 180
  *
  * @param Front Actor Sprite
+ * @parent ---Frontview---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the actor battle sprite in frontview?
  * NO - false     YES - true     Default - false
  * @default false
  *
  * @param Front Sprite Priority
+ * @parent ---Frontview---
+ * @type select
+ * @option Normal
+ * @value 0
+ * @option Actors on Top
+ * @value 1
+ * @option Enemies on Top
+ * @value 2
  * @desc Give actor sprites the priority of always being on top?
  * 0 - Normal   1 - Actors on Top   2 - Enemies on Top
  * @default 1
@@ -111,16 +165,26 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Home Position X
+ * @parent ---Sideview---
  * @desc This formula determines the actor's home X position.
  * Default: 600 + index * 32
  * @default screenWidth - 16 - (maxSize + 2) * 32 + index * 32
  *
  * @param Home Position Y
+ * @parent ---Sideview---
  * @desc This formula determines the actor's home Y position.
  * Default: 280 + index * 48
  * @default screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 32
  *
  * @param Side Sprite Priority
+ * @parent ---Sideview---
+ * @type select
+ * @option Normal
+ * @value 0
+ * @option Actors on Top
+ * @value 1
+ * @option Enemies on Top
+ * @value 2
  * @desc Give actor sprites the priority of always being on top?
  * 0 - Normal   1 - Actors on Top   2 - Enemies on Top
  * @default 1
@@ -129,26 +193,40 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Default X Anchor
+ * @parent ---Sprites---
+ * @type number
+ * @decimals 2
  * @desc Default value used for your sprites's X Anchor.
- * Default: 0.5
- * @default 0.5
+ * Default: 0.50
+ * @default 0.50
  *
  * @param Default Y Anchor
+ * @parent ---Sprites---
+ * @type number
+ * @decimals 2
  * @desc Default value used for your sprites's Y Anchor.
- * Default: 1.0
- * @default 1.0
+ * Default: 1.00
+ * @default 1.00
  *
  * @param Step Distance
+ * @parent ---Sprites---
+ * @type number
  * @desc This is the distance a unit steps forward for actions.
  * Default: 48
  * @default 48
  *
  * @param Flinch Distance
+ * @parent ---Sprites---
+ * @type number
  * @desc In sideview, when a unit takes damage or dodges, it will
  * flinch a certain distance in pixels.
  * @default 12
  *
  * @param Show Shadows
+ * @parent ---Sprites---
+ * @type boolean
+ * @on Show Shadows
+ * @off Hide Shadows
  * @desc Do you wish to have shadows appear under actors?
  * NO - false     YES - true
  * @default true
@@ -157,26 +235,40 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Popup Duration
+ * @parent ---Damage Popups---
+ * @type number
+ * @min 1
  * @desc Adjusts how many frames a popup will stay visible for.
  * Default: 90
  * @default 128
  *
  * @param Newest Popup Bottom
+ * @parent ---Damage Popups---
+ * @type boolean
+ * @on Newest at bottom
+ * @off Newest at top
  * @desc Places the newest popup at the bottom of a group.
  * NO - false     YES - true
  * @default true
  *
  * @param Popup Overlap Rate
+ * @parent ---Damage Popups---
+ * @type number
+ * @decimals 1
  * @desc When multiple damage popups appear, they cover each other.
  * Use this to change the buffer rate amount for each sprite.
  * @default 0.9
  *
  * @param Critical Popup
+ * @parent ---Damage Popups---
  * @desc Adjusts the popup's flashing color for critical hits.
  * Default: 255, 0, 0, 160
  * @default 255, 0, 0, 160
  *
  * @param Critical Duration
+ * @parent ---Damage Popups---
+ * @type number
+ * @min 1
  * @desc How many frames the flashing will remain for a critical.
  * Default: 60
  * @default 60
@@ -185,20 +277,35 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Timed States
+ * @parent ---Tick-Settings---
+ * @type boolean
+ * @on Time-Based States
+ * @off Turn-Based States
  * @desc If the battle system is Tick-based, use time instead of
  * turns for states? NO - false   YES - true
  * @default false
  *
  * @param Timed Buffs
+ * @parent ---Tick-Settings---
+ * @type boolean
+ * @on Time-Based Buffs
+ * @off Turn-Based Buffs
  * @desc If the battle system is Tick-based, use time instead of
  * turns for buffs? NO - false   YES - true
  * @default false
  *
  * @param Turn Time
+ * @parent ---Tick-Settings---
+ * @type number
+ * @min 1
  * @desc How many ticks must past to equal 1 turn?
  * @default 100
  * 
  * @param AI Self Turns
+ * @parent ---Tick-Settings---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Set AI to be based on their own individual turns?
  * NO - false     YES - true
  * @default true
@@ -207,31 +314,54 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Lower Windows
+ * @parent ---Window Settings---
+ * @type boolean
+ * @on Bottom Layout
+ * @off Default Layout
  * @desc Places the skill and item windows at the screen's bottom.
  * OFF - false     ON - true
  * @default true
  *
  * @param Window Rows
+ * @parent ---Window Settings---
+ * @number
+ * @min 1
  * @desc For lower windows, how many rows of items do you wish for
  * the windows to display?
  * @default 4
  *
  * @param Command Window Rows
+ * @parent ---Window Settings---
+ * @type number
+ * @min 1
  * @desc Sets the number of rows for each command window to display.
  * Default: 4
  * @default 4
  *
  * @param Command Alignment
+ * @parent ---Window Settings---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Sets the text alignment for the Party/Actor Commands.
  * Default: left
  * @default center
  *
  * @param Start Actor Command
+ * @parent ---Window Settings---
+ * @type boolean
+ * @on Actor Command Window
+ * @off Party Command Window
  * @desc Starts turn with the Actor Command Window instead of Party.
  * OFF - false     ON - true
  * @default true
  *
  * @param Current Max
+ * @parent ---Window Settings---
+ * @type boolean
+ * @on Current / Max
+ * @off Just Current
  * @desc Display the entire current / max value of HP/MP?
  * NO - false     YES - true     Default: true
  * @default false
@@ -240,41 +370,56 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Mouse Over
+ * @parent ---Selection Help---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allows you to mouse over the enemies to auto-select them.
  * OFF - false     ON - true
  * @default true
  *
  * @param Select Help Window
+ * @parent ---Selection Help---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc When selecting actors and enemies, show the help window?
  * NO - false     YES - true
  * @default true
  *
  * @param User Help Text
+ * @parent ---Selection Help---
  * @desc The singular form of 'User' used in a help window.
  * @default User
  *
  * @param Ally Help Text
+ * @parent ---Selection Help---
  * @desc The singular form of 'Ally' used in a help window.
  * @default Ally
  *
  * @param Allies Help Text
+ * @parent ---Selection Help---
  * @desc The plural form of 'Allies' used in a help window.
  * @default Allies
  *
  * @param Enemy Help Text
+ * @parent ---Selection Help---
  * @desc The singular form of 'Enemy' used in a help window.
  * @default Enemy
  *
  * @param Enemies Help Text
+ * @parent ---Selection Help---
  * @desc The plural form of 'Enemy' used in a help window.
  * @default Enemies
  *
  * @param All Help Text
+ * @parent ---Selection Help---
  * @desc When selecting a entire group of targets.
  * %1 - Target Group (Allies or Enemies)
  * @default All %1
  *
  * @param Random Help Text
+ * @parent ---Selection Help---
  * @desc When selecting a random selection of targets.
  * %1 - Target Group (Allies or Enemies)     %2 - Number
  * @default %2 Random %1
@@ -283,26 +428,42 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Visual Enemy Select
+ * @parent ---Enemy Select---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Replaces the enemy selection screen with a more visual one.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Enemy Name
+ * @parent ---Enemy Select---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show enemy names with Visual Enemy Select.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Select Box
+ * @parent ---Enemy Select---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show a selection box when selecting enemies.
  * OFF - false     ON - true
  * @default false
  *
  * @param Enemy Font Size
+ * @parent ---Enemy Select---
+ * @type number
+ * @min 1
  * @desc Changes the font size used to display enemy names.
  * Default: 28
  * @default 20
  *
  * @param Enemy Auto Select
+ * @parent ---Enemy Select---
  * @desc Changes what enemy is automatically selected at first.
  * LEFT - 0     RIGHT - this.furthestRight()
  * @default this.furthestRight()
@@ -311,6 +472,10 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Visual Actor Select
+ * @parent ---Actor Select---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allows you to click the actor on screen to select it.
  * OFF - false     ON - true
  * @default true
@@ -319,86 +484,154 @@ Yanfly.BEC.version = 1.43;
  * @default
  *
  * @param Show Emerge Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows the battle start text for enemies appearing.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Pre-Emptive Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows the text for getting a pre-emptive attack.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Surprise Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows the text for getting a surprise attack.
  * OFF - false     ON - true
  * @default true
  *
  * @param Optimize Speed
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Cuts log base line process to optimize the battle speed.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Action Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on Full
+ * @off Simple
  * @desc Displays full action text or a simplified version of it.
  * SIMPLE - false     FULL - true
  * @default false
  *
  * @param Show State Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows all text regarding states.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Buff Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows all text regarding buffs.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Counter Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding counter attacks.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Reflect Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding reflected spells.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Substitute Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding substituted damage.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Fail Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding failed attacks.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Critical Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding critical hits.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Miss Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding missed attacks.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Evasion Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding evaded attacks.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show HP Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding HP damage or heals.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show MP Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding MP damage or heals.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show TP Text
+ * @parent ---Battle Log---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows text regarding TP damage or heals.
  * OFF - false     ON - true
  * @default false
@@ -649,7 +882,14 @@ Yanfly.BEC.version = 1.43;
  * Changelog
  * ============================================================================
  *
- * Version 1.43a:
+ * Version 1.45:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.44:
+ * - Fixed a bug where the enemy name windows disappear if you change scenes
+ * mid-way through battle and return to it.
+ *
+ * Version 1.43b:
  * - Bug fixed to prevent crash if non-existent actions are used.
  * - Optimization update.
  *
@@ -1652,10 +1892,14 @@ BattleManager.getNextSubject = function() {
         var battler = this._actionBattlers.shift();
         if (!battler) return null;
         if (battler.isBattleMember() && battler.isAlive()) {
-            this._performedBattlers.push(battler);
+            this.pushPerformedBattler(battler);
             return battler;
         }
     }
+};
+
+BattleManager.pushPerformedBattler = function(battler) {
+  this._performedBattlers.push(battler);
 };
 
 BattleManager.update = function() {
@@ -2525,6 +2769,8 @@ BattleManager.actionIfConditions = function(actionName, actionArgs) {
   var subject = this._subject;
   var user = this._subject;
   var target = this._targets[0];
+  var critical = false;
+  if (target && target.result()) critical = target.result().critical;
   var targets = this._targets;
   var action = this._action;
   var item = this._action.item();
@@ -2982,6 +3228,7 @@ Yanfly.BEC.Sprite_Enemy_update = Sprite_Enemy.prototype.update;
 Sprite_Enemy.prototype.update = function() {
     Yanfly.BEC.Sprite_Enemy_update.call(this);
     this.addVisualSelectWindow();
+    this.checkExistInSceneChildren()
 };
 
 Sprite_Enemy.prototype.addVisualSelectWindow = function() {
@@ -3002,6 +3249,17 @@ Yanfly.BEC.Sprite_Enemy_setBattler = Sprite_Enemy.prototype.setBattler;
 Sprite_Enemy.prototype.setBattler = function(battler) {
     Yanfly.BEC.Sprite_Enemy_setBattler.call(this, battler);
     if (this._visualSelectWindow) this._visualSelectWindow.setBattler(battler);
+};
+
+Sprite_Enemy.prototype.checkExistInSceneChildren = function() {
+    if (!this._visualSelect) return;
+    if (!SceneManager._scene) return;
+    var scene = SceneManager._scene;
+    if (!scene._windowLayer) return;
+    if (!scene.children.contains(this._visualSelectWindow)) {
+      this._addedVisualSelect = true;
+      scene.addChild(this._visualSelectWindow);
+    }
 };
 
 //=============================================================================

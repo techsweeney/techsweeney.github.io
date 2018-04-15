@@ -8,10 +8,11 @@ Imported.YEP_X_VisualHpGauge = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.VHG = Yanfly.VHG || {};
+Yanfly.VHG.version = 1.07
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 (Requires YEP_BattleEngineCore.js) Reveal HP Gauges
+ * @plugindesc v1.07 (Requires YEP_BattleEngineCore.js) Reveal HP Gauges
  * when a battler is selected or takes damage in battle.
  * @author Yanfly Engine Plugins
  *
@@ -19,16 +20,28 @@ Yanfly.VHG = Yanfly.VHG || {};
  * @default
  *
  * @param Display Actor
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Do you wish to display the HP Gauge for actors?
  * NO - false     YES - true
  * @default true
  *
  * @param Defeat First
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Enemies must be defeated first before showing the HP Gauge.
  * NO - false     YES - true
  * @default false
  *
  * @param Always Visible
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc HP Gauge is always visible and doesn't fade away.
  * NO - false     YES - true
  * @default false
@@ -37,40 +50,68 @@ Yanfly.VHG = Yanfly.VHG || {};
  * @default
  *
  * @param Minimum Gauge Width
+ * @parent ---Appearance---
+ * @type number
+ * @min 1
  * @desc This is the minimum width in pixels for HP Gauges.
  * @default 144
  *
  * @param Gauge Height
+ * @parent ---Appearance---
+ * @type number
+ * @min 1
  * @desc This is the height in pixels for HP Gauges.
  * @default 18
  *
  * @param Back Color
+ * @parent ---Appearance---
  * @desc This is the text color used for the back of HP Gauges.
  * @default 19
  *
  * @param HP Color 1
+ * @parent ---Appearance---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used for the 1st part of HP Gauges.
  * @default 20
  *
  * @param HP Color 2
+ * @parent ---Appearance---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used for the 2nd part of HP Gauges.
  * @default 21
  *
  * @param Gauge Duration
+ * @parent ---Appearance---
+ * @type number
+ * @min 0
  * @desc This is the frames the HP gauge will continue to show after
  * it finishes draining or filling.
  * @default 30
  *
  * @param Gauge Position
+ * @parent ---Appearance---
+ * @type boolean
+ * @on Above
+ * @off Below
  * @desc Where do you wish to show the HP gauge?
  * BELOW - false     ABOVE - true
  * @default false
  *
  * @param Y Buffer
+ * @parent ---Appearance---
+ * @type number
  * @desc How much do you wish to shift the gauge Y position?
  * @default -16
  *
  * @param Use Thick Gauges
+ * @parent ---Appearance---
+ * @type boolean
+ * @on Thick
+ * @off Normal
  * @desc Use the thick gauges provided by this plugin?
  * Default - false     Thick - true
  * @default true
@@ -79,16 +120,28 @@ Yanfly.VHG = Yanfly.VHG || {};
  * @default
  *
  * @param Show HP
+ * @parent ---Text Display---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the actual 'HP' text.
  * NO - false     YES - true
  * @default false
  *
  * @param Show Value
+ * @parent ---Text Display---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the HP value.
  * NO - false     YES - true
  * @default false
  *
  * @param Show Max
+ * @parent ---Text Display---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the MaxHP value if value is shown?
  * NO - false     YES - true
  * @default false
@@ -142,6 +195,9 @@ Yanfly.VHG = Yanfly.VHG || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.07:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.06:
  * - Compatibility update with State Categories.

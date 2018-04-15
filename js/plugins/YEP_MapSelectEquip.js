@@ -8,42 +8,63 @@ Imported.YEP_MapSelectEquip = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.MSE = Yanfly.MSE || {};
+Yanfly.MSE.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Open up a window similar to the Select Item Window,
+ * @plugindesc v1.01 Open up a window similar to the Select Item Window,
  * but instead, returns weapon/armor ID's to a variable.
  * @author Yanfly Engine Plugins
  *
  * @param Default Columns
+ * @type number
+ * @min 1
  * @desc Default number of columns for the window.
  * @default 2
  *
  * @param Default Rows
+ * @type number
+ * @min 1
  * @desc Default number of rows for the window.
  * @default 4
  *
  * @param Default X Position
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Default X Position of the window.
  * left     center     right
  * @default center
  *
  * @param Default Y Position
+ * @type combo
+ * @option top
+ * @option middle
+ * @option bottom
  * @desc Default Y Position of the window.
  * top     middle     bottom
  * @default bottom
  *
  * @param Default Width
+ * @type number
+ * @min 0
  * @desc Default width of the window.
  * If set to 0, window width will be the screen width.
  * @default 0
  *
  * @param Default Enable
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable all equips by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Default Quantity
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the quantity of the equips by default?
  * NO - false     YES - true
  * @default true
@@ -99,6 +120,16 @@ Yanfly.MSE = Yanfly.MSE || {};
  *
  * HideMapSelectEquipQuantity
  * - Hide the quantity of the Equips in the Map Select Equip Window.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

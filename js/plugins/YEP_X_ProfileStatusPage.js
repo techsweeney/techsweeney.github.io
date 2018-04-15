@@ -8,10 +8,11 @@ Imported.YEP_X_ProfileStatusPage = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.PSP = Yanfly.PSP || {};
+Yanfly.PSP.version = 1.03
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 (Requires YEP_StatusMenuCore.js) Places a Profile
+ * @plugindesc v1.03 (Requires YEP_StatusMenuCore.js) Places a Profile
  * Status Page in the status menu for your actors.
  * @author Yanfly Engine Plugins
  *
@@ -21,11 +22,18 @@ Yanfly.PSP = Yanfly.PSP || {};
  * @default Profile
  *
  * @param Default Profile
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Set database profile as default profile?
  * NO - false     YES - true
  * @default true
  *
  * @param Image Align
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc How do you want the profile image aligned?
  * left     center     right
  * @default right
@@ -108,6 +116,12 @@ Yanfly.PSP = Yanfly.PSP || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.02:
+ * - Fixed a bug twhere the status window was not calling the right arguments.
  *
  * Version 1.01:
  * - Updated for RPG Maker MV version 1.1.0.
@@ -385,7 +399,7 @@ Window_StatusInfo.prototype.drawProfileImage = function() {
 
 Yanfly.PSP.Window_StatusInfo_drawItem = Window_StatusInfo.prototype.drawItem;
 Window_StatusInfo.prototype.drawItem = function(index) {
-    Yanfly.PSP.Window_StatusInfo_drawItem.call(this);
+    Yanfly.PSP.Window_StatusInfo_drawItem.call(this, index);
     if (this._symbol === 'profile') this.drawProfileItem(index);
 };
 

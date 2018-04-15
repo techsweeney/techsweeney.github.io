@@ -8,11 +8,11 @@ Imported.YEP_X_ItemDurability = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IDur = Yanfly.IDur || {};
-Yanfly.IDur.version = 1.02;
+Yanfly.IDur.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 (Requires YEP_ItemCore.js) Independent equipment
+ * @plugindesc v1.03 (Requires YEP_ItemCore.js) Independent equipment
  * now have durability, which when runs out, will break.
  * @author Yanfly Engine Plugins
  *
@@ -20,15 +20,22 @@ Yanfly.IDur.version = 1.02;
  * @default
  *
  * @param Default Durability
+ * @parent ---Defaults---
  * @desc This is the default durability value for independent
  * equipment when made. Set to -1 to bypass durability.
  * @default 100
  *
  * @param Durability Variance
+ * @parent ---Defaults---
+ * @type number
+ * @min 0
  * @desc The random variance value for durability.
  * @default 5
  *
  * @param Durability Maximum
+ * @parent ---Defaults---
+ * @type number
+ * @min 1
  * @desc Default maximum value for durability.
  * @default 200
  *
@@ -36,36 +43,46 @@ Yanfly.IDur.version = 1.02;
  * @default
  *
  * @param Physical Action
- * @desc When performing physical actions, drop all equipped weapons
- * durability by this much.
+ * @parent ---Durability Drop---
+ * @desc When performing physical actions, drop all equipped
+ * weapons durability by this much.
  * @default -1
  *
  * @param Magical Action
- * @desc When performing magical actions, drop all equipped weapons
- * durability by this much.
+ * @parent ---Durability Drop---
+ * @desc When performing magical actions, drop all equipped
+ * weapons durability by this much.
  * @default 0
  *
  * @param Certain Action
- * @desc When performing certain hit actions, drop all equipped weapons
- * durability by this much.
+ * @parent ---Durability Drop---
+ * @desc When performing certain hit actions, drop all equipped
+ * weapons durability by this much.
  * @default 0
  *
  * @param Damage All Armor
+ * @parent ---Durability Drop---
+ * @type boolean
+ * @on Damage All
+ * @off Damage Random
  * @desc When receiving damage, damage all armors or 1 random?
  * RANDOM - false     ALL - true
  * @default false
  *
  * @param Physical Damage
+ * @parent ---Durability Drop---
  * @desc When performing physical actions, drop all equipped weapons
  * durability by this much.
  * @default -2
  *
  * @param Magical Damage
+ * @parent ---Durability Drop---
  * @desc When performing magical actions, drop all equipped weapons
  * durability by this much.
  * @default -1
  *
  * @param Certain Damage
+ * @parent ---Durability Drop---
  * @desc When performing certain hit actions, drop all equipped weapons
  * durability by this much.
  * @default -1
@@ -74,29 +91,38 @@ Yanfly.IDur.version = 1.02;
  * @default
  *
  * @param Broken Text
+ * @parent ---Breaking---
  * @desc The text shown when an item breaks mid-battle.
  * %1 - User's name     %2 - Item Name     %3 - Item Icon
  * @default %1's %3%2 broke!
  *
  * @param Broken Wait
+ * @parent ---Breaking---
  * @desc If using the Battle Engine Core, this is how many frames
  * the message will wait.
  * @default 60
  *
  * @param Break Sound
+ * @parent ---Breaking---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the default break sound filename.
  * This is case-sensitive. Do not include file extension.
  * @default Crash
  *
  * @param Break Volume
+ * @parent ---Breaking---
  * @desc This is the default break sound volume.
  * @default 100
  *
  * @param Break Pitch
+ * @parent ---Breaking---
  * @desc This is the default break sound pitch.
  * @default 150
  *
  * @param Break Pan
+ * @parent ---Breaking---
  * @desc This is the default break sound pan.
  * @default 0
  *
@@ -104,34 +130,50 @@ Yanfly.IDur.version = 1.02;
  * @default
  *
  * @param Show Repair
+ * @parent ---Repair---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the repair equipment option when selecting equips?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Repair
+ * @parent ---Repair---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable the repair equipment option when selecting equips?
  * NO - false     YES - true
  * @default true
  *
  * @param Repair Command
+ * @parent ---Repair---
  * @desc Command text for repairing eslected equipment.
  * %1 - Equipment Name
  * @default Repair %1
  *
  * @param Repair Sound
+ * @parent ---Repair---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the default repair sound filename.
  * This is case-sensitive. Do not include file extension.
  * @default Skill2
  *
  * @param Repair Volume
+ * @parent ---Repair---
  * @desc This is the default repair sound volume.
  * @default 100
  *
  * @param Repair Pitch
+ * @parent ---Repair---
  * @desc This is the default repair sound pitch.
  * @default 150
  *
  * @param Repair Pan
+ * @parent ---Repair---
  * @desc This is the default repair sound pan.
  * @default 0
  *
@@ -139,25 +181,33 @@ Yanfly.IDur.version = 1.02;
  * @default
  *
  * @param Show Durability
+ * @parent ---Window Info---
  * @desc Show durability values for equipment?
  * NO - false     YES - true
  * @default true
  *
  * @param Durability Text
+ * @parent ---Window Info---
  * @desc Text used to display durability:
  * @default Durability
  *
  * @param Durability Format
+ * @parent ---Window Info---
  * @desc The format in displaying the durability value.
  * %1 - Current Durability     %2 - Maximum Durability
  * @default %1
  *
  * @param Show Unbreakable
+ * @parent ---Window Info---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the durability value if item is unbreakable?
  * NO - false     YES - true
  * @default true
  *
  * @param Unbreakable Text
+ * @parent ---Window Info---
  * @desc The text used to indicate an item is unbreakable.
  * @default Unbreakable
  *
@@ -165,54 +215,106 @@ Yanfly.IDur.version = 1.02;
  * @default
  *
  * @param Unbreakable
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color used for unbreakable items.
  * @default 23
  *
  * @param Max Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is equal to its max.
  * @default 29
  *
  * @param 190% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 190% default.
  * @default 29
  *
  * @param 175% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 175% default.
  * @default 24
  *
  * @param 150% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 150% default.
  * @default 24
  *
  * @param 120% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 120% default.
  * @default 4
  *
  * @param 110% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 110% default.
  * @default 0
  *
  * @param 100% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 100% default.
  * @default 0
  *
  * @param 80% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 80% default.
  * @default 0
  *
  * @param 50% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 80% default.
  * @default 6
  *
  * @param 25% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 25% default.
  * @default 17
  *
  * @param 10% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 10% default.
  * @default 2
  *
  * @param 1% Durability
+ * @parent ---Durability Color---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color when durability is above 1% default.
  * @default 18
  *
@@ -484,6 +586,9 @@ Yanfly.IDur.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Lunatic Mode fail safes added.

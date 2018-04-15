@@ -8,11 +8,11 @@ Imported.YEP_HitAccuracy = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.HA = Yanfly.HA || {};
-Yanfly.HA.version = 1.02;
+Yanfly.HA.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 This plugin alters the nature of hit accuracy for
+ * @plugindesc v1.03 This plugin alters the nature of hit accuracy for
  * RPG Maker MV by giving control to its formula.
  * @author Yanfly Engine Plugins
  *
@@ -20,11 +20,13 @@ Yanfly.HA.version = 1.02;
  * @default
  *
  * @param Accuracy Formula
+ * @parent ---Formula---
  * @desc The formula used to determine the skill's accuracy.
  * Variables: skillHitRate, userHitRate, targetEvadeRate
  * @default skillHitRate * (userHitRate - targetEvadeRate)
  *
  * @param Evade Formula
+ * @parent ---Formula---
  * @desc The formula used to determine if the skill is evaded.
  * Variables: skillHitRate, userHitRate, targetEvadeRate
  * @default 0
@@ -33,16 +35,19 @@ Yanfly.HA.version = 1.02;
  * @default
  *
  * @param User Physical Hit
+ * @parent ---User Hit Rate---
  * @desc The formula used to determine the user's hit rate
  * for physical actions.
  * @default user.hit
  *
  * @param User Magical Hit
+ * @parent ---User Hit Rate---
  * @desc The formula used to determine the user's hit rate
  * for magical actions.
  * @default 1.00
  *
  * @param User Certain Hit
+ * @parent ---User Hit Rate---
  * @desc The formula used to determine the user's hit rate
  * for certain hit actions.
  * @default 1.00
@@ -51,16 +56,19 @@ Yanfly.HA.version = 1.02;
  * @default
  *
  * @param Target Physical Evade
+ * @parent ---Target Evade Rate---
  * @desc The formula used to determine the target's evade rate
  * for physical actions.
  * @default target.eva
  *
  * @param Target Magical Evade
+ * @parent ---Target Evade Rate---
  * @desc The formula used to determine the target's evade rate
  * for magical actions.
  * @default target.mev
  *
  * @param Target Certain Evade
+ * @parent ---Target Evade Rate---
  * @desc The formula used to determine the target's evade rate
  * for certain hit actions.
  * @default 0.00
@@ -101,6 +109,9 @@ Yanfly.HA.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Lunatic Mode fail safes added.

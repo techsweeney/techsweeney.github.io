@@ -8,7 +8,7 @@ Imported.YEP_X_VisualStateFX = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.VSFX = Yanfly.VSFX || {};
-Yanfly.VSFX.version = 1.02;
+Yanfly.VSFX.version = 1.03;
 
 //=============================================================================
  /*:
@@ -20,16 +20,28 @@ Yanfly.VSFX.version = 1.02;
  * @default
  *
  * @param Actor State Overlay
+ * @parent ---Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show state overlay over the head of actors?
  * YES - true     NO - false     Default: true
  * @default true
  *
  * @param Actor State Icons
+ * @parent ---Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show state icons over the head of actors?
  * YES - true     NO - false     Default: false
  * @default true
  *
  * @param Actor State Animation
+ * @parent ---Actors---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show state animations on the actors?
  * YES - true     NO - false
  * @default true
@@ -38,16 +50,28 @@ Yanfly.VSFX.version = 1.02;
  * @default
  *
  * @param Enemy State Overlay
+ * @parent ---Enemies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show state overlay over the head of enemies?
  * YES - true     NO - false     Default: false
  * @default true
  *
  * @param Enemy State Icons
+ * @parent ---Enemies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show state icons over the head of enemies?
  * YES - true     NO - false     Default: true
  * @default true
  *
  * @param Enemy State Animation
+ * @parent ---Enemies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show state animations on the enemies?
  * YES - true     NO - false
  * @default true
@@ -56,21 +80,37 @@ Yanfly.VSFX.version = 1.02;
  * @default
  *
  * @param Allow Target Flash
+ * @parent ---Animation Settings---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allow state animations to use target flash effects?
  * YES - true     NO - false
  * @default true
  *
  * @param Allow Screen Flash
+ * @parent ---Animation Settings---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allow state animations to use screen flash effects?
  * YES - true     NO - false
  * @default false
  *
  * @param Allow Hide Target
+ * @parent ---Animation Settings---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allow state animations to use hide target effects?
  * YES - true     NO - false
  * @default false
  *
  * @param Allow Sound
+ * @parent ---Animation Settings---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allow state animations to use sound effects?
  * YES - true     NO - false
  * @default false
@@ -134,6 +174,9 @@ Yanfly.VSFX.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Fixed a bug where enemy icon settings would match actor icon settings

@@ -8,10 +8,11 @@ Imported.YEP_X_AreaOfEffect = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.AOE = Yanfly.AOE || {};
+Yanfly.AOE.version = 1.02
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_BattleEngineCore & YEP_TargetCore)
+ * @plugindesc v1.02 (Requires YEP_BattleEngineCore & YEP_TargetCore)
  * Adds Area of Effect scopes for targeting allies or enemies.
  * @author Yanfly Engine Plugins
  *
@@ -19,14 +20,20 @@ Yanfly.AOE = Yanfly.AOE || {};
  * @default
  *
  * @param Buffer X
+ * @parent ---Buffer---
  * @desc The default offset coordinate buffer for battlers.
  * @default 0
  *
  * @param Buffer Y
+ * @parent ---Buffer---
  * @desc The default offset coordinate buffer for battlers.
  * @default 0
  *
  * @param Center Animation
+ * @parent ---Buffer---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Plays battle animation only on central target?
  * NO - false     YES - true
  * @default true
@@ -35,16 +42,34 @@ Yanfly.AOE = Yanfly.AOE || {};
  * @default
  *
  * @param Circle Graphic
+ * @parent ---Circle---
+ * @type file
+ * @dir img/pictures/
+ * @require 1
  * @desc Default graphic used for AoE Circles.
  * Place this image inside img/pictures/
  * @default AoE_Circle
  *
  * @param Circle Blend
+ * @parent ---Circle---
+ * @type select
+ * @option Normal
+ * @value 0
+ * @option Additive
+ * @value 1
+ * @option Multiply
+ * @value 2
+ * @option Screen
+ * @value 3
  * @desc Blend mode used for AoE Circles.
  * 0: Normal, 1: Additive, 2: Multiply, 3: Screen
  * @default 3
  *
  * @param Circle Height Rate
+ * @parent ---Circle---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc Default height rate of AoE Circle.
  * @default 0.33
  *
@@ -52,11 +77,25 @@ Yanfly.AOE = Yanfly.AOE || {};
  * @default
  *
  * @param Rect Graphic
+ * @parent ---Rectangle---
+ * @type file
+ * @dir img/pictures/
+ * @require 1
  * @desc Default graphic used for AoE Rectangles.
  * Place this image inside img/pictures/
  * @default AoE_Rect
  *
  * @param Rect Blend
+ * @parent ---Rectangle---
+ * @type select
+ * @option Normal
+ * @value 0
+ * @option Additive
+ * @value 1
+ * @option Multiply
+ * @value 2
+ * @option Screen
+ * @value 3
  * @desc Blend mode used for AoE Rectangles.
  * 0: Normal, 1: Additive, 2: Multiply, 3: Screen
  * @default 3
@@ -121,6 +160,9 @@ Yanfly.AOE = Yanfly.AOE || {};
  *   This is the blend mode used for the AOE graphic. 0 is normal with no blend
  *   modes applied. 1 is additive. 2 is multiply. 3 is screen.
  *
+ *   *NOTE: This does not work with the unique selection types found with the
+ *   YEP_X_SelectionControl plugin.
+ *
  *   --- AOE Rectangle Scope ---
  *
  *   <Rect Column: x>
@@ -152,6 +194,9 @@ Yanfly.AOE = Yanfly.AOE || {};
  *   This is the blend mode used for the AOE graphic. 0 is normal with no blend
  *   modes applied. 1 is additive. 2 is multiply. 3 is screen.
  *
+ *   *NOTE: This does not work with the unique selection types found with the
+ *   YEP_X_SelectionControl plugin.
+ *
  *   --- Animation Settings ---
  *
  *   <AOE Center Animation>
@@ -181,6 +226,22 @@ Yanfly.AOE = Yanfly.AOE || {};
  *   <AOE Hitbox Height: x>
  *   This will adjust the hitbox of the battler to have an AOE hitbox width of
  *   x or an AOE hitbox height of x.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.01:
+ * - Plugin update to provide checks against certain selection condition types
+ * used with YEP_X_SelectionControl. Unique conditions will disable AoE types
+ * to prevent clashing which include enemy/actor switching, certain rows, and
+ * toggling between single/multiple.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -345,6 +406,35 @@ DataManager.setAoeActions = function(obj) {
     obj.finishActions = Yanfly.BEC.DefaultActionFinish.slice();
 };
 
+DataManager.isAoeForbidden = function(obj) {
+  if (!obj) return true;
+  if (obj.isAoeForbidden !== undefined) return obj.isAoeForbidden;
+  obj.isAoeForbidden = false;
+  if (Imported.YEP_X_SelectionControl) {
+    var arr = obj.selectConditions;
+    var length = arr.length;
+    for (var i = 0; i < length; ++i) {
+      var line = arr[i];
+      if (line) {
+        if (line.match(/ENEMY OR ACTOR SELECT/i)) {
+          obj.isAoeForbidden = true;
+          break;
+        } else if (line.match(/ACTOR OR ENEMY SELECT/i)) {
+          obj.isAoeForbidden = true;
+          break;
+        } else if (line.match(/SINGLE OR MULTIPLE SELECT/i)) {
+          obj.isAoeForbidden = true;
+          break;
+        } else if (line.match(/ROW[ ](\d+)/i)) {
+          obj.isAoeForbidden = true;
+          break;
+        }
+      }
+    }
+  }
+  return obj.isAoeForbidden;
+};
+
 //=============================================================================
 // BattleManager
 //=============================================================================
@@ -439,15 +529,22 @@ Game_Enemy.prototype.aoeHeight = function() {
 // Game_Action
 //=============================================================================
 
+Game_Action.prototype.isAoeForbidden = function() {
+    return DataManager.isAoeForbidden(this.item());
+};
+
 Game_Action.prototype.isAoe = function() {
+    if (this.isAoeForbidden()) return false;
     return this.isAoeCircle() || this.isAoeRect();
 };
 
 Game_Action.prototype.isAoeCircle = function() {
+    if (this.isAoeForbidden()) return false;
     return this.item().aoeCircleRadius > 0;
 };
 
 Game_Action.prototype.isAoeRect = function() {
+    if (this.isAoeForbidden()) return false;
     if (this.item().aoeRectColumn > 0) return true;
     if (this.item().aoeRectRow > 0) return true;
     return this.item().aoeRectAll;
@@ -586,6 +683,7 @@ Sprite_AoeCircle.prototype.initMembers = function() {
 
 Sprite_AoeCircle.prototype.setup = function(skill) {
     this._skill = skill;
+    if (DataManager.isAoeForbidden(skill)) return;
     if (this._skill.aoeCircleRadius <= 0) return;
     this._targetIndex = -1;
     this._radius = this._skill.aoeCircleRadius;
@@ -670,6 +768,7 @@ Sprite_AoeRect.prototype.initMembers = function() {
 
 Sprite_AoeRect.prototype.setup = function(skill) {
     this._skill = skill;
+    if (DataManager.isAoeForbidden(skill)) return;
     if (this._skill.aoeRectColumn > 0) {
       this._widthPixels = this._skill.aoeRectColumn;
       this._heightPixels = Graphics.boxWidth;

@@ -8,10 +8,11 @@ Imported.YEP_ExternalLinks = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.LINK = Yanfly.LINK || {};
+Yanfly.LINK.version = 1.00
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Link back to your home page through the title screen
+ * @plugindesc v1.01 Link back to your home page through the title screen
  * and also be able to link your players from within the game.
  * @author Yanfly Engine Plugins
  *
@@ -49,6 +50,16 @@ Yanfly.LINK = Yanfly.LINK || {};
  *   OpenNewWindow http://www.google.com/  Opens link in a new window.
  *
  * Some web browsers may not differentiate these commands too much.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -171,6 +182,7 @@ Scene_Base.prototype.createWindowLayer = function() {
 };
 
 Scene_Base.prototype.createPopupBlockerMessage = function() {
+    if (this._popupBlockerWindow) return;
 		this._popupBlockerWindow = new Window_PopupBlocker();
 		this.addWindow(this._popupBlockerWindow);
 		this._popupCounter = 0;

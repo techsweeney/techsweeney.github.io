@@ -8,11 +8,11 @@ Imported.YEP_SpecialParamFormula = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SParam = Yanfly.SParam || {};
-Yanfly.SParam.version = 1.04;
+Yanfly.SParam.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 Control the formulas of special parameters for
+ * @plugindesc v1.05 Control the formulas of special parameters for
  * TGR, GRD, REC, PHA, MCR, TCR, PDR, MDR, FDR, EXR.
  * @author Yanfly Engine Plugins
  *
@@ -20,51 +20,61 @@ Yanfly.SParam.version = 1.04;
  * @default
  *
  * @param TGR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine TGR: Target Rate
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param GRD Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine GRD: Guard Effect
  * This is a formula.
  * @default Math.max((base + plus) * rate + flat, 0.0000000001)
  *
  * @param REC Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine REC: Recovery Rate
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param PHA Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine PHA: Pharmacology
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param MCR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine MCR: MP Cost Rate
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param TCR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine TCR: TP Charge Rate
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param PDR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine PDR: Physical Damage%
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param MDR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine MDR: Magical Damage%
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param FDR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine FDR: Floor Damage%
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param EXR Formula
+ * @parent ---SParam Formula---
  * @desc The formula used to determine EXR: Experience%
  * This is a formula.
  * @default (base + plus) * rate + flat
@@ -73,16 +83,19 @@ Yanfly.SParam.version = 1.04;
  * @default
  *
  * @param Guard Calculation
+ * @parent ---Other Formula---
  * @desc The calculation used to determine the guard effect.
  * This is a formula.
  * @default damage / (damage > 0 && target.isGuard() ? 2 * target.grd : 1)
  *
  * @param Basic Floor Damage
+ * @parent ---Other Formula---
  * @desc The basic floor damage calculation.
  * This is a formula.
  * @default 10
  *
  * @param Reserve EXP Rate
+ * @parent ---Other Formula---
  * @desc The calculation used for reserve party member EXP
  * if enabled in Database > System. This is a formula.
  * @default 1
@@ -382,6 +395,9 @@ Yanfly.SParam.version = 1.04;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Lunatic Mode fail safes added.

@@ -8,11 +8,11 @@ Imported.YEP_X_ItemDisassemble = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IDA = Yanfly.IDA || {};
-Yanfly.IDA.version = 1.04;
+Yanfly.IDA.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_ItemCore.js) Grants the option to
+ * @plugindesc v1.05 (Requires YEP_ItemCore.js) Grants the option to
  * break down items in the item menu into other items.
  * @author Yanfly Engine Plugins
  *
@@ -20,46 +20,59 @@ Yanfly.IDA.version = 1.04;
  * @default
  *
  * @param Disassemble Command
+ * @parent ---General---
  * @desc The command text used for disassembling items.
  * %1 - Item Name
  * @default Disassemble %1
  *
  * @param Disassemble List
+ * @parent ---General---
  * @desc The text used to list the disassemble items.
  * @default Disassemble Items
  *
  * @param Item Quantity 1
+ * @parent ---General---
  * @desc This is how item quantity is drawn in the list of items.
  * %1 - Quantity     %2 - Item Name
  * @default ×%1 %2
  *
  * @param Item Quantity 2
+ * @parent ---General---
  * @desc This is how item quantity is drawn in the list of items.
  * %1 - Quantity1   %2 - Quantity2     %3 - Item Name
  * @default ×%1-×%2 %3
  *
  * @param Rate Font Size
+ * @type number
+ * @min 1
  * @desc This is the text's font size used for the success rate.
- * Default: 28f
+ * Default: 28
  * @default 20
  *
  * @param ---Disassemble Sound---
  * @default
  *
  * @param Disassemble Sound
+ * @parent ---Disassemble Sound---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the default disassemble sound filename.
  * This is case-sensitive. Do not include file extension.
  * @default Break
  *
  * @param Disassemble Volume
+ * @parent ---Disassemble Sound---
  * @desc This is the default disassemble sound volume.
  * @default 100
  *
  * @param Disassemble Pitch
+ * @parent ---Disassemble Sound---
  * @desc This is the default disassemble sound pitch.
  * @default 150
  *
  * @param Disassemble Pan
+ * @parent ---Disassemble Sound---
  * @desc This is the default disassemble sound pan.
  * @default 0
  *
@@ -67,19 +80,26 @@ Yanfly.IDA.version = 1.04;
  * @default
  *
  * @param Result Sound
+ * @parent ---Result Sound---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the default result sound filename.
  * This is case-sensitive. Do not include file extension.
  * @default Item1
  *
  * @param Result Volume
+ * @parent ---Result Sound---
  * @desc This is the default result sound volume.
  * @default 100
  *
  * @param Result Pitch
+ * @parent ---Result Sound---
  * @desc This is the default result sound pitch.
  * @default 100
  *
  * @param Result Pan
+ * @parent ---Result Sound---
  * @desc This is the default result sound pan.
  * @default 0
  *
@@ -87,19 +107,26 @@ Yanfly.IDA.version = 1.04;
  * @default
  *
  * @param Empty Sound
+ * @parent ---Empty Sound---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the no salvage results sound filename.
  * This is case-sensitive. Do not include file extension.
  * @default Buzzer2
  *
  * @param Empty Volume
+ * @parent ---Empty Sound---
  * @desc This is the no salvage results sound volume.
  * @default 100
  *
  * @param Empty Pitch
+ * @parent ---Empty Sound---
  * @desc This is the no salvage results sound pitch.
  * @default 100
  *
  * @param Empty Pan
+ * @parent ---Empty Sound---
  * @desc This is the no salvage results sound pan.
  * @default 0
  *
@@ -289,6 +316,9 @@ Yanfly.IDA.version = 1.04;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Lunatic Mode fail safes added.

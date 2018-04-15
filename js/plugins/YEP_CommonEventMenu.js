@@ -8,11 +8,11 @@ Imported.YEP_CommonEventMenu = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CEM = Yanfly.CEM || {};
-Yanfly.CEM.version = 1.02;
+Yanfly.CEM.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02a This plugin allows the creation of windows to call
+ * @plugindesc v1.03 This plugin allows the creation of windows to call
  * common events with.
  * @author Yanfly Engine Plugins
  *
@@ -20,18 +20,25 @@ Yanfly.CEM.version = 1.02;
  * @default
  *
  * @param Default Icon
+ * @parent ---Defaults---
+ * @type number
+ * @min 0
  * @desc Default icon used for common events.
  * @default 160
  *
  * @param Default Help
+ * @parent ---Defaults---
  * @desc Default help description text used for common events.
  * @default Use <Help Description> comment tag to add a help description.
  *
  * @param Default Subtext
+ * @parent ---Defaults---
  * @desc Default subtext used for common events.
  * @default Subtext here!
  *
  * @param Default Cancel Event
+ * @parent ---Defaults---
+ * @type common_event
  * @desc Default common event used for cancel.
  * Leave at 0 to make it not apply an event or -1 to disable.
  * @default 0
@@ -40,31 +47,37 @@ Yanfly.CEM.version = 1.02;
  * @default
  *
  * @param Window X
+ * @parent ---Main Settings---
  * @desc Default X position for the window.
  * This can be a formula.
  * @default 0
  *
  * @param Window Y
+ * @parent ---Main Settings---
  * @desc Default Y position for the window.
  * This can be a formula.
  * @default this.fittingHeight(2)
  *
  * @param Window Width
+ * @parent ---Main Settings---
  * @desc Default width for the window.
  * This can be a formula.
  * @default Graphics.boxWidth / 2
  *
  * @param Window Height
+ * @parent ---Main Settings---
  * @desc Default height for the Window.
  * This can be a formula.
  * @default Graphics.boxHeight - this.fittingHeight(2)
  *
  * @param Window Columns
+ * @parent ---Main Settings---
  * @desc The number of columns for the window.
  * This can be a formula.
  * @default 1
  *
  * @param Window Opacity
+ * @parent ---Main Settings---
  * @desc The opacity of the window skin for the window.
  * This can be a formula.
  * @default 255
@@ -73,31 +86,40 @@ Yanfly.CEM.version = 1.02;
  * @default
  *
  * @param Show Help
+ * @parent ---Help Settings---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show help window by default?
  * YES - true     NO - false
  * @default true
  *
  * @param Help X
+ * @parent ---Help Settings---
  * @desc Default X position for help window.
  * This can be a formula.
  * @default 0
  *
  * @param Help Y
+ * @parent ---Help Settings---
  * @desc Default Y position for help window.
  * This can be a formula.
  * @default 0
  *
  * @param Help Width
+ * @parent ---Help Settings---
  * @desc Default width for help window.
  * This can be a formula.
  * @default Graphics.boxWidth
  *
  * @param Help Height
+ * @parent ---Help Settings---
  * @desc Default text rows for help window.
  * This can be a formula.
  * @default this.fittingHeight(2)
  *
  * @param Help Opacity
+ * @parent ---Help Settings---
  * @desc The opacity of the window skin for the help window.
  * This can be a formula.
  * @default 255
@@ -106,31 +128,40 @@ Yanfly.CEM.version = 1.02;
  * @default
  *
  * @param Show Picture
+ * @parent ---Picture Settings---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show picture window by default?
  * YES - true     NO - false
  * @default true
  *
  * @param Picture X
+ * @parent ---Picture Settings---
  * @desc Default X position for picture window.
  * This can be a formula.
  * @default Graphics.boxWidth / 2
  *
  * @param Picture Y
+ * @parent ---Picture Settings---
  * @desc Default Y position for picture window.
  * This can be a formula.
  * @default this.fittingHeight(2)
  *
  * @param Picture Width
+ * @parent ---Picture Settings---
  * @desc Default width for picture window.
  * This can be a formula.
  * @default Graphics.boxWidth / 2
  *
  * @param Picture Height
+ * @parent ---Picture Settings---
  * @desc Default text rows for picture window.
  * This can be a formula.
  * @default this.fittingHeight(10)
  *
  * @param Picture Opacity
+ * @parent ---Picture Settings---
  * @desc The opacity of the window skin for the picture window.
  * This can be a formula.
  * @default 255
@@ -139,31 +170,40 @@ Yanfly.CEM.version = 1.02;
  * @default
  *
  * @param Show Subtext
+ * @parent ---Subtext Settings---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show subtext window by default?
  * YES - true     NO - false
  * @default true
  *
  * @param Subtext X
+ * @parent ---Subtext Settings---
  * @desc Default X position for subtext window.
  * This can be a formula.
  * @default Graphics.boxWidth / 2
  *
  * @param Subtext Y
+ * @parent ---Subtext Settings---
  * @desc Default Y position for subtext window.
  * This can be a formula.
  * @default Graphics.boxHeight - height
  *
  * @param Subtext Width
+ * @parent ---Subtext Settings---
  * @desc Default width for subtext window.
  * This can be a formula.
  * @default Graphics.boxWidth / 2
  *
  * @param Subtext Height
+ * @parent ---Subtext Settings---
  * @desc Default text rows for subtext window.
  * This can be a formula.
  * @default Graphics.boxHeight - this.fittingHeight(2) - this.fittingHeight(10)
  *
  * @param Subtext Opacity
+ * @parent ---Subtext Settings---
  * @desc The opacity of the window skin for the subtext window.
  * This can be a formula.
  * @default 255
@@ -420,6 +460,9 @@ Yanfly.CEM.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02a:
  * - Added 'EnableCommonEventMenuCancel' and 'EnableCommonEventMenuConfirm' for

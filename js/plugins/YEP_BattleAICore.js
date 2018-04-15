@@ -8,25 +8,42 @@ Imported.YEP_BattleAICore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CoreAI = Yanfly.CoreAI || {};
-Yanfly.CoreAI.version = 1.11;
+Yanfly.CoreAI.version = 1.13;
 
 //=============================================================================
  /*:
- * @plugindesc v1.11 This plugin allows you to structure battle A.I.
+ * @plugindesc v1.13 This plugin allows you to structure battle A.I.
  * patterns with more control.
  * @author Yanfly Engine Plugins
  *
  * @param Dynamic Actions
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If enabled, enemy actions are decided on the spot instead
  * of at the start of turn.   NO - false     YES - true
  * @default true
  *
+ * @param Dynamic Turn Count
+ * @type boolean
+ * @on YES
+ * @off NO
+ * @desc Decide if the turn count dynamic is counted for earlier or later.
+ * true - Current Turn + 1   false - Current Turn
+ * @default false
+ *
  * @param Element Testing
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If enabled, enemies will test actors on their elements by
  * setting them to match first.   NO - false     YES - true
  * @default true
  *
  * @param Default AI Level
+ * @type number
+ * @min 0
+ * @max 100
  * @desc This is the default AI level of all enemies.
  * Level 0: Very Random     Level 100: Very Strict
  * @default 80
@@ -426,6 +443,14 @@ Yanfly.CoreAI.version = 1.11;
  * Changelog
  * ============================================================================
  *
+ * Version 1.13:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.12:
+ * - Added 'Dynamic Turn Count' plugin parameter for those who wish to push the
+ * turn count further by 1 turn in order to adjust for Dynamic Actions. Code
+ * provided by Talonos.
+ *
  * Version 1.11:
  * - Adding the ability to support multiple conditions. Please Read the
  * 'Multiple Conditions' section in the help file for more details.
@@ -481,6 +506,8 @@ Yanfly.Param = Yanfly.Param || {};
 
 Yanfly.Param.CoreAIDynamic = String(Yanfly.Parameters['Dynamic Actions']);
 Yanfly.Param.CoreAIDynamic = eval(Yanfly.Param.CoreAIDynamic);
+Yanfly.Param.CoreAIDynTurnCnt = String(Yanfly.Parameters['Dynamic Turn Count']);
+Yanfly.Param.CoreAIDynTurnCnt = eval(Yanfly.Param.CoreAIDynTurnCnt);
 Yanfly.Param.CoreAIElementTest = String(Yanfly.Parameters['Element Testing']);
 Yanfly.Param.CoreAIElementTest = eval(Yanfly.Param.CoreAIElementTest);
 Yanfly.Param.CoreAIDefaultLevel = Number(Yanfly.Parameters['Default AI Level']);
@@ -1545,6 +1572,8 @@ AIManager.conditionSwitch = function(switchId, value) {
     return true;
 };
 
+if (!Yanfly.Param.CoreAIDynTurnCnt) {
+
 AIManager.conditionTurnCount = function(condition) {
     var action = this.action();
     var item = action.item();
@@ -1566,6 +1595,42 @@ AIManager.conditionTurnCount = function(condition) {
     this.setProperTarget(group);
     return true;
 };
+
+} else {
+// Alternative provided by Talonos
+
+AIManager.conditionTurnCount = function(condition) {
+    var action = this.action();
+    var item = action.item();
+    var user = this.battler();
+    var s = $gameSwitches._data;
+    var v = $gameVariables._data;
+    if (Imported.YEP_BattleEngineCore) {
+      if (BattleManager._phase === "input" && BattleManager.isTurnBased()) {
+        condition = '(user.turnCount() + 1) ' + condition;
+      } else {
+        condition = 'user.turnCount() ' + condition;
+      }
+    } else {
+      if (BattleManager._phase === "input") {
+        condition = '($gameTroop.turnCount() + 1) ' + condition;
+      } else {
+        condition = '$gameTroop.turnCount() ' + condition;
+      }
+    }
+    try {
+      if (!eval(condition)) return false;
+    } catch (e) {
+      Yanfly.Util.displayError(e, condition, 'A.I. TURN COUNT ERROR');
+      return false;
+    }
+    var group = this.getActionGroup();
+    this.setProperTarget(group);
+    return true;
+};
+
+} // Yanfly.Param.CoreAIDynamic
+
 
 AIManager.conditionVariable = function(variableId, condition) {
     var action = this.action();

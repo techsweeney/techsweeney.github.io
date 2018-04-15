@@ -8,7 +8,7 @@ Imported.YEP_LifeSteal = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.LS = Yanfly.LS || {};
-Yanfly.LS.version = 1.02;
+Yanfly.LS.version = 1.03;
 
 //=============================================================================
  /*:
@@ -17,21 +17,33 @@ Yanfly.LS.version = 1.02;
  * @author Yanfly Engine Plugins
  *
  * @param Enable HP Overheal
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Allow Life Steal to drain more HP than damage?
  * NO - false     YES - true
  * @default false
  *
  * @param Enable MP Overheal
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Allow Life Steal to drain more MP than damage?
  * NO - false     YES - true
  * @default false
  *
  * @param Negative HP LifeSteal
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Allow HP Life Steal values to go negative and damage
  * the attacker? NO - false     YES - true
  * @default false
  *
  * @param Negative MP LifeSteal
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Allow MP Life Steal values to go negative and damage
  * the attacker? NO - false     YES - true
  * @default false
@@ -231,6 +243,9 @@ Yanfly.LS.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Lunatic Mode fail safes added.

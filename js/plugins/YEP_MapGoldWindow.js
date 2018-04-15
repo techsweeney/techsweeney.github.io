@@ -8,23 +8,33 @@ Imported.YEP_MapGoldWindow = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.MGW = Yanfly.MGW || {};
+Yanfly.MGW.version = 1.02
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 Allows you to display the gold window on your map.
+ * @plugindesc v1.02 Allows you to display the gold window on your map.
  * @author Yanfly Engine Plugins
  *
  * @param Automatic Open
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Automatically open the map window by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Default Position
+ * @type number
+ * @min 1
+ * @max 9
  * @desc The default position of the gold window.
  * Refer to the numbers on the NumPad for screen position.
  * @default 9
  *
  * @param Opacity
+ * @type number
+ * @min 0
+ * @max 255
  * @desc The opacity value used for the gold window.
  * Default: 255
  * @default 255
@@ -66,6 +76,9 @@ Yanfly.MGW = Yanfly.MGW || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Fixed a bug where a finished message in battle would open up the gold

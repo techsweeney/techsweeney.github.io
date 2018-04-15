@@ -8,11 +8,11 @@ Imported.YEP_X_CriticalControl = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Crit = Yanfly.Crit || {};
-Yanfly.Crit.version = 1.03;
+Yanfly.Crit.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_DamageCore.js) Control over critical
+ * @plugindesc v1.05 (Requires YEP_DamageCore.js) Control over critical
  * hits have been added.
  * @author Yanfly Engine Plugins
  *
@@ -195,6 +195,13 @@ Yanfly.Crit.version = 1.03;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.04:
+ * - Bug fixed where the physical critical modifier replaced the magical
+ * critical modifier. This should be fixed now.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.
@@ -498,7 +505,7 @@ Game_Battler.prototype.magicalCritRateBonus = function() {
     multiplier = 0.0;
     for (var i = 0; i < this.states().length; ++i) {
       var state = this.states()[i];
-      if (state) multiplier += state.physicalCritRateBonus;
+      if (state) multiplier += state.magicalCritRateBonus;
     }
     return Math.max(0, multiplier);
 };

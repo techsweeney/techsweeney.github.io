@@ -12,7 +12,7 @@ Yanfly.WUL.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 Replace the Attack command or give it the option of
+ * @plugindesc v1.04a Replace the Attack command or give it the option of
  * have a skill randomly occur when using it!
  * @author Yanfly Engine Plugins
  *
@@ -126,7 +126,7 @@ Yanfly.WUL.version = 1.04;
  *
  *   <Guard Unleash: +x%>
  *   <Guard Unleash: -x%>
- *   This alters the weapon unleash rate for all weapon unleashes by +x%/-x%.
+ *   This alters the guard unleash rate for all weapon unleashes by +x%/-x%.
  *
  *   <Guard Unleash x: +y%>
  *   <Guard Unleash x: -y%>
@@ -255,6 +255,7 @@ Yanfly.WUL.version = 1.04;
  *
  * Version 1.04:
  * - Bug fixed for replaced attacks that do not have a selection target.
+ * - Documentation update. Fixed a help file error.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.

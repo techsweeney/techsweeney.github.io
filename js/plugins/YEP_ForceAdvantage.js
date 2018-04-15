@@ -8,24 +8,28 @@ Imported.YEP_ForceAdvantage = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.FAdv = Yanfly.FAdv || {};
+Yanfly.FAdv.version = 1.01
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 This plugin allows you to force pre-emptive,
+ * @plugindesc v1.01 This plugin allows you to force pre-emptive,
  * surprise, or normal initiatives for battles.
  * @author Yanfly Engine Plugins
  *
  * @param Neutral Event
+ * @type common_event
  * @desc This common event will play with neutral advantage.
  * Place 0 to not use this parameter.
  * @default 0
  *
  * @param Pre-Emptive Event
+ * @type common_event
  * @desc This common event will play with pre-emptive strikes.
  * Place 0 to not use this parameter.
  * @default 0
  *
  * @param Surprise Event
+ * @type common_event
  * @desc This common event will play with surprise strikes.
  * Place 0 to not use this parameter.
  * @default 0
@@ -71,6 +75,16 @@ Yanfly.FAdv = Yanfly.FAdv || {};
  *
  *   ForceAdvantage Clear
  *   - Clears any forced advantage settings imposed by the above commands.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

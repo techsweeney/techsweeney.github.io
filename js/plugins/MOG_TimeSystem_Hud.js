@@ -2,7 +2,7 @@
 // MOG_TimeSystem_Hud.js
 //=============================================================================
 /*:
- * @plugindesc (v1.3) Adiciona uma HUD apresentando o tempo. 
+ * @plugindesc (v1.7) Adiciona uma HUD apresentando o tempo. 
  * @author Moghunter
  *
  * @param Initial Visible
@@ -111,7 +111,7 @@
  *
  * @param Day Week X-axis
  * @desc Definição da posição X-Axis dos dias da semana.
- * @default 100
+ * @default 85
  *
  * @param Day Week Y-axis
  * @desc Definição da posição Y-Axis dos dias da semana.
@@ -119,7 +119,7 @@
  * 
  * @help  
  * =============================================================================
- * +++ MOG Time System Hud (v1.3) +++
+ * +++ MOG Time System Hud (v1.7) +++
  * By Moghunter 
  * https://atelierrgss.wordpress.com/
  * =============================================================================
@@ -136,6 +136,10 @@
  * ============================================================================
  * HISTÓRICO
  * ============================================================================
+ * (v1.7) - Melhoria da codificação e na compatibilidade de plugins.  
+ * (v1.6) Correção do tamanho do texto nos dias da semana.  
+ * (v1.5) Compatibilidade com Chrono Engine.
+ * (v1.4) Correção do glitch de piscar a hud. 
  * (v1.3) Adição de ocultar a hud no inicio do jogo.
  * (v1.2) Correção de piscar a hud no modo ocultar a hud.
  *        
@@ -174,7 +178,7 @@
 	Moghunter.timehud_season_x = Number(Moghunter.parameters['Season X-axis'] || 53);
 	Moghunter.timehud_season_y = Number(Moghunter.parameters['Season Y-axis'] || 100);
 	Moghunter.timehud_dayweek_visible = String(Moghunter.parameters['Day Week Visible'] || "true");
-	Moghunter.timehud_dayweek_x = Number(Moghunter.parameters['Day Week X-axis'] || 100);
+	Moghunter.timehud_dayweek_x = Number(Moghunter.parameters['Day Week X-axis'] || 85);
 	Moghunter.timehud_dayweek_y = Number(Moghunter.parameters['Day Week Y-axis'] || 165);		
 	Moghunter.timehud_timer_visible = String(Moghunter.parameters['Timer Visible'] || "false");
 	Moghunter.timehud_timer_x = Number(Moghunter.parameters['Timer X-axis'] || 63);
@@ -211,25 +215,48 @@ Game_CharacterBase.prototype.screen_realY = function() {
 };
 	
 //=============================================================================
-// ** Spriteset_Map
+// ** Scene Base
 //=============================================================================
 
 //==============================
-// * Create Upper Layer
+// ** create Hud Field
 //==============================
-var _alias_mog_time_system_sptrbase_createUpperLayer = Spriteset_Map.prototype.createUpperLayer;
-Spriteset_Map.prototype.createUpperLayer = function() {
-	_alias_mog_time_system_sptrbase_createUpperLayer.call(this)
-	this.create_sprite_time_engine();
+Scene_Base.prototype.createHudField = function() {
+	this._hudField = new Sprite();
+	this._hudField.z = 10;
+	this.addChild(this._hudField);
 };
 
 //==============================
-// * Create Sprite Time Engine
+// ** sort MZ
 //==============================
-Spriteset_Map.prototype.create_sprite_time_engine = function() {
-	this.sprite_time_engine = new SpriteTimeEngine();
-	this.addChild(this.sprite_time_engine);
+Scene_Base.prototype.sortMz = function() {
+   this._hudField.children.sort(function(a, b){return a.mz-b.mz});
+};	
+	
+//=============================================================================
+// ** Scene Map
+//=============================================================================
+
+//==============================
+// ** create Spriteset
+//==============================
+var _mog_TimeSystemHud_sMap_createSpriteset = Scene_Map.prototype.createSpriteset;
+Scene_Map.prototype.createSpriteset = function() {
+	_mog_TimeSystemHud_sMap_createSpriteset.call(this);
+	if (!this._hudField) {this.createHudField()};
+	this.createTimeSystemHud();
+	this.sortMz();
 };
+	
+//==============================
+// ** create Time System Hud
+//==============================
+Scene_Map.prototype.createTimeSystemHud = function() {
+    this.sprite_time_engine = new SpriteTimeEngine();
+	this.sprite_time_engine.mz = 120;
+	this._hudField.addChild(this.sprite_time_engine);	
+};	
 
 //=============================================================================
 // * Sprite Time Engine
@@ -486,7 +513,7 @@ SpriteTimeEngine.prototype.refresh_season = function() {
 SpriteTimeEngine.prototype.create_dayweek = function() {
 	 if (Moghunter.timehud_dayweek_visible !== "true") {return};
 	 this._dayweek_old = $gameSystem.day_week();
-     this._dayweek = new Sprite(new Bitmap(60,32));
+     this._dayweek = new Sprite(new Bitmap(90,32));
 	 this._dayweek.x = this._pos_x + Moghunter.timehud_dayweek_x;
 	 this._dayweek.y = this._pos_y + Moghunter.timehud_dayweek_y;
 	 this._dayweek.bitmap.fontSize = Moghunter.timehud_fontSize;
@@ -501,7 +528,7 @@ SpriteTimeEngine.prototype.create_dayweek = function() {
 SpriteTimeEngine.prototype.refresh_dayweek = function() {
 	this._dayweek_old = $gameSystem.day_week();
 	this._dayweek.bitmap.clear();
-	this._dayweek.bitmap.drawText($gameSystem.day_week_name(),0,0,60,32,"center")
+	this._dayweek.bitmap.drawText($gameSystem.day_week_name(),0,0,90,32,"center")
 };
 
 //==============================
@@ -540,9 +567,22 @@ SpriteTimeEngine.prototype.update = function() {
 // * Update visible
 //==============================
 SpriteTimeEngine.prototype.update_visible = function() {
+	if (Imported.MOG_ChronoEngine && $gameSystem.isChronoMode()) {
+		this.opacity -= 20;
+		return;
+	};	
 	this.visible = $gameSystem._time_window_visible;
 	if (this.is_hud_visible()) {this.opacity += 10}	 
-	else {this.opacity -= 10};
+	else {
+		if ($gameMessage.isBusy()) {
+		        this.opacity -= 10;
+		} else {		
+			if (this.opacity > Moghunter.timehud_fade_limit) {	
+				this.opacity -= 10;
+				if (this.opacity < Moghunter.timehud_fade_limit) {this.opacity = Moghunter.timehud_fade_limit};
+			};
+		};
+	};
 };
 
 //==============================

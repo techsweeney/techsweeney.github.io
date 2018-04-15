@@ -8,11 +8,11 @@ Imported.YEP_X_WeakEnemyPoses = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.WEPose = Yanfly.WEPose || {};
-Yanfly.WEPose.version = 1.01;
+Yanfly.WEPose.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 (Requires YEP_BattleEngineCore.js) Allow enemies to
+ * @plugindesc v1.02 (Requires YEP_BattleEngineCore.js) Allow enemies to
  * have different battler images when they're weakened.
  * @author Yanfly Engine Plugins
  *
@@ -123,6 +123,9 @@ Yanfly.WEPose.version = 1.01;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Lunatic Mode fail safes added.

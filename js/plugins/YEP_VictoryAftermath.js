@@ -8,10 +8,11 @@ Imported.YEP_VictoryAftermath = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.VA = Yanfly.VA || {};
+Yanfly.VA.version = 1.07
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 Display an informative window after a battle is over
+ * @plugindesc v1.07 Display an informative window after a battle is over
  * instead of message box text stating what the party earned.
  * @author Yanfly Engine Plugins
  *
@@ -19,6 +20,7 @@ Yanfly.VA = Yanfly.VA || {};
  * @default
  *
  * @param Victory Order
+ * @parent ---General---
  * @desc This is the order the victory sequence will play out.
  * Separate each part with a space.
  * @default exp custom drops
@@ -27,18 +29,25 @@ Yanfly.VA = Yanfly.VA || {};
  * @default
  *
  * @param Victory BGM
+ * @parent ---BGM---
+ * @type file
+ * @dir audio/bgm/
+ * @require 1
  * @desc This will be the BGM used when the battle is over.
  * @default Ship3
  *
  * @param BGM Volume
+ * @parent ---BGM---
  * @desc This will be the volume of the BGM played.
  * @default 90
  *
  * @param BGM Pitch
+ * @parent ---BGM---
  * @desc This will be the pitch of the BGM played.
  * @default 100
  *
  * @param BGM Pan
+ * @parent ---BGM---
  * @desc This will be the pan of the BGM played.
  * @default 0
  *
@@ -46,15 +55,20 @@ Yanfly.VA = Yanfly.VA || {};
  * @default
  *
  * @param Cheer Wait
+ * @parent ---Battle Results---
+ * @type number
+ * @min 0
  * @desc This will be how many frames the actors will cheer for
  * before the Victory Aftermath windows appear.
  * @default 90
  *
  * @param Battle Results Text
+ * @parent ---Battle Results---
  * @desc This is the text used for the battle results text.
  * @default Battle Results
  *
  * @param Battle Drops Text
+ * @parent ---Battle Results---
  * @desc This is the text used for the drops gained in battle.
  * @default Battle Spoils
  *
@@ -62,69 +76,106 @@ Yanfly.VA = Yanfly.VA || {};
  * @default
  *
  * @param Font Size
+ * @parent ---EXP Window---
+ * @type number
+ * @min 1
  * @desc This is the font size used for the EXP Window.
  * Default: 28
  * @default 28
  *
  * @param Level Up Text
+ * @parent ---EXP Window---
  * @desc The text to be used when leveling up.
  * @default LEVEL UP!
  *
  * @param Max Level Text
+ * @parent ---EXP Window---
  * @desc The text to be used when the actor is Max Level.
  * @default MAX LEVEL
  *
  * @param Show Skills Learned
+ * @parent ---EXP Window---
+ * @type boolean
+ * @on Display Skills
+ * @off Don't Display
  * @desc Display skills learned at level up?
  * NO - false     YES - true
  * @default false
  *
  * @param Gained EXP Text
+ * @parent ---EXP Window---
  * @desc The text to label how much EXP was gained in battle.
  * @default Gained EXP
  *
  * @param Gained EXP Format
+ * @parent ---EXP Window---
  * @desc The text to display how much EXP was gained in battle.
  * @default +%1
  *
  * @param EXP Gauge Color 1
+ * @parent ---EXP Window---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The skin color used in EXP Gauge Color 1 shown in the
  * Victory Aftermath Window.
  * @default 30
  *
  * @param EXP Gauge Color 2
+ * @parent ---EXP Window---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The skin color used in EXP Gauge Color 2 shown in the
  * Victory Aftermath Window.
  * @default 31
  *
  * @param Level Gauge Color 1
+ * @parent ---EXP Window---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The skin color used for the EXP Gauge Color 1 if the actor
  * has leveled up.
  * @default 14
  *
  * @param Level Gauge Color 2
+ * @parent ---EXP Window---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The skin color used for the EXP Gauge Color 2 if the actor
  * has leveled up.
  * @default 6
  *
  * @param Gauge Ticks
+ * @parent ---EXP Window---
+ * @type number
+ * @min 0
  * @desc This is how many ticks will occur before the gained EXP
  * gauge is full. Each tick is 4 frames.
  * @default 15
  *
  * @param Tick SE
+ * @parent ---EXP Window---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This will be the sound used while the EXP gauge fills up.
  * @default Absorb2
  *
  * @param Tick Volume
+ * @parent ---EXP Window---
  * @desc This will be the volume of the BGM played.
  * @default 90
  *
  * @param Tick Pitch
+ * @parent ---EXP Window---
  * @desc This will be the pitch of the BGM played.
  * @default 150
  *
  * @param Tick Pan
+ * @parent ---EXP Window---
  * @desc This will be the pan of the BGM played.
  * @default 0
  *
@@ -173,6 +224,9 @@ Yanfly.VA = Yanfly.VA || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.07:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.06:
  * - Updated for RPG Maker MV version 1.3.2.

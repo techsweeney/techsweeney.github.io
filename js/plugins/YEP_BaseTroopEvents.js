@@ -8,14 +8,16 @@ Imported.YEP_BaseTroopEvents = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BTE = Yanfly.BTE || {};
+Yanfly.BTE.version = 1.01
 
 //=============================================================================
 /*:
- * @plugindesc v1.00 Enabling this plugin will cause all troops to have
+ * @plugindesc v1.01 Enabling this plugin will cause all troops to have
  * events occur in every fight.
  * @author Yanfly Engine Plugins
  *
  * @param Base Troop ID
+ * @type troop
  * @desc Change this value to the Troop ID you want all of the recurring
  * troop events to draw from.
  * @default 1
@@ -29,6 +31,16 @@ Yanfly.BTE = Yanfly.BTE || {};
  * custom event pages, you can now save yourself some time by drawing all the
  * event pages from a base troop event to occur in every fight. All of the
  * events will be present in every single battle.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

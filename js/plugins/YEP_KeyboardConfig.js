@@ -8,10 +8,11 @@ Imported.YEP_KeyboardConfig = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.KeyConfig = Yanfly.KeyConfig || {};
+Yanfly.KeyConfig.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 Allows players to adjust their button configuration
+ * @plugindesc v1.03 Allows players to adjust their button configuration
  * for keyboards.
  * @author Yanfly Engine Plugins
  *
@@ -19,54 +20,79 @@ Yanfly.KeyConfig = Yanfly.KeyConfig || {};
  * @default
  *
  * @param Command Name
+ * @parent ---General---
  * @desc This is the option name that appears in the main menu.
  * @default Keyboard Config
  *
  * @param Button Events
+ * @parent ---General---
  * @desc Requires YEP_ButtonCommonEvents. This is a list of common
  * events you can bind to key presses. Separate with a space.
  * @default 1 2 3
+ *
+ * @param Button Events List
+ * @parent ---General---
+ * @type number[]
+ * @desc Requires YEP_ButtonCommonEvents. This is a list of common
+ * events you can bind to key presses. MV 1.5.0+
+ * @default []
  *
  * @param ---Help Text---
  * @default
  *
  * @param Key Help
+ * @parent ---Help Text---
  * @desc This is the help message that will display for keys.
  * @default Change the configuration of this key?
  *
  * @param Default Layout
+ * @parent ---Help Text---
  * @desc This is the text for switching to the default layout.
  * @default Default Keyboard Layout
  *
  * @param Default Help
+ * @parent ---Help Text---
  * @desc This is the help message that will display for keys.
  * @default Reverts your keyboard setting to the default setup.
  *
  * @param WASD Layout
+ * @parent ---Help Text---
  * @desc This is the text for switching to the WASD layout.
  * @default WASD Movement Layout
  *
  * @param WASD Help
+ * @parent ---Help Text---
  * @desc This is the help message that will display for WASD.
  * @default Changes your keyboard to WASD movement.
  *
  * @param Finish Config
+ * @parent ---Help Text---
  * @desc This is the text for finishing with keyboard configuration.
  * @default Finish Configuration
  *
  * @param Finish Help
+ * @parent ---Help Text---
  * @desc This is the help message that will display for Finish.
  * @default Are you done configuring your keyboard?
  *
  * @param Assigned Color
+ * @parent ---Help Text---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the background color of a key that's assigned.
  * @default 21
  *
  * @param Action Color
+ * @parent ---Help Text---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color of an assigned action.
  * @default 4
  *
  * @param Clear Text
+ * @parent ---Help Text---
  * @desc This is the Clear action will appear for the config text.
  * @default Clear
  *
@@ -74,90 +100,112 @@ Yanfly.KeyConfig = Yanfly.KeyConfig || {};
  * @default
  *
  * @param OK Key
+ * @parent ---Key Names---
  * @desc This is the OK action will appear on a key.
  * @default OK
  *
  * @param OK Text
+ * @parent ---Key Names---
  * @desc This is the OK action will appear for the config text.
  * @default OK / Talk
  *
  * @param Escape Key
+ * @parent ---Key Names---
  * @desc This is the Escape action will appear on a key.
  * @default X
  *
  * @param Escape Text
+ * @parent ---Key Names---
  * @desc This is the Escape action will appear for the config text.
  * @default Cancel / Menu
  *
  * @param Cancel Key
+ * @parent ---Key Names---
  * @desc This is the Cancel action will appear on a key.
  * @default Cancel
  *
  * @param Cancel Text
+ * @parent ---Key Names---
  * @desc This is the Cancel action will appear for the config text.
  * @default Cancel
  *
  * @param Menu Key
+ * @parent ---Key Names---
  * @desc This is the Menu action will appear on a key.
  * @default Menu
  *
  * @param Menu Text
+ * @parent ---Key Names---
  * @desc This is the Menu action will appear for the config text.
  * @default Menu
  *
  * @param Shift Key
+ * @parent ---Key Names---
  * @desc This is the Shift action will appear on a key.
  * @default Dash
  *
  * @param Shift Text
+ * @parent ---Key Names---
  * @desc This is the Shift action will appear for the config text.
  * @default Dash
  *
  * @param PageUp Key
+ * @parent ---Key Names---
  * @desc This is the PageUp action will appear on a key.
  * @default PgUp
  *
  * @param PageUp Text
+ * @parent ---Key Names---
  * @desc This is the PageUp action will appear for the config text.
  * @default Page Up
  *
  * @param PageDown Key
+ * @parent ---Key Names---
  * @desc This is the PageUp action will appear on a key.
  * @default PgDn
  *
  * @param PageDown Text
+ * @parent ---Key Names---
  * @desc This is the PageUp action will appear for the config text.
  * @default Page Down
  *
  * @param Left Key
+ * @parent ---Key Names---
  * @desc This is the Left action will appear on a key.
  * @default ◄
  *
  * @param Left Text
+ * @parent ---Key Names---
  * @desc This is the Left action will appear for the config text.
  * @default Move ◄ Left
  *
  * @param Up Key
+ * @parent ---Key Names---
  * @desc This is the Up action will appear on a key.
  * @default ▲
  *
  * @param Up Text
+ * @parent ---Key Names---
  * @desc This is the Up action will appear for the config text.
  * @default Move ▲ Up
  *
  * @param Right Key
+ * @parent ---Key Names---
  * @desc This is the Right action will appear on a key.
  * @default ►
  *
  * @param Right Text
+ * @parent ---Key Names---
  * @desc This is the Right action will appear for the config text.
  * @default Move ► Right
  *
  * @param Down Key
+ * @parent ---Key Names---
  * @desc This is the Down action will appear on a key.
  * @default ▼
  *
  * @param Down Text
+ * @parent ---Key Names---
  * @desc This is the Down action will appear for the config text.
  * @default Move ▼ Down
  *
@@ -211,6 +259,13 @@ Yanfly.KeyConfig = Yanfly.KeyConfig || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.03:
+ * - Bug fixed that prevented the plugin from working if specific other plugins
+ * weren't present.
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
  * Version 1.01:
  * - Compatibility update with Button Common Events.
  * - Added <Config Key: text>, <Config Text: text>, and <Config Required>
@@ -229,21 +284,29 @@ Yanfly.Parameters = PluginManager.parameters('YEP_KeyboardConfig');
 Yanfly.Param = Yanfly.Param || {};
 
 Yanfly.Param.KeyConfigName = String(Yanfly.Parameters['Command Name']);
-if (Imported.YEP_ButtonCommonEvents) {
-  Yanfly.Param.KeyConfigEv = String(Yanfly.Parameters['Button Events']);
-  Yanfly.Param.KeyConfigEv = Yanfly.Param.KeyConfigEv.split(' ');
-  for (Yanfly.i = 0; Yanfly.i < Yanfly.Param.KeyConfigEv.length; ++Yanfly.i) {
-    Yanfly.Param.KeyConfigEv[Yanfly.i] = 
-      parseInt(Yanfly.Param.KeyConfigEv[Yanfly.i]);
+Yanfly.SetupParameters = function() {
+  if (Imported.YEP_ButtonCommonEvents) {
+    Yanfly.Param.KeyConfigEv = String(Yanfly.Parameters['Button Events']);
+    Yanfly.Param.KeyConfigEv = Yanfly.Param.KeyConfigEv.split(' ');
+    for (var i = 0; i < Yanfly.Param.KeyConfigEv.length; ++i) {
+      Yanfly.Param.KeyConfigEv[i] = 
+        parseInt(Yanfly.Param.KeyConfigEv[i]);
+    };
+    Yanfly.Param.KeyConfigKeys = {};
+    for (var key in Yanfly.Param.BCEList) {
+      value = Yanfly.Param.BCEList[key];
+      Yanfly.Param.KeyConfigKeys[value] = key;
+    }
+    var array = JSON.parse(Yanfly.Parameters['Button Events List'] || '[]');
+    for (var j = 0; j < array.length; ++j) {
+      if (Yanfly.Param.KeyConfigEv.contains(array[j])) continue;
+      Yanfly.Param.KeyConfigEv.push(parseInt(array[j]));
+    }
+  } else {
+    Yanfly.Param.KeyConfigEv = [];
   };
-  Yanfly.Param.KeyConfigKeys = {};
-  for (var key in Yanfly.Param.BCEList) {
-    value = Yanfly.Param.BCEList[key];
-    Yanfly.Param.KeyConfigKeys[value] = key;
-  }
-} else {
-  Yanfly.Param.KeyConfigEv = [];
 };
+Yanfly.SetupParameters();
 
 Yanfly.Param.KeyConfigKeyHelp = String(Yanfly.Parameters['Key Help']);
 Yanfly.Param.KeyConfigDefaultTx = String(Yanfly.Parameters['Default Layout']);

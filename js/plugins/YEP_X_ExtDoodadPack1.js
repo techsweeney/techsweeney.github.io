@@ -8,11 +8,11 @@ Imported.YEP_X_ExtDoodadPack1 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EDP1 = Yanfly.EDP1 || {};
-Yanfly.EDP1.version = 1.00;
+Yanfly.EDP1.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_GridFreeDoodads.js) Adds extra options
+ * @plugindesc v1.01 (Requires YEP_GridFreeDoodads.js) Adds extra options
  * to the Grid-Free Doodads plugin's doodad settings.
  * @author Yanfly Engine Plugins
  *
@@ -67,8 +67,11 @@ Yanfly.EDP1.version = 1.00;
  * Changelog
  * ============================================================================
  *
- * Version BETA:
- * - Started Plugin!
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

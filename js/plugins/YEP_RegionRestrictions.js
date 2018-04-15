@@ -8,10 +8,11 @@ Imported.YEP_RegionRestrictions = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.RR = Yanfly.RR || {};
+Yanfly.RR.version = 1.04
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 Use regions to block out Events and/or the player from
+ * @plugindesc v1.04 Use regions to block out Events and/or the player from
  * being able to venture into those spots.
  * @author Yanfly Engine Plugins
  *
@@ -108,6 +109,9 @@ Yanfly.RR = Yanfly.RR || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Fixed an issue with vehicles being capable of landing the player in region

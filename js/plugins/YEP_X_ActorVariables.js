@@ -8,43 +8,98 @@ Imported.YEP_X_ActorVariables = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.AVar = Yanfly.AVar || {};
-Yanfly.AVar.version = 1.04;
+Yanfly.AVar.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_StatusMenuCore.js) Allows you to
+ * @plugindesc v1.05 (Requires YEP_StatusMenuCore.js) Allows you to
  * display variables for each actor.
  * @author Yanfly Engine Plugins
  *
+ * @param ---General---
+ * @default
+ *
  * @param Command Name
+ * @parent ---General---
  * @desc This is the text used for the command name in the Status
  * Menu command List
  * @default Variables
  *
+ * @param ---Columns---
+ * @default
+ *
  * @param Global Column 1
+ * @parent ---Columns---
  * @desc This is a list of variables that appear for all actors.
  * Separate each variable ID with a space.
  * @default 1 2 3 4
  *
  * @param Global Column 2
+ * @parent ---Columns---
  * @desc This is a list of variables that appear for all actors.
  * Separate each variable ID with a space.
  * @default 5 6 7 8
  *
  * @param Global Column 3
+ * @parent ---Columns---
  * @desc This is a list of variables that appear for all actors.
  * Separate each variable ID with a space.
  * @default
  *
  * @param Global Column 4
+ * @parent ---Columns---
  * @desc This is a list of variables that appear for all actors.
  * Separate each variable ID with a space.
  * @default
  *
  * @param Hidden Variables
+ * @parent ---Columns---
  * @desc Hide these variables from the status menu at the start
  * of the game. Separate each variable ID with a space.
  * @default
+ *
+ * @param ---MV 1.5.0---
+ * @default
+ *
+ * @param Global Column 1 1.5.0
+ * @text Global Column 1
+ * @parent ---MV 1.5.0---
+ * @type variable[]
+ * @desc This is a list of variables that appear for all actors.
+ * Use with MV 1.5.0+
+ * @default ["1","2","3","4"]
+ *
+ * @param Global Column 2 1.5.0
+ * @text Global Column 2
+ * @parent ---MV 1.5.0---
+ * @type variable[]
+ * @desc This is a list of variables that appear for all actors.
+ * Use with MV 1.5.0+
+ * @default ["5","6","7","8"]
+ *
+ * @param Global Column 3 1.5.0
+ * @text Global Column 3
+ * @parent ---MV 1.5.0---
+ * @type variable[]
+ * @desc This is a list of variables that appear for all actors.
+ * Use with MV 1.5.0+
+ * @default []
+ *
+ * @param Global Column 4 1.5.0
+ * @text Global Column 4
+ * @parent ---MV 1.5.0---
+ * @type variable[]
+ * @desc This is a list of variables that appear for all actors.
+ * Use with MV 1.5.0+
+ * @default []
+ *
+ * @param Hidden Variables 1.5.0
+ * @text Hidden Variables
+ * @parent ---MV 1.5.0---
+ * @type variable[]
+ * @desc Hide these variables from the status menu at the start
+ * of the game. Use with MV 1.5.0+
+ * @default []
  *
  * @help
  * ============================================================================
@@ -113,6 +168,9 @@ Yanfly.AVar.version = 1.04;
  * Changelog
  * ============================================================================
  *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
  * Version 1.04:
  * - Plugin fixed to be standalone if you wish to use the x to y notetags.
  *
@@ -147,6 +205,48 @@ Yanfly.Param.AVarColumn2 = String(Yanfly.Parameters['Global Column 2']);
 Yanfly.Param.AVarColumn3 = String(Yanfly.Parameters['Global Column 3']);
 Yanfly.Param.AVarColumn4 = String(Yanfly.Parameters['Global Column 4']);
 Yanfly.Param.AVarHidden = String(Yanfly.Parameters['Hidden Variables']);
+
+if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.5.0") {
+
+Yanfly.SetupParameters = function() {
+  var data = JSON.parse(Yanfly.Parameters['Global Column 1 1.5.0'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = data[i];
+    Yanfly.Param.AVarColumn1 += ' ' + varId;
+  }
+  Yanfly.Param.AVarColumn1 = Yanfly.Param.AVarColumn1.trim();
+
+  data = JSON.parse(Yanfly.Parameters['Global Column 2 1.5.0'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = data[i];
+    Yanfly.Param.AVarColumn2 += ' ' + varId;
+  }
+  Yanfly.Param.AVarColumn2 = Yanfly.Param.AVarColumn2.trim();
+
+  data = JSON.parse(Yanfly.Parameters['Global Column 3 1.5.0'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = data[i];
+    Yanfly.Param.AVarColumn3 += ' ' + varId;
+  }
+  Yanfly.Param.AVarColumn3 = Yanfly.Param.AVarColumn3.trim();
+
+  var data = JSON.parse(Yanfly.Parameters['Global Column 4 1.5.0'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = data[i];
+    Yanfly.Param.AVarColumn4 += ' ' + varId;
+  }
+  Yanfly.Param.AVarColumn4 = Yanfly.Param.AVarColumn4.trim();
+
+  var data = JSON.parse(Yanfly.Parameters['Hidden Variables 1.5.0'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = data[i];
+    Yanfly.Param.AVarHidden += ' ' + varId;
+  }
+  Yanfly.Param.AVarHidden = Yanfly.Param.AVarHidden.trim();
+};
+Yanfly.SetupParameters();
+
+} // Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.5.0"
 
 //=============================================================================
 // DataManager

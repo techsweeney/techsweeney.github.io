@@ -8,11 +8,11 @@ Imported.YEP_EquipCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Equip = Yanfly.Equip || {};
-Yanfly.Equip.version = 1.16;
+Yanfly.Equip.version = 1.17;
 
 //=============================================================================
  /*:
- * @plugindesc v1.16 Allows for the equipment system to be more flexible to
+ * @plugindesc v1.17 Allows for the equipment system to be more flexible to
  * allow for unique equipment slots per class.
  * @author Yanfly Engine Plugins
  *
@@ -20,30 +20,44 @@ Yanfly.Equip.version = 1.16;
  * @default
  *
  * @param Text Align
+ * @parent ---General---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc How to align the text for the command window.
  * left     center     right
  * @default center
  *
  * @param Finish Command
+ * @parent ---General---
  * @desc The command text used for exiting the equip scene.
  * Leave empty to not include this command.
  * @default Finish
  *
  * @param Remove Text
+ * @parent ---General---
  * @desc The text used to display the "Remove" command in the equip
  * item list.
  * @default Remove
  *
  * @param Remove Icon
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc The icon used to display next to the "Remove" command in
  * the equip item list.
  * @default 16
  *
  * @param Empty Text
+ * @parent ---General---
  * @desc The text used to display an "Empty" piece of equipment.
  * @default <Empty>
  *
  * @param Empty Icon
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc The icon used to display next to the "Empty" piece of
  * equipment in the equipment list.
  * @default 16
@@ -52,11 +66,19 @@ Yanfly.Equip.version = 1.16;
  * @default
  *
  * @param Non-Removable Types
+ * @parent ---Rules---
+ * @type number
+ * @min 1
+ * @max 100
  * @desc These types must always have an item equipped and cannot
  * be empty. Separate the type ID's by a space.
  * @default 1
  *
  * @param Non-Optimized Types
+ * @parent ---Rules---
+ * @type number
+ * @min 1
+ * @max 100
  * @desc These types will be ignored when the actor optimizes
  * equips. Separate the type ID's by a space.
  * @default 5
@@ -160,6 +182,9 @@ Yanfly.Equip.version = 1.16;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.17:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.16:
  * - Lunatic Mode fail safes added.

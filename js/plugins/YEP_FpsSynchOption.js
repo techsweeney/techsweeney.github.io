@@ -8,11 +8,11 @@ Imported.YEP_SynchFpsOption = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.FpsSynch = Yanfly.FpsSynch || {};
-Yanfly.FpsSynch.version = 1.01;
+Yanfly.FpsSynch.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 Adds a new command to Options menu for synching
+ * @plugindesc v1.02 Adds a new command to Options menu for synching
  * the FPS of moniters with higher FPS rates.
  * @author Yanfly Engine Plugins
  *
@@ -21,6 +21,9 @@ Yanfly.FpsSynch.version = 1.01;
  * @default Synch Monitor FPS
  *
  * @param Default Setting
+ * @type boolean
+ * @on ON
+ * @off OFF
  * @desc The default setting of the Synch Monitor FPS.
  * OFF - false (Recommended)  ON - true
  * @default false
@@ -58,6 +61,9 @@ Yanfly.FpsSynch.version = 1.01;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - The plugin is now prevented if the project's core files are under version

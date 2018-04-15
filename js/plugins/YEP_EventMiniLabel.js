@@ -8,36 +8,49 @@ Imported.YEP_EventMiniLabel = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EML = Yanfly.EML || {};
+Yanfly.EML.version = 1.12
 
 //=============================================================================
  /*:
- * @plugindesc v1.11 Creates miniature-sized labels over events to allow
+ * @plugindesc v1.12 Creates miniature-sized labels over events to allow
  * you to insert whatever text you'd like in them.
  * @author Yanfly Engine Plugins
  *
  * @param Default Show
  * @desc Show mini labels by default?
+ * @type boolean
+ * @on YES
+ * @off NO
  * NO - false     YES - true
  * @default true
  *
  * @param Minimum Width
+ * @type number
+ * @min 1
  * @desc What is the minimum width in pixels for mini labels?
  * @default 136
  *
  * @param Font Size
+ * @type number
+ * @min 1
  * @desc What is the font size used for text inside a mini label?
  * Default: 28
  * @default 20
  *
  * @param X Buffer
+ * @type number
  * @desc Alter the X position of the label by this much.
  * @default 0
  *
  * @param Y Buffer
+ * @type number
  * @desc Alter the Y position of the label by this much.
  * @default 36
  *
  * @param Battle Transition
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show Event Mini label during battle transition?
  * NO - false     YES - true
  * @default false
@@ -112,6 +125,9 @@ Yanfly.EML = Yanfly.EML || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.12:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.11:
  * - Added 'Battle Transition' plugin parameter. Enabling this will allow you

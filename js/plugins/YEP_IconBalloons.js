@@ -8,20 +8,21 @@ Imported.YEP_IconBalloons = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IBalloon = Yanfly.IBalloon || {};
+Yanfly.IBalloon.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Allows you to use icons for your on-map balloons
+ * @plugindesc v1.02 Allows you to use icons for your on-map balloons
  * over your characters and events!
  * @author Yanfly Engine Plugins
  *
  * @param Empty Filename
+ * @type file
+ * @dir img/system/
+ * @require 1
  * @desc This is the filename of your empty balloon. Do not include
  * file extension here.
  * @default EmptyBalloon
- * @require 1
- * @dir img/system/
- * @type file
  *
  * @help
  * ============================================================================
@@ -51,6 +52,9 @@ Yanfly.IBalloon = Yanfly.IBalloon || {};
  *
  *   ShowIconBalloon x on Follower y
  *   ShowIconBalloon x on Follower y, Wait
+ *
+ *   ShowIconBalloon x on This Event
+ *   ShowIconBalloon x on This Event, wait
  *   - This will cause the Icon Balloon using icon index x to appear on the
  *   player, event y, or follower y. If 'wait' is used, then the event will
  *   wait until the balloon has finished playing.
@@ -65,11 +69,27 @@ Yanfly.IBalloon = Yanfly.IBalloon || {};
  *
  *   ShowIconBalloon x to y on Follower z
  *   ShowIconBalloon x to y on Follower z, Wait
+ *
+ *   ShowIconBalloon x to y on This Event
+ *   ShowIconBalloon x to y on This Event, Wait
  *   - This will cause the Icon Balloon start on icon index x and move through
  *   to y, the next icon upward each few frames up to icon index y. This icon
  *   balloon will be played on the player, event z, or follower z. If 'wait' is
  *   used, then the event will wait until the balloon has finished playing.
  *   When using this command, x cannot be greater than y.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.02:
+ * - Added 'This Event' option to Show Icon balloons thanks to Eldaym!
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -143,7 +163,9 @@ Game_Interpreter.prototype.canShowIconBalloons = function() {
 };
 
 Game_Interpreter.prototype.processIconBalloons = function(str) {
-
+  // Addition made by Eldaym
+  str = str.replace('This Event', 'Event ' + this.eventId());
+  // Original
   if (str.match(/(\d+)[ ]TO[ ](\d+)[ ](.*)/i)) {
     var iconIndex1 = parseInt(RegExp.$1);
     var iconIndex2 = parseInt(RegExp.$2);

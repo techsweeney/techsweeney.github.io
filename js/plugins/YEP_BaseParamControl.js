@@ -8,11 +8,11 @@ Imported.YEP_BaseParamControl = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BPC = Yanfly.BPC || {};
-Yanfly.BPC.version = 1.02;
+Yanfly.BPC.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 Gain control over the method of calculation for base
+ * @plugindesc v1.03 Gain control over the method of calculation for base
  * parameters: MaxHP, MaxMP, ATK, DEF, MAT, MDF, AGI, LUK.
  * @author Yanfly Engine Plugins
  *
@@ -20,16 +20,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param MHP Formula
+ * @parent ---MaxHP---
  * @desc The formula used to determine MHP: MaxHP
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param MHP Maximum
+ * @parent ---MaxHP---
  * @desc This is the highest value for MHP.
  * This is a formula.
  * @default customMax || (user.isActor() ? 9999 : 999999)
  *
  * @param MHP Minimum
+ * @parent ---MaxHP---
  * @desc This is the lowest value for MHP.
  * This is a formula.
  * @default customMin || 1
@@ -38,16 +41,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param MMP Formula
+ * @parent ---MaxMP---
  * @desc The formula used to determine MMP: MaxMP
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param MMP Maximum
+ * @parent ---MaxMP---
  * @desc This is the highest value for MMP.
  * This is a formula.
  * @default customMax || (user.isActor() ? 9999 : 9999)
  *
  * @param MMP Minimum
+ * @parent ---MaxMP---
  * @desc This is the lowest value for MMP.
  * This is a formula.
  * @default customMin || 0
@@ -56,16 +62,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param ATK Formula
+ * @parent ---Attack---
  * @desc The formula used to determine ATK: Attack
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param ATK Maximum
+ * @parent ---Attack---
  * @desc This is the highest value for ATK.
  * This is a formula.
  * @default customMax || (user.isActor() ? 999 : 999)
  *
  * @param ATK Minimum
+ * @parent ---Attack---
  * @desc This is the lowest value for ATK.
  * This is a formula.
  * @default customMin || 1
@@ -74,16 +83,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param DEF Formula
+ * @parent ---Defense---
  * @desc The formula used to determine DEF: Defense
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param DEF Maximum
+ * @parent ---Defense---
  * @desc This is the highest value for DEF.
  * This is a formula.
  * @default customMax || (user.isActor() ? 999 : 999)
  *
  * @param DEF Minimum
+ * @parent ---Defense---
  * @desc This is the lowest value for DEF.
  * This is a formula.
  * @default customMin || 1
@@ -92,16 +104,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param MAT Formula
+ * @parent ---M.Attack---
  * @desc The formula used to determine MAT: M.Attack
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param MAT Maximum
+ * @parent ---M.Attack---
  * @desc This is the highest value for MAT.
  * This is a formula.
  * @default customMax || (user.isActor() ? 999 : 999)
  *
  * @param MAT Minimum
+ * @parent ---M.Attack---
  * @desc This is the lowest value for MAT.
  * This is a formula.
  * @default customMin || 1
@@ -110,16 +125,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param MDF Formula
+ * @parent ---M.Defense---
  * @desc The formula used to determine MDF: M.Defense
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param MDF Maximum
+ * @parent ---M.Defense---
  * @desc This is the highest value for MDF.
  * This is a formula.
  * @default customMax || (user.isActor() ? 999 : 999)
  *
  * @param MDF Minimum
+ * @parent ---M.Defense---
  * @desc This is the lowest value for MDF.
  * This is a formula.
  * @default customMin || 1
@@ -128,16 +146,19 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param AGI Formula
+ * @parent ---Agility---
  * @desc The formula used to determine AGI: Agility
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param AGI Maximum
+ * @parent ---Agility---
  * @desc This is the highest value for AGI.
  * This is a formula.
  * @default customMax || (user.isActor() ? 999 : 999)
  *
  * @param AGI Minimum
+ * @parent ---Agility---
  * @desc This is the lowest value for AGI.
  * This is a formula.
  * @default customMin || 1
@@ -146,21 +167,25 @@ Yanfly.BPC.version = 1.02;
  * @default
  *
  * @param LUK Formula
+ * @parent ---Luck---
  * @desc The formula used to determine LUK: Luck
  * This is a formula.
  * @default (base + plus) * paramRate * buffRate + flat
  *
  * @param LUK Maximum
+ * @parent ---Luck---
  * @desc This is the highest value for LUK.
  * This is a formula.
  * @default customMax || (user.isActor() ? 999 : 999)
  *
  * @param LUK Minimum
+ * @parent ---Luck---
  * @desc This is the lowest value for LUK.
  * This is a formula.
  * @default customMin || 1
  *
  * @param LUK Effect
+ * @parent ---Luck---
  * @desc The formula used to influence state success rates.
  * This is a formula
  * @default Math.max(1.0 + (user.luk - target.luk) * 0.001, 0.0)
@@ -482,6 +507,9 @@ Yanfly.BPC.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Lunatic Mode fail safes added.

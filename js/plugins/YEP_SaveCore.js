@@ -8,11 +8,11 @@ Imported.YEP_SaveCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Save = Yanfly.Save || {};
-Yanfly.Save.version = 1.04;
+Yanfly.Save.version = 1.06;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 Alter the save menu for a more aesthetic layout
+ * @plugindesc v1.06 Alter the save menu for a more aesthetic layout
  * and take control over the file system's rules.
  * @author Yanfly Engine Plugins
  *
@@ -20,24 +20,41 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Max Files
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc The maximum number of files for your game.
  * Default: 20
  * @default 24
  *
  * @param Saved Icon
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Icon ID used for a file slot with a save.
  * @default 231
  *
  * @param Empty Icon
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Icon ID used for an empty file slot.
  * @default 230
  *
  * @param Return After Saving
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Return to the previous scene after saving?
  * NO - false     YES - true     Default: true
  * @default false
  * 
  * @param Auto New Index
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc For new games, automatically decide the save slot?
  * NO - false     YES - true     Default: true
  * @default true
@@ -46,14 +63,17 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Load Command
+ * @parent ---Action Window---
  * @desc Text for the load command in the action window.
  * @default Load
  *
  * @param Save Command
+ * @parent ---Action Window---
  * @desc Text for the save command in the action window.
  * @default Save
  *
  * @param Delete Command
+ * @parent ---Action Window---
  * @desc Text for the delete command in the action window.
  * @default Delete
  *
@@ -61,18 +81,22 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Select Help
+ * @parent ---Help Window---
  * @desc Help text displayed when selecting a slot.
  * @default Please select a file slot.
  *
  * @param Load Help
+ * @parent ---Help Window---
  * @desc Help text displayed when selecting load option.
  * @default Loads the data from the saved game.
  *
  * @param Save Help
+ * @parent ---Help Window---
  * @desc Help text displayed when selecting save option.
  * @default Saves the current progress in your game.
  *
  * @param Delete Help
+ * @parent ---Help Window---
  * @desc Help text displayed when selecting delete option.
  * @default Deletes all data from this save file.
  *
@@ -80,19 +104,26 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Delete Filename
+ * @parent ---Delete---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc Used for the delete sound from the /audio/se/ folder.
  * Do NOT include the file extension.
  * @default Damage2
  *
  * @param Delete Volume
+ * @parent ---Delete---
  * @desc Volume used for the delete sound.
  * @default 100
  *
  * @param Delete Pitch
+ * @parent ---Delete---
  * @desc Pitch used for the delete sound.
  * @default 150
  *
  * @param Delete Pan
+ * @parent ---Delete---
  * @desc Pan used for the delete sound.
  * @default 0
  *
@@ -100,79 +131,122 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Show Game Title
+ * @parent ---Info Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Display the game title in the save file?
  * NO - false     YES - true
  * @default true
  *
  * @param Invalid Game Text
+ * @parent ---Info Window---
  * @desc Text used when the save is for a different game.
  * @default This save is for a different game.
  *
  * @param Empty Game Text
+ * @parent ---Info Window---
  * @desc Text used when the save is empty.
  * @default Empty
  *
  * @param Map Display Name
+ * @parent ---Info Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Use the display name for the saved map instead?
  * NO - false     YES - true
  * @default true
  *
  * @param Party Display
+ * @parent ---Info Window---
+ * @type select
+ * @option None
+ * @value 0
+ * @option Characters
+ * @value 1
+ * @option Faces
+ * @value 2
+ * @option SV Actors
+ * @value 3
  * @desc The display type used for the party.
  * 0 - None; 1 - Characters; 2 - Faces; 3 - SV Actors
  * @default 2
  *
  * @param Party Y Position
+ * @parent ---Info Window---
  * @desc This is the base Y position for the party display.
  * Formulas can be used.
  * @default this.lineHeight() + Window_Base._faceHeight
  *
  * @param Show Actor Names
+ * @parent ---Info Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Display the names of the actors?
  * NO - false     YES - true
  * @default true
  *
  * @param Name Font Size
+ * @parent ---Info Window---
+ * @type number
+ * @min 1
  * @desc Font size used for names if names are displayed.
  * Default: 28
  * @default 20
  *
  * @param Show Actor Level
+ * @parent ---Info Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Display the levels of the actors?
  * NO - false     YES - true
  * @default true
  *
  * @param Level Font Size
+ * @parent ---Info Window---
+ * @type number
+ * @min 1
  * @desc Font size used for levels if levels are displayed.
  * Default: 28
  * @default 20
  *
  * @param Level Format
+ * @parent ---Info Window---
  * @desc The text format used to display levels.
  * %1 - Lv (Abbr)   %2 - Lv (Full)     %3 - Value
  * @default \c[16]%1 \c[0]%3
  *
  * @param Data Font Size
+ * @parent ---Info Window---
+ * @type number
+ * @min 1
  * @desc Font size used for displaying data.
  * Default: 28
  * @default 20
  *
  * @param Data Column 1
+ * @parent ---Info Window---
  * @desc The data to be displayed in data column 1. Refer to help
  * file for data entries. Separate each entry with commas.
  * @default empty, playtime, save count, gold count
  *
  * @param Data Column 2
+ * @parent ---Info Window---
  * @desc The data to be displayed in data column 2. Refer to help
  * file for data entries. Separate each entry with commas.
  * @default location, variable 1, variable 2, variable 3
  *
  * @param Data Column 3
+ * @parent ---Info Window---
  * @desc The data to be displayed in data column 2. Refer to help
  * file for data entries. Separate each entry with commas.
  * @default empty, variable 4, variable 5, variable 6
  *
  * @param Data Column 4
+ * @parent ---Info Window---
  * @desc The data to be displayed in data column 2. Refer to help
  * file for data entries. Separate each entry with commas.
  * @default
@@ -181,21 +255,25 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Map Location
+ * @parent ---Vocabulary---
  * @desc Text used to categorize 'Map Location'.
  * Leave empty to not use this category and center the data.
  * @default
  *
  * @param Playtime
+ * @parent ---Vocabulary---
  * @desc Text used to categorize 'Playtime'.
  * Leave empty to not use this category and center the data.
  * @default Playtime:
  *
  * @param Save Count
+ * @parent ---Vocabulary---
  * @desc Text used to categorize 'Save Count'.
  * Leave empty to not use this category and center the data.
  * @default Total Saves:
  *
  * @param Gold Count
+ * @parent ---Vocabulary---
  * @desc Text used to categorize 'Gold Count'.
  * Leave empty to not use this category and center the data.
  * @default %1:
@@ -204,36 +282,47 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Save Mode
+ * @parent ---Technical---
+ * @type combo
+ * @option local
+ * @option web
+ * @option auto
  * @desc How the save system should work for your game:
  * local     web     auto
  * @default auto
  *
  * @param Local Config
+ * @parent ---Technical---
  * @desc Filename for config when working with local saves.
  * Default: config.rpgsave
  * @default config.rpgsave
  *
  * @param Local Global
+ * @parent ---Technical---
  * @desc Filename for global when working with local saves.
  * Default: global.rpgsave
  * @default global.rpgsave
  *
  * @param Local Save
+ * @parent ---Technical---
  * @desc Filename for game saves when working with local saves.
  * %1 - File Slot. Default: config.rpgsave
  * @default file%1.rpgsave
  *
  * @param Web Config
+ * @parent ---Technical---
  * @desc Filename for config when working with web saves.
  * %1 - Game Name. Default: RPG Config
  * @default RPG %1 Config
  *
  * @param Web Global
+ * @parent ---Technical---
  * @desc Filename for global when working with web saves.
  * %1 - Game Name. Default: RPG Global
  * @default RPG %1 Global
  *
  * @param Web Save
+ * @parent ---Technical---
  * @desc Filename for game saves when working with web saves.
  * %1 - Game Name. %2 - File Slot. Default: RPG File%1
  * @default RPG %1 File%2
@@ -242,37 +331,54 @@ Yanfly.Save.version = 1.04;
  * @default
  *
  * @param Load Confirmation
+ * @parent ---Confirmation---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the load confirmation window when loading a
  * save file? NO - false     YES - true
  * @default true
  *
  * @param Load Text
+ * @parent ---Confirmation---
  * @desc Text displayed when loading a save file.
  * @default Do you wish to load this save file?
  *
  * @param Save Confirmation
+ * @parent ---Confirmation---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the save confirmation window when overwriting a
  * save file? NO - false     YES - true
  * @default true
  *
  * @param Save Text
+ * @parent ---Confirmation---
  * @desc Text displayed when overwriting a save file.
  * @default Do you wish to overwrite this save file?
  *
  * @param Delete Confirmation
+ * @parent ---Confirmation---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the save confirmation window when deleting a
  * save file? NO - false     YES - true
  * @default true
  *
  * @param Delete Text
+ * @parent ---Confirmation---
  * @desc Text displayed when deleting a save file.
  * @default Do you wish to delete this save file?
  *
  * @param Confirm Yes
+ * @parent ---Confirmation---
  * @desc Text used for the 'Yes' confirm command
  * @default Yes
  *
  * @param Confirm No
+ * @parent ---Confirmation---
  * @desc Text used for the 'No' confirm command
  * @default No
  *
@@ -376,6 +482,12 @@ Yanfly.Save.version = 1.04;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.06:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.05:
+ * - Added anti-crash measure for nonexistent $dataMapInfos entries.
  *
  * Version 1.04:
  * - Added 'Map Display Name' plugin parameter. Enabling this option will now
@@ -981,9 +1093,11 @@ Window_SaveInfo.prototype.drawLocation = function(dx, dy, dw) {
     var id = this._saveContents.map._mapId;
     if (Yanfly.Param.SaveMapDisplayName) {
       var text = this._saveContents.map.locationDisplayName || '';
-      if (text.length <= 0) text = $dataMapInfos[id].name;
-    } else {
+      if (text.length <= 0 && $dataMapInfos[id]) text = $dataMapInfos[id].name;
+    } else if ($dataMapInfos[id]) {
       var text = $dataMapInfos[id].name;
+    } else {
+      var text = '';
     }
     if (Yanfly.Param.SaveVocabLocation.length > 0) {
       this.changeTextColor(this.systemColor());

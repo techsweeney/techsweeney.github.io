@@ -8,19 +8,22 @@ Imported.YEP_X_ItemUpgrades = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IUS = Yanfly.IUS || {};
-Yanfly.IUS.version = 1.07;
+Yanfly.IUS.version = 1.08;
 
 //=============================================================================
  /*:
- * @plugindesc v1.07 (Requires YEP_ItemCore.js) Allows independent items to
+ * @plugindesc v1.08 (Requires YEP_ItemCore.js) Allows independent items to
  * be upgradeable and gain better stats.
  * @author Yanfly Engine Plugins
  *
  * @param Default Slots
+ * @type number
+ * @min 0
  * @desc The default amount of slots items can be upgraded.
  * @default 3
  *
  * @param Slot Variance
+ * @type number
  * @desc The default slot variance for items with slots.
  * @default 1
  *
@@ -30,6 +33,9 @@ Yanfly.IUS.version = 1.07;
  * @default Upgrade %1
  *
  * @param Show Only
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc The Upgrade Command will only show if item is upgradeable.
  * NO - false     YES - true
  * @default true
@@ -40,6 +46,9 @@ Yanfly.IUS.version = 1.07;
  * @default Slots Available
  *
  * @param Show Slot Upgrades
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Shows what upgrades applied to slots in info window.
  * NO - false     YES - true
  * @default true
@@ -50,6 +59,9 @@ Yanfly.IUS.version = 1.07;
  * @default \}Slot%1: %2\{
  *
  * @param Default Sound
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the default sound played when using an
  * item upgrade.
  * @default Heal2
@@ -195,6 +207,9 @@ Yanfly.IUS.version = 1.07;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.08:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.07:
  * - Lunatic Mode fail safes added.

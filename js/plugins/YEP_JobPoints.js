@@ -8,11 +8,11 @@ Imported.YEP_JobPoints = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.JP = Yanfly.JP || {};
-Yanfly.JP.version = 1.08;
+Yanfly.JP.version = 1.09;
 
 //=============================================================================
  /*:
- * @plugindesc v1.08 This plugin by itself doesn't do much, but it enables
+ * @plugindesc v1.09 This plugin by itself doesn't do much, but it enables
  * actors to acquire JP (job points) used for other plugins.
  * @author Yanfly Engine Plugins
  *
@@ -20,43 +20,62 @@ Yanfly.JP.version = 1.08;
  * @default
  *
  * @param JP Text
+ * @parent ---General---
  * @desc This changes how you want JP to appear in the game.
  * @default JP
  *
  * @param JP Icon
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc This is the icon used for JP.
  * Use 0 if you wish to use no icon.
  * @default 188
  *
  * @param Max JP
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc This is the maximum JP an actor can have per class.
  * Use 0 if you wish to have no limit.
  * @default 0
  *
  * @param JP Per Action
+ * @parent ---General---
  * @desc This is the amount of JP an actor gains for his/her
  * current class whenever he/she performs an action.
  * @default 10 + Math.randomInt(10)
  *
  * @param JP Per Level
+ * @parent ---General---
  * @desc This is the amount of JP an actor gains per level up.
  * @default 100 + Math.randomInt(100)
  *
  * @param JP Per Enemy
+ * @parent ---General---
  * @desc This is the amount of JP given per defeated enemy.
  * @default 50 + Math.randomInt(10)
  *
  * @param Show Results
+ * @parent ---General---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Upon winning, show how much JP is earned for default?
  * NO - false     YES - true
  * @default true
  *
  * @param JP Gained in Battle
+ * @parent ---General---
  * @desc Adjusts how the gained JP text is shown after battle.
  * %1 - Actor     %2 Value     %3 JP
  * @default %1 gains %2%3!
  *
  * @param Alive Actors
+ * @parent ---General---
+ * @type boolean
+ * @on Alive Requirement
+ * @off No Requirement
  * @desc Actors must be alive to receive JP earned from enemies.
  * NO - false     YES - true
  * @default true
@@ -65,11 +84,16 @@ Yanfly.JP.version = 1.08;
  * @default
  *
  * @param Show In Menu
+ * @parent ---Menu---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Display JP in the main menu?
  * NO - false     YES - true
  * @default true
  *
  * @param Menu Format
+ * @parent ---Menu---
  * @desc How the JP text format in the menu appears.
  * %1 - Value     %2 - Amount     %3 - Icon
  * @default %1\c[4]%2\c[0]%3
@@ -78,20 +102,27 @@ Yanfly.JP.version = 1.08;
  * @default
  *
  * @param Enable Aftermath
+ * @parent ---Victory Aftermath---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enables Victory Aftermath windows.
  * NO - false     YES - true
  * @default true
  *
  * @param Aftermath Text
+ * @parent ---Victory Aftermath---
  * @desc Text used to describe how much JP is earned.
  * @default JP Earned
  *
  * @param Aftermath Format
+ * @parent ---Victory Aftermath---
  * @desc How the JP text format in the aftermath appears.
  * %1 - Value     %2 - Amount     %3 - Icon
  * @default +%1\c[4]%2\c[0]%3
  *
  * @param Aftermath JP Earned
+ * @parent ---Victory Aftermath---
  * @desc Describes how much JP is earned per actor.
  * @default JP Earned in Battle
  *
@@ -192,6 +223,9 @@ Yanfly.JP.version = 1.08;
  * Changelog
  * ============================================================================
  *
+ * Version 1.09:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
  * Version 1.08:
  * - Lunatic Mode fail safes added.
  *
@@ -235,7 +269,7 @@ Yanfly.Icon = Yanfly.Icon || {};
 
 Yanfly.Param.Jp = String(Yanfly.Parameters['JP Text']);
 Yanfly.Icon.Jp = Number(Yanfly.Parameters['JP Icon']);
-Yanfly.Param.JpMax = String(Yanfly.Parameters['Max JP']);
+Yanfly.Param.JpMax = Number(Yanfly.Parameters['Max JP']);
 Yanfly.Param.JpPerAction = String(Yanfly.Parameters['JP Per Action']);
 Yanfly.Param.JpPerEnemy = String(Yanfly.Parameters['JP Per Enemy']);
 Yanfly.Param.JpShowResults = eval(String(Yanfly.Parameters['Show Results']));

@@ -8,171 +8,265 @@ Imported.YEP_RegionBattlebacks = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.RBB = Yanfly.RBB || {};
+Yanfly.RBB.version = 1.01
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 This lets you assign certain battlebacks to specific
+ * @plugindesc v1.01 This lets you assign certain battlebacks to specific
  * region ID's when entering battle in that region.
  * @author Yanfly Engine Plugins
  *
- * @param ----------
+ * @param ---Default---
  * @default
  *
  * @param Default 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Default---
  * @desc The filename used by default for battleback1.
  * Default: Grassland
  * @default Grassland
  *
  * @param Default 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Default---
  * @desc The filename used by default for battleback2.
  * Default: Grassland
  * @default Grassland
  *
- * @param ----------
+ * @param ---Ship---
  * @default
  *
  * @param Ship 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Ship---
  * @desc The filename used by ships for battleback1.
  * Default: Ship
  * @default Ship
  *
  * @param Ship 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Ship---
  * @desc The filename used by ships for battleback2.
  * Default: Ship
  * @default Ship
  *
- * @param ----------
+ * @param ---Forest---
  * @default
  *
  * @param Forest 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Forest---
  * @desc The filename used by forests for battleback1.
  * Default: There is none.
  * @default There is none.
  *
  * @param Forest 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Forest---
  * @desc The filename used by forests for battleback2.
  * Default: Forest
  * @default Forest
  *
- * @param ----------
+ * @param ---Cliff---
  * @default
  *
  * @param Cliff 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Cliff---
  * @desc The filename used by cliffs for battleback1.
  * Default: There is none.
  * @default There is none.
  *
  * @param Cliff 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Cliff---
  * @desc The filename used by cliffs for battleback2.
  * Default: Cliff
  * @default Cliff
  *
- * @param ----------
+ * @param ---Wasteland---
  * @default
  *
  * @param Wasteland 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Wasteland---
  * @desc The filename used by wastelands for battleback1.
  * Default: Wasteland
  * @default Wasteland
  *
  * @param Wasteland 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Wasteland---
  * @desc The filename used by wastelands for battleback2.
  * Default: Wasteland
  * @default Wasteland
  *
- * @param ----------
+ * @param ---Dirtfield---
  * @default
  *
  * @param Dirtfield 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Dirtfield---
  * @desc The filename used by dirt fields for battleback1.
  * Default: Wasteland
  * @default Wasteland
  *
  * @param Dirtfield 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Dirtfield---
  * @desc The filename used by dirt fields for battleback2.
  * Default: There is none.
  * @default There is none.
  *
- * @param ----------
+ * @param ---Desert---
  * @default
  *
  * @param Desert 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Desert---
  * @desc The filename used by deserts for battleback1.
  * Default: Desert
  * @default Desert
  *
  * @param Desert 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Desert---
  * @desc The filename used by deserts for battleback2.
  * Default: Desert
  * @default Desert
  *
- * @param ----------
+ * @param ---Lava1---
  * @default
  *
  * @param Lava1 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Lava1---
  * @desc The filename used by lava type 1 for battleback1.
  * Default: Lava1
  * @default Lava1
  *
  * @param Lava1 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Lava1---
  * @desc The filename used by lava type 1 for battleback2.
  * Default: Lava
  * @default Lava
  *
- * @param ----------
+ * @param ---Lava2---
  * @default
  *
  * @param Lava2 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Lava2---
  * @desc The filename used by lava type 2 for battleback1.
  * Default: Lava2
  * @default Lava2
  *
  * @param Lava2 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Lava2---
  * @desc The filename used by lava type 2 for battleback2.
  * Default: Lava
  * @default Lava
  *
- * @param ----------
+ * @param ---Snowfield---
  * @default
  *
  * @param Snowfield 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Snowfield---
  * @desc The filename used by snow fields for battleback1.
  * Default: Snowfield
  * @default Snowfield
  *
  * @param Snowfield 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Snowfield---
  * @desc The filename used by snow fields for battleback2.
  * Default: Snowfield
  * @default Snowfield
  *
- * @param ----------
+ * @param ---Clouds---
  * @default
  *
  * @param Clouds 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---Clouds---
  * @desc The filename used by clouds for battleback1.
  * Default: Clouds
  * @default Clouds
  *
  * @param Clouds 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---Clouds---
  * @desc The filename used by clouds for battleback2.
  * Default: Clouds
  * @default Clouds
  *
- * @param ----------
+ * @param ---PoisonSwamp---
  * @default
  *
  * @param PoisonSwamp 1
+ * @type file
+ * @dir img/battlebacks1
+ * @require 1
+ * @parent ---PoisonSwamp---
  * @desc The filename used by poison swamps for battleback1.
  * Default: PoisonSwamp
  * @default PoisonSwamp
  *
  * @param PoisonSwamp 2
+ * @type file
+ * @dir img/battlebacks2
+ * @require 1
+ * @parent ---PoisonSwamp---
  * @desc The filename used by poison swamps for battleback2.
  * Default: PoisonSwamp
  * @default PoisonSwamp
- *
- * @param ----------
- * @default
  *
  * @help
  * ============================================================================
@@ -219,6 +313,9 @@ Yanfly.RBB = Yanfly.RBB || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.00:
  * - Finished Plugin!

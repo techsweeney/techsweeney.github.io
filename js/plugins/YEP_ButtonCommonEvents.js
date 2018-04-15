@@ -8,10 +8,11 @@ Imported.YEP_ButtonCommonEvents = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BCE = Yanfly.BCE || {};
+Yanfly.BCE.version = 1.02
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 On the field map, call common events when certain
+ * @plugindesc v1.02 On the field map, call common events when certain
  * buttons are pressed on the keyboard.
  * @author Yanfly Engine Plugins
  *
@@ -19,66 +20,92 @@ Yanfly.BCE = Yanfly.BCE || {};
  * @default
  *
  * @param Key ~
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 1
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 2
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 3
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 4
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 5
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 6
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 7
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 8
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 9
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key 0
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key -
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key =
+ * @parent ---Top Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
@@ -87,66 +114,92 @@ Yanfly.BCE = Yanfly.BCE || {};
  * @default
  *
  * @param Key Q (PageUp)
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key W (PageDown)
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key E
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key R
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key T
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Y
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key U
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key I
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key O
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key P
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key [
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key ]
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key \
+ * @parent ---2nd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
@@ -155,61 +208,85 @@ Yanfly.BCE = Yanfly.BCE || {};
  * @default
  *
  * @param Key A
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key S
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key D
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key F
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key G
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key H
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key J
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key K
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key L
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key ;
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key "
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Enter (OK)
+ * @parent ---3rd Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
@@ -218,56 +295,78 @@ Yanfly.BCE = Yanfly.BCE || {};
  * @default
  *
  * @param Key Shift (Dash)
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Z (OK)
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key X (Cancel)
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key C
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key V
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key B
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key N
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key M
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key ,
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key .
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key /
+ * @parent ---4th Row---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
@@ -276,56 +375,78 @@ Yanfly.BCE = Yanfly.BCE || {};
  * @default
  *
  * @param Key Space (OK)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Left (Left)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Up (Up)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Right (Right)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Down (Down)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Insert (Cancel)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Delete
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Home
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key End
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Page Up (PageUp)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key Page Down (PageDown)
+ * @parent ---Misc---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
@@ -334,76 +455,106 @@ Yanfly.BCE = Yanfly.BCE || {};
  * @default
  *
  * @param Key NumPad 0 (Cancel)
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 1
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 2 (Down)
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 3
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 4 (Left)
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 5
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 6 (Right)
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 7
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 8 (Up)
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad 9
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad .
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad +
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad -
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad *
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
  *
  * @param Key NumPad /
+ * @parent ---NumPad---
+ * @type common_event
  * @desc The common event to call when this button is pressed.
  * Set to 0 if you don't wish for a common event to call.
  * @default 0
@@ -531,6 +682,9 @@ Yanfly.BCE = Yanfly.BCE || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Changed buttons from triggering to repeating so that common events can

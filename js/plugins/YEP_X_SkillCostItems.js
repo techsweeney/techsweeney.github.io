@@ -8,11 +8,11 @@ Imported.YEP_X_SkillCostItems = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SCI = Yanfly.SCI || {};
-Yanfly.SCI.version = 1.03;
+Yanfly.SCI.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_SkillCore.js) Skills can now have an
+ * @plugindesc v1.04 (Requires YEP_SkillCore.js) Skills can now have an
  * item cost attached to them.
  * @author Yanfly Engine Plugins
  *
@@ -20,21 +20,35 @@ Yanfly.SCI.version = 1.03;
  * @default
  *
  * @param Cost Style
+ * @parent ---General---
+ * @type select
+ * @option None
+ * @value 0
+ * @option Amount Over Icon
+ * @value 1
+ * @option Amount Then Icon
+ * @value 2
  * @desc How do you want the costs to appear?
  * 0 - None   1 - Amount Over Icon   2 - Amount Then Icon
  * @default 2
  *
  * @param Font Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc Font size used for item costs.
  * Default: 28
  * @default 20
  *
  * @param Amount Format
+ * @parent ---General---
  * @desc How do you wish to display the amount cost?
  * %1 - Need    %2 - Owned
  * @default ×%1
  *
  * @param Amount Y Buffer
+ * @parent ---General---
+ * @type number
  * @desc The Y Buffer amount used to display the cost.
  * @default 4
  *
@@ -42,19 +56,35 @@ Yanfly.SCI.version = 1.03;
  * @default
  *
  * @param Gauge Color 1
+ * @parent ---Gauges---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The text color used for item gauges.
  * @default 13
  *
  * @param Gauge Color 2
+ * @parent ---Gauges---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The text color used for item gauges.
  * @default 5
  *
  * @param Display Name
+ * @parent ---Gauges---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Display the Item Name by default for the gauge?
  * NO - false     YES - true
  * @default true
  *
  * @param Text Color
+ * @parent ---Gauges---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text color of the gauge name displayed.
  * Default: 16
  * @default 16
@@ -214,6 +244,9 @@ Yanfly.SCI.version = 1.03;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.

@@ -8,10 +8,11 @@ Imported.YEP_X_EventChaseStealth = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ECS = Yanfly.ECS || {};
+Yanfly.ECS.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 (Requires YEP_EventChasePlayer.js) Enables a stealth
+ * @plugindesc v1.03 (Requires YEP_EventChasePlayer.js) Enables a stealth
  * mechanic for the Event Chase Player plugin.
  * @author Yanfly Engine Plugins
  *
@@ -19,15 +20,23 @@ Yanfly.ECS = Yanfly.ECS || {};
  * @default
  *
  * @param Player Transparency
+ * @parent ---General---
  * @desc This is the transparency rate of the player while
  * in stealth mode.
  * @default 0.5
  *
  * @param Disable Dash
+ * @parent ---General---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Disable dashing while in Stealth Mode?
  * @default true
  *
  * @param Move Speed
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc The move speed while in Stealth Mode.
  * @default 3
  *
@@ -35,6 +44,7 @@ Yanfly.ECS = Yanfly.ECS || {};
  * @default
  *
  * @param Stealth Regions
+ * @parent ---Stealth Regions---
  * @desc These are the Region ID's that make the player unable
  * to be seen by events. Separate ID's with a space.
  * @default 0
@@ -43,48 +53,73 @@ Yanfly.ECS = Yanfly.ECS || {};
  * @default
  *
  * @param Show Gauge
+ * @parent ---Stealth Regions---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the stealth gauge?
  * NO - false     YES - true
  * @default true
  *
  * @param Gauge Opacity
+ * @parent ---Stealth Regions---
+ * @type number
+ * @min 0
+ * @max 255
  * @desc This is the opacity of the gauge.
  * @default 100
  *
  * @param Show Timer
+ * @parent ---Stealth Regions---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Display Timer while in stealth mode?
  * NO - false     YES - true
  * @default true
  *
  * @param Unlimited Text
+ * @parent ---Stealth Regions---
  * @desc The text to display while in unlimited Stealth Mode.
  * @default ∞
  *
  * @param Gauge X
+ * @parent ---Stealth Regions---
  * @desc The x location of the stealth gauge.
  * This is a formula
  * @default 96
  *
  * @param Gauge Y
+ * @parent ---Stealth Regions---
  * @desc The y location of the stealth gauge.
  * This is a formula
  * @default Graphics.boxHeight - 84
  *
  * @param Gauge Width
+ * @parent ---Stealth Regions---
  * @desc The width of the stealth gauge.
  * This is a formula.
  * @default Graphics.boxWidth - 192
  *
  * @param Gauge Height
+ * @parent ---Stealth Regions---
  * @desc The height of the stealth gauge.
  * This is a formula.
  * @default 36
  *
  * @param Gauge Color 1
+ * @parent ---Stealth Regions---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color 1 of the gauge.
  * @default 9
  *
  * @param Gauge Color 2
+ * @parent ---Stealth Regions---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color 2 of the gauge.
  * @default 13
  *
@@ -208,6 +243,9 @@ Yanfly.ECS = Yanfly.ECS || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Fixed a bug where changing the stealth movement speed would affect all

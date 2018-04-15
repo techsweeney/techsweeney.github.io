@@ -8,12 +8,20 @@ Imported.YEP_SwapEnemies = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SwE = Yanfly.SwE || {};
+Yanfly.SwE.version = 1.03
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 This is utility plugin made to help randomize sets of
+ * @plugindesc v1.03 This is utility plugin made to help randomize sets of
  * enemies for battle.
  * @author Yanfly Engine Plugins
+ *
+ * @param Filter Unnamed Enemies
+ * @type boolean
+ * @on Filter
+ * @off Don't Filter
+ * @desc Remove unnamed enemies from a range of enemies?
+ * @default true
  *
  * @help
  * ============================================================================
@@ -55,6 +63,10 @@ Yanfly.SwE = Yanfly.SwE || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added new 'Filter Unnamed Enemies' plugin parameter.
+ *
  * Version 1.02:
  * - Feature update. If a swap enemy swaps into another swap enemy, it will
  * then draw out a swap target from that enemy for up to 100 loops.
@@ -66,6 +78,11 @@ Yanfly.SwE = Yanfly.SwE || {};
  * - Finished Plugin!
  */
 //=============================================================================
+
+Yanfly.Parameters = PluginManager.parameters('YEP_SwapEnemies');
+Yanfly.Param = Yanfly.Param || {};
+
+Yanfly.Param.SwEFilter = eval(Yanfly.Parameters['Filter Unnamed Enemies']);
 
 //=============================================================================
 // DataManager
@@ -106,10 +123,12 @@ DataManager.processSwENotetags1 = function(group) {
       var line = notedata[i];
       if (line.match(note1)) {
         var array = JSON.parse('[' + RegExp.$1.match(/\d+/g) + ']');
+        array = this.SwEfilter(array);
         obj.swapEnemies = obj.swapEnemies.concat(array);
       } else if (line.match(note2)) {
         var range = Yanfly.Util.getRange(parseInt(RegExp.$1),
           parseInt(RegExp.$2));
+        range = this.SwEfilter(range);
         obj.swapEnemies = obj.swapEnemies.concat(range);
       } else if (line.match(/<(?:SWAP)>/i)) {
         var mode = 'swap';
@@ -126,6 +145,17 @@ DataManager.processSwENotetags1 = function(group) {
       obj.battlerHue = 0;
     }
   }
+};
+
+DataManager.SwEfilter = function(array) {
+  if (!Yanfly.Param.SwEFilter) return array;
+  var result = [];
+  var length = array.length;
+  for (var i = 0; i < length; ++i) {
+    var enemy = $dataEnemies[array[i]];
+    if (enemy && enemy.name !== '') result.push(array[i]);
+  }
+  return result;
 };
 
 //=============================================================================

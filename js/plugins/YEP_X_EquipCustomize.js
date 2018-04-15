@@ -8,10 +8,11 @@ Imported.YEP_X_EquipCustomize = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ECC = Yanfly.ECC || {};
+Yanfly.ECC.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_ItemCore && YEP_EquipCore.js)
+ * @plugindesc v1.02 (Requires YEP_ItemCore && YEP_EquipCore.js)
  * Adds a 'Customize' command to the Equip menu.
  * @author Yanfly Engine Plugins
  *
@@ -20,6 +21,9 @@ Yanfly.ECC = Yanfly.ECC || {};
  * @default Customize
  *
  * @param Default Enable
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Show the Customize command in the Equip menu by default?
  * NO - false     YES - true
  * @default true
@@ -51,6 +55,19 @@ Yanfly.ECC = Yanfly.ECC || {};
  *
  *   HideEquipCustomize
  *   - This will hide the 'Customize' command in the equip menu.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.01:
+ * - Optimization Update
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -208,7 +225,7 @@ function Scene_EquipCustomize() {
 }
 
 Scene_EquipCustomize.prototype = Object.create(Scene_Item.prototype);
-Scene_EquipCustomize.prototype.constructor = Scene_Item;
+Scene_EquipCustomize.prototype.constructor = Scene_EquipCustomize;
 
 Scene_EquipCustomize.prototype.initialize = function() {
     Scene_Item.prototype.initialize.call(this);
@@ -247,6 +264,9 @@ Scene_EquipCustomize.prototype.setCustomizedItem = function() {
     this._statusWindow.setItem(this.item());
     this._infoWindow.setItem(this.item());
     this._itemActionWindow.setItem(this.item());
+    if ($gameTemp._itemActionIndex) {
+      this._itemActionWindow.select($gameTemp._itemActionIndex);
+    }
 };
 
 Scene_EquipCustomize.prototype.onActionCancel = function() {

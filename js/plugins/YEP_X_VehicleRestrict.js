@@ -8,10 +8,11 @@ Imported.YEP_X_VehicleRestrict = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.VR = Yanfly.VR || {};
+Yanfly.VR.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Req YEP_RegionRestrictions.js) This plugin allows you
+ * @plugindesc v1.01 (Req YEP_RegionRestrictions.js) This plugin allows you
  * to control where vehicles can move and can land.
  * @author Yanfly Engine Plugins
  *
@@ -19,16 +20,19 @@ Yanfly.VR = Yanfly.VR || {};
  * @default
  *
  * @param Boat Restrict
+ * @parent ---Boat---
  * @desc This region ID will restrict boats from entering.
  * To use multiple regions, separate them by spaces.
  * @default 0
  *
  * @param Boat Allow
+ * @parent ---Boat---
  * @desc This region ID will always allow boats to pass.
  * To use multiple regions, separate them by spaces.
  * @default 0
  *
  * @param Boat Land
+ * @parent ---Boat---
  * @desc This region ID is a place a boat can land. If this is
  * left as only 0, then all regions can be landed on.
  * @default 0
@@ -37,16 +41,19 @@ Yanfly.VR = Yanfly.VR || {};
  * @default
  *
  * @param Ship Restrict
+ * @parent ---Ship---
  * @desc This region ID will restrict ships from entering.
  * To use multiple regions, separate them by spaces.
  * @default 0
  *
  * @param Ship Allow
+ * @parent ---Ship---
  * @desc This region ID will always allow ships to pass.
  * To use multiple regions, separate them by spaces.
  * @default 0
  *
  * @param Ship Land
+ * @parent ---Ship---
  * @desc This region ID is a place a ship can land. If this is
  * left as only 0, then all regions can be landed on.
  * @default 0
@@ -55,16 +62,19 @@ Yanfly.VR = Yanfly.VR || {};
  * @default
  *
  * @param Airship Restrict
+ * @parent ---Airship---
  * @desc This region ID will restrict airships from entering.
  * To use multiple regions, separate them by spaces.
  * @default 0
  *
  * @param Airship Allow
+ * @parent ---Airship---
  * @desc This region ID will always allow airships to pass.
  * To use multiple regions, separate them by spaces.
  * @default 0
  *
  * @param Airship Land
+ * @parent ---Airship---
  * @desc This region ID is a place an airship can land. If this is
  * left as only 0, then all regions can be landed on.
  * @default 0
@@ -131,6 +141,16 @@ Yanfly.VR = Yanfly.VR || {};
  *   - These notetags will enforce vehicles to only able to land on region(s)
  *   marked by x (to y). They cannot land anywhere else. These regions will be
  *   combined with the regions flagged by the plugin parameters.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

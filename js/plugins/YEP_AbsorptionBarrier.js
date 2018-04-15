@@ -8,33 +8,42 @@ Imported.YEP_AbsorptionBarrier = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ABR = Yanfly.ABR || {};
-Yanfly.ABR.version = 1.06;
+Yanfly.ABR.version = 1.07;
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 Battlers can be surrounded by an absorption barrier
+ * @plugindesc v1.07 Battlers can be surrounded by an absorption barrier
  * that would mitigate damage dealt to HP.
  * @author Yanfly Engine Plugins
  *
  * @param Barrier State
+ * @type state
  * @desc If a battler has even 1 Barrier Point, the battler will
  * be affected by this state. Leave at 0 for no state.
  * @default 0
  *
  * @param Barrier Color 1
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The text code color 1 used for the barriers.
  * @default 13
  *
  * @param Barrier Color 2
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The text code color 2 used for the barriers.
  * @default 5
  *
  * @param Barrier Animation
+ * @type animation
  * @desc Animation played when barrier points are lost.
  * Leave at 0 for no animation.
  * @default 0
  *
  * @param Break Animation
+ * @type animation
  * @desc Animation played when barrier points are emptied.
  * Leave at 0 for no animation.
  * @default 0
@@ -45,16 +54,25 @@ Yanfly.ABR.version = 1.06;
  * @default 255, 0, 255, 160
  *
  * @param Display 0 HP Damage
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Display 0 HP Damage if 0 Damage is dealt to HP?
  * NO - false     YES - true
  * @default false
  *
  * @param Clear Per Battle
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Clear barrier points at the start and end of battle?
  * NO - false     YES - true
  * @default true
  *
  * @param Clear on Death
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Clear barrier points if the battler dies?
  * NO - false     YES - true
  * @default true
@@ -408,6 +426,9 @@ Yanfly.ABR.version = 1.06;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.07:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.06:
  * - Fixed a bug that caused shields to regenerate outside of battle.

@@ -1,5 +1,5 @@
 //==
-// Game Time MV Version 1.1c
+// Game Time MV Version 1.1
 //==
 
 /*:
@@ -74,7 +74,7 @@
  * @desc Whether to use seconds or not (not using causes minutes to increase every timelapse)
  * @default false
  *
- * @help Game Time MV! 1.1c
+ * @help Game Time MV! 1.1
  *  Follow me on twitter: https://twitter.com/DaimoniousTails
  *   Or facebook: https://www.facebook.com/DaimoniousTailsGames/
  *   for the most recent updates!
@@ -435,21 +435,17 @@
 	}
 	DataManager.extractSaveContents = function(contents) {
 		gameTime_DataManager_extractSaveContents.call(this, contents);
-		if(contents.time) {	
-			$gameTime = contents.time;
-			var gt = new GameTime();
-			var ct = new Current_Time();
-			$gameTime.__proto__ = gt.__proto__;
-			$gameTime.currentTime.__proto__ = ct.__proto__;
-		} else {
-			$gameTime = new GameTime();
-		}
+		$gameTime = contents.time;
+		var gt = new GameTime();
+		var ct = new Current_Time();
+		$gameTime.__proto__ = gt.__proto__;
+		$gameTime.currentTime.__proto__ = ct.__proto__;
 	}
 	
 	var gameTime_Scene_Base_update = Scene_Base.prototype.update;
 	Scene_Base.prototype.update = function() {
 		gameTime_Scene_Base_update.call(this);
-		if($gameTime) { $gameTime.update(); }
+		$gameTime.update();
 	}
 	
 	var gameTime_Scene_Map_createAllWindows = Scene_Map.prototype.createAllWindows;
@@ -560,7 +556,7 @@
 			return monthNames[$gameTime.getTime("month")];
 		}.bind(this));
 		text = text.replace(/\GTYEAR/g, function() {
-			return String($gameTime.getTime("year"));
+			return String($gameTime.getTime("month")+1);
 		}.bind(this));
 		text = text.replace(/\GTMERI/g, function() {
 			return $gameTime.getTime("hour") > 11 ? "PM" : "AM";

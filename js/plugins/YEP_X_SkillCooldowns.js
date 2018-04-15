@@ -8,11 +8,11 @@ Imported.YEP_X_SkillCooldowns = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SCD = Yanfly.SCD || {};
-Yanfly.SCD.version = 1.11;
+Yanfly.SCD.version = 1.12;
 
 //=============================================================================
  /*:
- * @plugindesc v1.11 (Requires YEP_SkillCore.js) Cooldowns can be applied
+ * @plugindesc v1.12 (Requires YEP_SkillCore.js) Cooldowns can be applied
  * to skills to prevent them from being used continuously.
  * @author Yanfly Engine Plugins
  *
@@ -20,56 +20,91 @@ Yanfly.SCD.version = 1.11;
  * @default
  *
  * @param Cooldown Format
+ * @parent ---Cooldown---
  * @desc This is the text format used for cooldowns.
  * %1 - Turns Remaining
  * @default %1CD
  *
  * @param Cooldown Font Size
+ * @parent ---Cooldown---
+ * @type number
+ * @min 0
  * @desc This is the font size used for cooldowns.
  * Default: 28
  * @default 20
  *
  * @param Cooldown Text Color
+ * @parent ---Cooldown---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Adjusts the text color used for cooldowns.
  * @default 6
  *
  * @param Cooldown Icon
+ * @parent ---Cooldown---
+ * @type number
+ * @min 0
  * @desc What icon to be used for cooldowns.
  * Use 0 for no icon.
  * @default 75
  *
  * @param Cooldown After Battle
+ * @parent ---Cooldown---
+ * @type number
  * @desc How are cooldowns handled after battle?
  * @default -10
  *
  * @param Cooldown Steps
+ * @parent ---Cooldown---
+ * @type number
+ * @min 0
  * @desc Outside of battle, this is how many steps on the map the
  * player must walk to drop each cooldown by 1.
  * @default 5
  *
  * @param Cooldown Bypass
+ * @parent ---Cooldown---
  * @desc This is a list of skills that cannot be on cooldown so that
  * way, skills like Attack, Guard.
  * @default 1 2 3 4 5 6 7
+ *
+ * @param Cooldown Bypass List
+ * @parent ---Cooldown---
+ * @type skill[]
+ * @desc This is a list of skills that cannot be on cooldown so that
+ * way, skills like Attack, Guard. Requires RPG Maker MV 1.5.0+
+ * @default []
  *
  * @param ---Warmup---
  * @default
  *
  * @param Warmup Format
+ * @parent ---Warmup---
  * @desc This is the text format used for warmups.
  * %1 - Turns Remaining
  * @default %1WU
  *
  * @param Warmup Font Size
+ * @parent ---Warmup---
+ * @type number
+ * @min 1
  * @desc This is the font size used for warmups.
  * Default: 28
  * @default 20
  *
  * @param Warmup Text Color
+ * @parent ---Warmup---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Adjusts the text color used for warmups.
  * @default 4
  *
  * @param Warmup Icon
+ * @parent ---Warmup---
+ * @type number
+ * @min 0
  * @desc What icon to be used for warmups.
  * Use 0 for no icon.
  * @default 75
@@ -78,11 +113,18 @@ Yanfly.SCD.version = 1.11;
  * @default
  *
  * @param Time Based
+ * @parent ---Battle Core---
+ * @type boolean
+ * @on Time-Based
+ * @off Turn-Based
  * @desc If a battle system is Tick-based, use time instead
  * of turns for cooldowns? NO - false   YES - true
  * @default false
  *
  * @param Turn Time
+ * @parent ---Battle Core---
+ * @type number
+ * @min 1
  * @desc How many ticks must pass to equal 1 cooldown turn?
  * @default 100
  *
@@ -364,6 +406,10 @@ Yanfly.SCD.version = 1.11;
  * Changelog
  * ============================================================================
  *
+ * Version 1.12:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added Parameter: Cooldown Bypass List
+ *
  * Version 1.11:
  * - Lunatic Mode fail safes added.
  *
@@ -411,6 +457,7 @@ Yanfly.SCD.version = 1.11;
  */
 //=============================================================================
 
+
 if (Imported.YEP_SkillCore) {
 
 //=============================================================================
@@ -425,19 +472,31 @@ Yanfly.Param.CDFmt = String(Yanfly.Parameters['Cooldown Format']);
 Yanfly.Param.CDFontSize = Number(Yanfly.Parameters['Cooldown Font Size']);
 Yanfly.Param.CDTextColor = Number(Yanfly.Parameters['Cooldown Text Color']);
 Yanfly.Icon.Cooldown = Number(Yanfly.Parameters['Cooldown Icon']);
-Yanfly.Param.CDAfterBattle = String(Yanfly.Parameters['Cooldown After Battle']);
+Yanfly.Param.CDAfterBattle = Number(Yanfly.Parameters['Cooldown After Battle']);
 Yanfly.Param.CDSteps = Number(Yanfly.Parameters['Cooldown Steps']);
-Yanfly.Param.CDBypass = String(Yanfly.Parameters['Cooldown Bypass']);
-Yanfly.Param.CDBypass = Yanfly.Param.CDBypass.split(' ');
-for (Yanfly.i = 0; Yanfly.i < Yanfly.Param.CDBypass.length; ++Yanfly.i) {
-  Yanfly.Param.CDBypass[Yanfly.i] = parseInt(Yanfly.Param.CDBypass[Yanfly.i]);
-}
+
 Yanfly.Param.WUFmt = String(Yanfly.Parameters['Warmup Format']);
 Yanfly.Param.WUFontSize = Number(Yanfly.Parameters['Warmup Font Size']);
 Yanfly.Param.WUTextColor = Number(Yanfly.Parameters['Warmup Text Color']);
 Yanfly.Param.CDTimeBased = String(Yanfly.Parameters['Time Based']);
 Yanfly.Param.CDTurnTime = Number(Yanfly.Parameters['Turn Time']);
 Yanfly.Icon.Warmup = Number(Yanfly.Parameters['Warmup Icon']);
+
+Yanfly.SetupParameters = function() {
+  Yanfly.Param.CDBypass = String(Yanfly.Parameters['Cooldown Bypass']);
+  Yanfly.Param.CDBypass = Yanfly.Param.CDBypass.split(' ');
+  for (var i = 0; i < Yanfly.Param.CDBypass.length; ++i) {
+    Yanfly.Param.CDBypass[i] = parseInt(Yanfly.Param.CDBypass[i]);
+  }
+  var data = JSON.parse(Yanfly.Parameters['Cooldown Bypass List'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var id = parseInt(data[i]);
+    if (id <= 0) continue;
+    if (Yanfly.Param.CDBypass.contains(id)) continue;
+    Yanfly.Param.CDBypass.push(id);
+  }
+};
+Yanfly.SetupParameters()
 
 //=============================================================================
 // DataManager
@@ -486,7 +545,7 @@ DataManager.processSCDNotetags1 = function(group) {
     obj.cooldown = {};
     obj.stypeCooldown = {}
     obj.globalCooldown = 0;
-    obj.afterBattleCooldown = eval(Yanfly.Param.CDAfterBattle);
+    obj.afterBattleCooldown = Yanfly.Param.CDAfterBattle;
     obj.cooldownSteps = Math.max(1, parseInt(Yanfly.Param.CDSteps));
     obj.warmup = 0;
     obj.bypassCooldown = Yanfly.Param.CDBypass.contains(obj.id);
@@ -923,7 +982,7 @@ Game_BattlerBase.prototype.meetsSkillConditions = function(skill) {
     return Yanfly.SCD.Game_BattlerBase_meetsSkillConditions.call(this, skill);
 };
 
-Yanfly.SCD.Game_BattlerBase_paySkillCost =
+Yanfly.SCD.Game_BattlerBase_paySkillCost = 
     Game_BattlerBase.prototype.paySkillCost;
 Game_BattlerBase.prototype.paySkillCost = function(skill) {
     Yanfly.SCD.Game_BattlerBase_paySkillCost.call(this, skill);

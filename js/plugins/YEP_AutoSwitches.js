@@ -8,47 +8,56 @@ Imported.YEP_AutoSwitches = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.AutoSwitch = Yanfly.AutoSwitch || {};
+Yanfly.AutoSwitch.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 When playtesting, this will cause a particular
+ * @plugindesc v1.01 When playtesting, this will cause a particular
  * switch to always be ON for testing purposes.
  * @author Yanfly Engine Plugins
  *
  * @param Battle Switch
+ * @type switch
  * @desc This switch will always be ON when the player is in battle.
  * @default 0
  *
  * @param Battle Test Switch
+ * @type switch
  * @desc This switch will only be ON when accessing battle through
  * the database's Battle Test option.
  * @default 0
  *
  * @param Dash Switch
+ * @type switch
  * @desc This switch will always be ON when the player is dashing.
  * @default 0
  *
  * @param Debug Switch
+ * @type switch
  * @desc This switch will always be ON during test play and battle
  * testing and always OFF otherwise.
  * @default 0
  *
  * @param Mobile Switch
+ * @type switch
  * @desc This switch will always be ON when playing on any mobile
  * device and always OFF otherwise.
  * @default 0
  *
  * @param Mobile Chrome Switch
+ * @type switch
  * @desc This switch will be ON or OFF depending if playing on
  * the Mobile Chrome browser.
  * @default 0
  *
  * @param Mobile Safari Switch
+ * @type switch
  * @desc This switch will be ON or OFF depending if playing on
  * the Mobile Safari browser.
  * @default 0
  *
  * @param Non-Local Switch
+ * @type switch
  * @desc This switch will always be ON when playing on mobile or
  * browser and always OFF otherwise.
  * @default 0
@@ -63,6 +72,16 @@ Yanfly.AutoSwitch = Yanfly.AutoSwitch || {};
  * help enable easier access to determining the lesser frequently seen flags
  * set by the game such as determining if the game is running via debug mode or
  * on a certain type of browser.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

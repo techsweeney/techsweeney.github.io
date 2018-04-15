@@ -8,10 +8,11 @@ Imported.YEP_RepelEncounters = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.RepelLure = Yanfly.RepelLure || {};
+Yanfly.RepelLure.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Tie in the variables that modify the encounter rate
+ * @plugindesc v1.01 Tie in the variables that modify the encounter rate
  * by either making them repel or lure battles.
  * @author Yanfly Engine Plugins
  *
@@ -19,11 +20,21 @@ Yanfly.RepelLure = Yanfly.RepelLure || {};
  * @default
  *
  * @param Repel Variables
+ * @parent ---Repel---
  * @desc This is the variable used to prevent encounter rates.
  * Leave at 0 to not use. Insert spaces for multiple variables.
  * @default 0
  *
+ * @param Repel Variables List
+ * @parent ---Repel---
+ * @type variable[]
+ * @desc This is the variable used to prevent encounter rates.
+ * Requires MV 1.5.0+ to use.
+ * @default []
+ *
  * @param Repel Expire Event
+ * @parent ---Repel---
+ * @type common_event
  * @desc This is the ID of the common event to run when repel wears
  * off. Leave at 0 to not run a common event.
  * @default 0
@@ -32,21 +43,38 @@ Yanfly.RepelLure = Yanfly.RepelLure || {};
  * @default
  *
  * @param Lure Variables
+ * @parent ---Lure---
  * @desc This is the variable used to double encounter rates.
  * Leave at 0 to not use. Insert spaces for multiple variables.
  * @default 0
  *
+ * @param Lure Variables List
+ * @parent ---Lure---
+ * @type variable[]
+ * @desc This is the variable used to double encounter rates.
+ * Leave at 0 to not use. Insert spaces for multiple variables.
+ * @default []
+ *
  * @param Lure Expire Event
+ * @parent ---Lure---
+ * @type common_event
  * @desc This is the ID of the common event to run when lure wears
  * off. Leave at 0 to not run a common event.
  * @default 0
  *
  * @param Lure Rate
+ * @parent ---Lure---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc This is the rate used to inflate the encounter steps by
  * if under the effects of lure.
  * @default 2.00
  *
  * @param Lure Flat
+ * @parent ---Lure---
+ * @type number
+ * @min 0
  * @desc This is the flat value used to decrease the encounter steps
  * if under the effects of lure.
  * @default 1
@@ -112,6 +140,17 @@ Yanfly.RepelLure = Yanfly.RepelLure || {};
  *   SetLureFlat x
  *   - Sets the flat value for encounters to x when the Lure Variable is active.
  *   You can use JavaScript code for x if you are familiar with JavaScript.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added new parameters: 'Repel Variables List' and 'Lure Variables List'
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -132,6 +171,13 @@ Yanfly.SetupParameters = function() {
   for (var i = 0; i < arr.length; ++i) { arr[i] = parseInt(arr[i]) };
   Yanfly.Param.RepelLureVariables['repel'] = arr;
 
+  var data = JSON.parse(Yanfly.Parameters['Repel Variables List'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = parseInt(data[i]);
+    if (Yanfly.Param.RepelLureVariables.contains(varId)) continue;
+    Yanfly.Param.RepelLureVariables.push(varId);
+  }
+
   var arr = String(Yanfly.Parameters['Lure Variables']).split(' ');
   for (var i = 0; i < arr.length; ++i) { arr[i] = parseInt(arr[i]) };
   Yanfly.Param.RepelLureVariables['lure'] = arr;
@@ -139,6 +185,13 @@ Yanfly.SetupParameters = function() {
     Number(Yanfly.Parameters['Lure Rate']);
   Yanfly.Param.RepelLureVariables['lureFlat'] =
     Number(Yanfly.Parameters['Lure Flat']);
+
+  var data = JSON.parse(Yanfly.Parameters['Lure Variables List'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var varId = parseInt(data[i]);
+    if (Yanfly.Param.RepelLureVariables.contains(varId)) continue;
+    Yanfly.Param.RepelLureVariables.push(varId);
+  }
 };
 Yanfly.SetupParameters();
 

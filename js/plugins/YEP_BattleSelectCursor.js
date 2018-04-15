@@ -8,39 +8,62 @@ Imported.YEP_BattleSelectCursor = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BattleCursor = Yanfly.BattleCursor || {};
+Yanfly.BattleCursor.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 Adds a cursor to battle when selecting allies and/or
+ * @plugindesc v1.04 Adds a cursor to battle when selecting allies and/or
  * enemies for targeting.
  * @author Yanfly Engine Plugins
  *
  * @param Ally Cursor
+ * @type file
+ * @dir img/pictures/
+ * @require 1
  * @desc The filename name of the image used found within the project's
  * img/pictures/ folder. Do not include the file extension.
  * @default Crystal_Blue_4x2
  *
  * @param Enemy Cursor
+ * @type file
+ * @dir img/pictures/
+ * @require 1
  * @desc The filename name of the image used found within the project's
  * img/pictures/ folder. Do not include the file extension.
  * @default Crystal_Red_4x2
  *
  * @param Anchor X
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc This is the default X origin point of the sprite.
  * left     center     right
  * @default center
  *
  * @param Anchor Y
+ * @type combo
+ * @option top
+ * @option middle
+ * @option bottom
  * @desc This is the default Y origin point of the sprite.
  * top     middle     bottom
  * @default bottom
  *
  * @param Position X
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc This is the default X position of the sprite on the target.
  * left     center     right
  * @default center
  *
  * @param Position Y
+ * @type combo
+ * @option top
+ * @option middle
+ * @option bottom
  * @desc This is the default Y position of the sprite on the target.
  * top     middle     bottom
  * @default top
@@ -108,6 +131,9 @@ Yanfly.BattleCursor = Yanfly.BattleCursor || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Updated plugin to keep the battle select cursor on top of animated enemies

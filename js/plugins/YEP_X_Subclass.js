@@ -8,10 +8,11 @@ Imported.YEP_X_Subclass = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Subclass = Yanfly.Subclass || {};
+Yanfly.Subclass.version = 1.11
 
 //=============================================================================
  /*:
- * @plugindesc v1.10 (Requires YEP_ClassChangeCore.js) Allow your actors
+ * @plugindesc v1.11 (Requires YEP_ClassChangeCore.js) Allow your actors
  * to subclass into a secondary class!
  * @author Yanfly Engine Plugins
  *
@@ -19,25 +20,39 @@ Yanfly.Subclass = Yanfly.Subclass || {};
  * @default
  *
  * @param Subclass Command
+ * @parent ---Class Menu---
  * @desc The text used for 'Subclass' command.
  * @default Subclass
  *
  * @param Show Command
+ * @parent ---Class Menu---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the Subclass command by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Command
+ * @parent ---Class Menu---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable the Subclass command by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Name Format
+ * @parent ---Class Menu---
  * @desc How do you wish to display the class/subclass text?
  * %1 - Current Class     %2 - Subclass
  * @default %1/%2
  *
  * @param Subclass Color
+ * @parent ---Class Menu---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used for the actor's subclass.
  * @default 5
  *
@@ -45,42 +60,82 @@ Yanfly.Subclass = Yanfly.Subclass || {};
  * @default
  *
  * @param MaxHP
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass MaxHP should be added?
  * @default 0.10
  *
  * @param MaxMP
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass MaxMP should be added?
  * @default 0.10
  *
  * @param ATK
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass ATK should be added?
  * @default 0.20
  *
  * @param DEF
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass DEF should be added?
  * @default 0.20
  *
  * @param MAT
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass MAT should be added?
  * @default 0.20
  *
  * @param MDF
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass MDF should be added?
  * @default 0.20
  *
  * @param AGI
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass AGI should be added?
  * @default 0.20
  *
  * @param LUK
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc What rate of the Subclass LUK should be added?
  * @default 0.20
  *
  * @param EXP
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc When gaining EXP, how much should subclasses earn?
  * @default 0.25
  *
  * @param JP
+ * @parent ---Parameters---
+ * @type number
+ * @decimals 2
+ * @min 0
  * @desc When gaining JP, how much should subclasses earn?
  * @default 0.25
  *
@@ -88,66 +143,118 @@ Yanfly.Subclass = Yanfly.Subclass || {};
  * @default
  *
  * @param Skill Types
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc User can use skill types owned by the subclass?
  * NO - false     YES - true
  * @default true
  *
  * @param Added Skills
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over added skills from subclass?
  * NO - false     YES - true
  * @default true
  *
  * @param Param Rates
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over parameter rates from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param X-Param Values
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over x-parameter values from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param S-Param Rates
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over s-parameter rates from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param Element Rates
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over element rates from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param Debuff Rates
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over debuff rates from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param State Rates
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over parameter rates from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param State Resist
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over state resistances from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param Attack Element
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over attack elements from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param Attack State
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over attack states from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param Weapons
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over equippable weapons from subclass?
  * NO - false     YES - true
  * @default false
  *
  * @param Armors
+ * @parent ---Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Carry over equippable armors from subclass?
  * NO - false     YES - true
  * @default false
@@ -254,6 +361,9 @@ Yanfly.Subclass = Yanfly.Subclass || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.11:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.10:
  * - Compatibility update with Class Change Core's <Use Nickname> notetag.

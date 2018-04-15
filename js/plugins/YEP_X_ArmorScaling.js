@@ -8,11 +8,11 @@ Imported.YEP_X_ArmorScaling = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ARS = Yanfly.ARS || {};
-Yanfly.ARS.version = 1.03;
+Yanfly.ARS.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_DamageCore.js) Scale defensive
+ * @plugindesc v1.04 (Requires YEP_DamageCore.js) Scale defensive
  * stats relative to a universal scale.
  * @author Yanfly Engine Plugins
  * 
@@ -20,16 +20,19 @@ Yanfly.ARS.version = 1.03;
  * @default
  *
  * @param Positive Physical Rate
+ * @parent ---Physical---
  * @desc This is the multiplier rate for physical attacks if the
  * calculated armor is a positive value.
  * @default value *= 100 / (100 + armor)
  *
  * @param Negative Physical Rate
+ * @parent ---Physical---
  * @desc This is the multiplier rate for physical attacks if the
  * calculated armor is a negative value.
  * @default value *= 2 - (100 / (100 - armor))
  *
  * @param Physical Base Armor
+ * @parent ---Physical---
  * @desc This is the physical base armor calculation.
  * @default target.def / 2
  *
@@ -37,16 +40,19 @@ Yanfly.ARS.version = 1.03;
  * @default
  *
  * @param Positive Magical Rate
+ * @parent ---Magical---
  * @desc This is the multiplier rate for magical attacks if the
  * calculated armor is a positive value.
  * @default value *= 100 / (100 + armor)
  *
  * @param Negative Magical Rate
+ * @parent ---Magical---
  * @desc This is the multiplier rate for magical attacks if the
  * calculated armor is a negative value.
  * @default value *= 2 - (100 / (100 - armor))
  *
  * @param Magical Base Armor
+ * @parent ---Magical---
  * @desc This is the magical base armor calculation.
  * @default target.mdf / 2
  *
@@ -54,16 +60,19 @@ Yanfly.ARS.version = 1.03;
  * @default
  *
  * @param Positive Certain Rate
+ * @parent ---Certain---
  * @desc This is the multiplier rate for certain attacks if the
  * calculated armor is a positive value.
  * @default value *= 100 / (100 + armor)
  *
  * @param Negative Certain Rate
+ * @parent ---Certain---
  * @desc This is the multiplier rate for certain attacks if the
  * calculated armor is a negative value.
  * @default value *= 2 - (100 / (100 - armor))
  *
  * @param Certain Base Armor
+ * @parent ---Certain---
  * @desc This is the certain hit base armor calculation.
  * @default 0
  *
@@ -342,6 +351,9 @@ Yanfly.ARS.version = 1.03;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.

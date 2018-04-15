@@ -8,10 +8,11 @@ Imported.YEP_X_ChangeBattleEquip = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CBE = Yanfly.CBE || {};
+Yanfly.CBE.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01a (Requires YEP_BattleEngineCore & YEP_EquipCore)
+ * @plugindesc v1.03 (Requires YEP_BattleEngineCore & YEP_EquipCore)
  * Allow your actors to change equipment mid-battle.
  * @author Yanfly Engine Plugins
  *
@@ -20,6 +21,8 @@ Yanfly.CBE = Yanfly.CBE || {};
  * @default Equip
  *
  * @param Equip Cooldown
+ * @type number
+ * @min 0
  * @desc This is the default number of turns selecting the command
  * will place the command on cooldown for.
  * @default 1
@@ -59,7 +62,14 @@ Yanfly.CBE = Yanfly.CBE || {};
  * Changelog
  * ============================================================================
  *
- * Version 1.01:
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.02:
+ * - Game now refreshes all battlers upon reentry into the battle after
+ * entering and leaving the equipment change menu mid-battle.
+ *
+ * Version 1.01a:
  * - Fixed a bug that made <Disable Change Battle Equip> not work.
  * - Optimization update.
  *
@@ -130,6 +140,16 @@ BattleManager.startBattle = function() {
     }
     $gameTemp._cbeBattle = false;
     this._bypassMoveToStartLocation = false;
+    BattleManager.refreshAllBattlers();
+};
+
+BattleManager.refreshAllBattlers = function() {
+  var members = $gameParty.members().concat($gameTroop.members());
+  var length = members.length;
+  for (var i = 0; i < length; ++i) {
+    var member = members[i];
+    if (member) member.refresh();
+  }
 };
 
 Yanfly.CBE.BattleManager_playBattleBgm = BattleManager.playBattleBgm;
@@ -146,6 +166,26 @@ BattleManager.playBattleBgm = function() {
       restartBgm = false;
     }
     if (restartBgm) Yanfly.CBE.BattleManager_playBattleBgm.call(this);
+};
+
+//=============================================================================
+// Game_Temp
+//=============================================================================
+
+Game_Temp.prototype.hasStoredBattleSpriteset = function() {
+  return this._battleSpriteset;
+};
+
+Game_Temp.prototype.storeBattleSpriteset = function() {
+  this._battleSpriteset = SceneManager._scene._spriteset;
+};
+
+Game_Temp.prototype.restoreBattleSpriteset = function() {
+  if (this._battleSpriteset) {
+    SceneManager._scene._spriteset = this._battleSpriteset;
+    SceneManager._scene.addChild(SceneManager._scene._spriteset);
+    this._battleSpriteset = undefined;
+  }
 };
 
 //=============================================================================
@@ -321,6 +361,16 @@ Scene_Battle.prototype.createActorCommandWindow = function() {
     win.setHandler('equip change', this.commandChangeBattleEquip.bind(this));
 };
 
+Yanfly.CBE.Scene_Battle_createSpriteset =
+    Scene_Battle.prototype.createSpriteset;
+Scene_Battle.prototype.createSpriteset = function() {
+  if ($gameTemp.hasStoredBattleSpriteset()) {
+    $gameTemp.restoreBattleSpriteset();
+  } else {
+    Yanfly.CBE.Scene_Battle_createSpriteset.call(this);
+  }
+};
+
 Scene_Battle.prototype.commandChangeBattleEquip = function() {
     BattleManager._bypassMoveToStartLocation = true;
     $gameParty.loadActorImages();
@@ -330,6 +380,7 @@ Scene_Battle.prototype.commandChangeBattleEquip = function() {
     BattleManager.actor().setBattleEquipChange(true);
     Yanfly.CBE.SavedBattleBgm = AudioManager.saveBgm();
     Yanfly.CBE.SavedBattleBgs = AudioManager.saveBgs();
+    $gameTemp.storeBattleSpriteset();
     SceneManager.push(Scene_Equip);
     BattleManager._phase = 'input';
     $gameTemp._cbeBattle = true;

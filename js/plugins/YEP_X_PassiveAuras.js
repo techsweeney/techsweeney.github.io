@@ -8,11 +8,11 @@ Imported.YEP_X_PassiveAuras = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Aura = Yanfly.Aura || {};
-Yanfly.Aura.version = 1.03;
+Yanfly.Aura.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_AutoPassiveStates.js) Add aura effects
+ * @plugindesc v1.04 (Requires YEP_AutoPassiveStates.js) Add aura effects
  * to various database objects.
  * @author Yanfly Engine Plugins
  *
@@ -179,6 +179,13 @@ Yanfly.Aura.version = 1.03;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.04:
+ * - Bug fixed where if an aura is applied as the last action of a turn, it
+ * wouldn't take effect until the following turn.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.
@@ -371,6 +378,19 @@ DataManager.isAuraState = function(state) {
 };
 
 //=============================================================================
+// BattleManager
+//=============================================================================
+
+BattleManager.refreshAllBattlers = function() {
+  var members = $gameParty.members().concat($gameTroop.members());
+  var length = members.length;
+  for (var i = 0; i < length; ++i) {
+    var member = members[i];
+    if (member) member.refresh();
+  }
+};
+
+//=============================================================================
 // Game_BattlerBase
 //=============================================================================
 
@@ -496,6 +516,16 @@ Game_BattlerBase.prototype.updateAuras = function(stateId) {
   if ((aura.all.length + aura.opponents.length > 0) || aura.troop.length > 0) {
     $gameTroop.refreshMembers();
   }
+};
+
+//=============================================================================
+// Game_Battler
+//=============================================================================
+
+Yanfly.Aura.Game_Battler_onTurnEnd = Game_Battler.prototype.onTurnEnd;
+Game_Battler.prototype.onTurnEnd = function() {
+  this.refresh();
+  Yanfly.Aura.Game_Battler_onTurnEnd.call(this);
 };
 
 //=============================================================================

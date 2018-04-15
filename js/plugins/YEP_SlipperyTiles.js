@@ -8,23 +8,31 @@ Imported.YEP_SlipperyTiles = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Slip = Yanfly.Slip || {};
+Yanfly.Slip.version = 1.05
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 You can create slippery tiles by marking them with
+ * @plugindesc v1.05 You can create slippery tiles by marking them with
  * either a terrain tag or a region number.
  * @author Yanfly Engine Plugins
  *
  * @param Slippery Frame
+ * @type number
+ * @min 0
  * @desc This is the frame used while characters are sliding.
  * @default 2
  *
  * @param Slippery Region
+ * @type number
+ * @min 0
+ * @max 255
  * @desc Any tile marked with this region is a slippery tile
  * regardless of terrain tag. Use 0 to ignore.
  * @default 0
  *
  * @param Slippery Speed
+ * @type number
+ * @min 0
  * @desc Change the speed of the player while on a slippery tile to
  * this speed instead. Leave at 0 to keep current speed.
  * @default 0
@@ -52,6 +60,9 @@ Yanfly.Slip = Yanfly.Slip || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Added 'Slippery Speed' plugin parameter to let you change the speed of

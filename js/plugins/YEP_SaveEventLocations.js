@@ -8,11 +8,11 @@ Imported.YEP_SaveEventLocations = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SEL = Yanfly.SEL || {};
-Yanfly.SEL.version = 1.05;
+Yanfly.SEL.version = 1.06;
 
 //=============================================================================
  /*:
- * @plugindesc v1.05 Enable specified maps to memorize the locations of
+ * @plugindesc v1.06 Enable specified maps to memorize the locations of
  * events when leaving and loading them upon reentering map.
  * @author Yanfly Engine Plugins
  *
@@ -56,6 +56,10 @@ Yanfly.SEL.version = 1.05;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.06:
+ * - Fixed an issue where using an event to instantly move an event would not
+ * save the event's location.
  *
  * Version 1.05:
  * - Fixed a bug where if an event whose location is to be saved starts with a
@@ -199,6 +203,7 @@ Game_Event.prototype.locate = function(x, y) {
     DataManager.processSELNotetags2(this.event());
     Yanfly.SEL.Game_Event_locate.call(this, x, y);
     if (!$gameTemp._bypassLoadLocation) this.loadLocation();
+    this.saveLocation();
 };
 
 Yanfly.SEL.Game_Event_updateMove = Game_Event.prototype.updateMove;

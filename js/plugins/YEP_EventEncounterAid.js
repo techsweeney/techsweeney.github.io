@@ -8,10 +8,11 @@ Imported.YEP_EventEncounter = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EEA = Yanfly.EEA || {};
+Yanfly.EEA.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 This plugin helps make eventable encounters easier
+ * @plugindesc v1.01 This plugin helps make eventable encounters easier
  * and determine player position relative to the event.
  * @author Yanfly Engine Plugins
  *
@@ -76,6 +77,16 @@ Yanfly.EEA = Yanfly.EEA || {};
  * Make sure these are spelled correctly. They are also case-sensitive. This
  * means that even if you were to misspell or put a single letter in the wrong
  * case, the effect will cease to work as this is code we're dealing with.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

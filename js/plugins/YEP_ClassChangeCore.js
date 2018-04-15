@@ -8,11 +8,11 @@ Imported.YEP_ClassChangeCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CCC = Yanfly.CCC || {};
-Yanfly.CCC.version = 1.12;
+Yanfly.CCC.version = 1.13;
 
 //=============================================================================
  /*:
- * @plugindesc v1.12 This plugin creates a system where your player
+ * @plugindesc v1.13 This plugin creates a system where your player
  * can change classes through the main menu.
  * @author Yanfly Engine Plugins
  *
@@ -20,39 +20,58 @@ Yanfly.CCC.version = 1.12;
  * @default
  *
  * @param Class Command
+ * @parent ---General---
  * @desc This is the text used for the menu command.
  * @default Class
  *
  * @param Auto Add Menu
+ * @parent ---General---
  * @desc Automatically add the 'Class' command to the main menu?
  * NO - false     YES - true
  * @default true
  *
  * @param Show Command
+ * @parent ---General---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the Class command in the main menu by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Command
+ * @parent ---General---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable the Class command in the main menu by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Auto Place Command
+ * @parent ---General---
+ * @type boolean
+ * @on Automatic
+ * @off Manual
  * @desc Allow this plugin to decide the menu placement position?
  * NO - false     YES - true
  * @default true
  *
  * @param Default Icon
+ * @parent ---General---
  * @desc This is the default icon index used for all classes.
  * @default 78
  *
  * @param Maintain Levels
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Maintain levels throughout all classes?
  * NO - false     YES - true     Default: false
  * @default false
  *
  * @param Unlocked Classes
+ * @parent ---General---
  * @desc These are the classes that are unlocked by default. List
  * the ID's of the classes with spaces in between them.
  * @default 1 2 3 4
@@ -61,29 +80,48 @@ Yanfly.CCC.version = 1.12;
  * @default
  *
  * @param Class Change Command
+ * @parent ---Command Window---
  * @desc The command text used for changing the primary class.
  * @default Class
  *
  * @param Show Class Change
+ * @parent ---Command Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the class change command by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Class Change
+ * @parent ---Command Window---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable the class change command by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Show Skill Learn
+ * @parent ---Command Window---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc If you have Skill Learn System, show 'Learn Skill'?
  * NO - false     YES - true
  * @default true
  *
  * @param Finish Command
+ * @parent ---Command Window---
  * @desc The command text used for exiting the class scene.
  * @default Finish
  *
  * @param Text Alignment
+ * @parent ---Command Window---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc How to align the text for the command window.
  * left     center     right
  * @default center
@@ -92,14 +130,22 @@ Yanfly.CCC.version = 1.12;
  * @default
  *
  * @param Current Class Color
+ * @parent ---Window Settings---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used for the actor's current class.
  * @default 17
  *
  * @param Class Level Format
+ * @parent ---Window Settings---
  * @desc This is the text format for the Class Level.
  * @default LV%1
  *
  * @param Class Level Font Size
+ * @parent ---Window Settings---
+ * @type number
+ * @min 1
  * @desc This is the font size used for the class level.
  * @default 20
  *
@@ -255,6 +301,9 @@ Yanfly.CCC.version = 1.12;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.13:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.12:
  * - Optimization update.

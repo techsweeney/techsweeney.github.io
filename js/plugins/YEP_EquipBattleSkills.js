@@ -8,11 +8,11 @@ Imported.YEP_EquipBattleSkills = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EBS = Yanfly.EBS || {};
-Yanfly.EBS.version = 1.11;
+Yanfly.EBS.version = 1.13;
 
 //=============================================================================
  /*:
- * @plugindesc v1.11 Adds a new system where players can only bring
+ * @plugindesc v1.13 Adds a new system where players can only bring
  * equipped skills to battle.
  * @author Yanfly Engine Plugins
  *
@@ -20,21 +20,32 @@ Yanfly.EBS.version = 1.11;
  * @default
  *
  * @param Command Name
+ * @parent ---General---
  * @desc From the Skill menu, this is the command name to bring the
  * player to the equip skill menu.
  * @default Equip Skills
  *
  * @param Starting Skill Slots
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc This is the starting number of skills a player can bring
  * into battle by default.
  * @default 4
  *
  * @param Maximum Skills
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc This is the maximum number of skills that a player can equip.
  * No bonuses can go past this point.
  * @default 8
  *
  * @param All Equippable?
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Are all skills equippable? This includes skills outside of
  * the actor's skill types. NO - false     YES - true
  * @default false
@@ -43,18 +54,31 @@ Yanfly.EBS.version = 1.11;
  * @default
  *
  * @param Empty Slot
+ * @parent ---Windows---
  * @desc This is how the text an empty slot would appear.
  * @default - Empty -
  *
  * @param Empty Color
+ * @parent ---Windows---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used to display the empty text.
  * @default 16
  *
  * @param Empty Icon
+ * @parent ---Windows---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the icon used for empty.
  * @default 16
  *
  * @param Equipped Color
+ * @parent ---Windows---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the color of an already equipped skill.
  * @default 17
  *
@@ -198,6 +222,12 @@ Yanfly.EBS.version = 1.11;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.13:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.12:
+ * - Fixed a bug that made the help window not update after changing a skill.
  *
  * Version 1.11:
  * - Fixed a bug caused by Plugin Command 'DecreaseActorBattleSlots 5 by 2'
@@ -853,6 +883,15 @@ Window_SkillList.prototype.isBattleSkillEnabled = function(item) {
     return true;
 };
 
+Yanfly.EBS.Window_SkillList_selectLast = Window_SkillList.prototype.selectLast;
+Window_SkillList.prototype.selectLast = function() {
+  Yanfly.EBS.Window_SkillList_selectLast.call(this);
+  if ($gameParty.inBattle()) {
+    skill = this._actor.lastBattleSkill();
+    if (!skill) this.select(0);
+  }
+};
+
 //=============================================================================
 // Window_ActorCommand
 //=============================================================================
@@ -1230,6 +1269,7 @@ Scene_Skill.prototype.onSkillEqOk = function() {
     this.onSkillEqCancel();
     this._statusWindow.refresh();
     this._itemWindow.refresh();
+    this._itemWindow.updateHelp();
 };
 
 Scene_Skill.prototype.onSkillEqCancel = function() {

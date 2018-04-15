@@ -8,10 +8,11 @@ Imported.YEP_X_CEMSetupPack2 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CEMSP2 = Yanfly.CEMSP2 || {};
+Yanfly.CEMSP2.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_CommonEventMenu.js) Adds more setups
+ * @plugindesc v1.01 (Requires YEP_CommonEventMenu.js) Adds more setups
  * to use with the Common Event Menu.
  * @author Yanfly Engine Plugins
  *
@@ -137,6 +138,16 @@ Yanfly.CEMSP2 = Yanfly.CEMSP2 || {};
  *   - This puts the Help Window, main list, and picture window on the right
  *   half of the screen. Everything is half width. The main list is only four
  *   commands tall.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

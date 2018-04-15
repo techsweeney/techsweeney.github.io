@@ -8,10 +8,11 @@ Imported.YEP_X_EBSAllowedTypes = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EBSAT = Yanfly.EBSAT || {};
+Yanfly.EBSAT.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_EquipBattleSkills.js) For those who
+ * @plugindesc v1.01 (Requires YEP_EquipBattleSkills.js) For those who
  * wish to use Equip Battle Skills and still have skill types.
  * @author Yanfly Engine Plugins
  *
@@ -19,6 +20,12 @@ Yanfly.EBSAT = Yanfly.EBSAT || {};
  * @desc List here the skill type ID's you wish to retain in the
  * battle command skill type list.
  * @default 0
+ *
+ * @param Allowed Skill Types List
+ * @type number[]
+ * @desc List here the skill type ID's you wish to retain in the
+ * battle command skill type list. Requires MV 1.5.0+
+ * @default []
  *
  * @help
  * ============================================================================
@@ -35,6 +42,16 @@ Yanfly.EBSAT = Yanfly.EBSAT || {};
  * listed in the plugin parameters will be given an exception and will be shown
  * in battle. Any skill that contains the skill type also cannot be equipped in
  * a battle skill slot.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -53,6 +70,12 @@ Yanfly.setupParameters = function() {
   for (var i = 0; i < length; ++i) {
     var value = Yanfly.Param.EBSATTypes[i];
     Yanfly.Param.EBSATTypes[i] = parseInt(value.trim());
+  }
+  var data = JSON.parse(parameters['Allowed Skill Types List'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var type = parseInt(data[i]);
+    if (Yanfly.Param.EBSATTypes.contains(type)) continue;
+    Yanfly.Param.EBSATTypes.push(type);
   }
 };
 

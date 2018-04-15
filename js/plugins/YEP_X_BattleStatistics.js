@@ -8,68 +8,90 @@ Imported.YEP_X_BattleStatistics = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BStats = Yanfly.BStats || {};
-Yanfly.BStats.version = 1.01;
+Yanfly.BStats.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 (Requires YEP_StatusMenuCore.js) Logs the battle
+ * @plugindesc v1.02 (Requires YEP_StatusMenuCore.js) Logs the battle
  * statistics of actors for your players to view.
  * @author Yanfly Engine Plugins
  *
+ * @param ---General---
+ * @default
+ *
  * @param Command Name
+ * @parent ---General---
  * @desc This is the text used for the command name in the Status
  * Menu command list.
  * @default Statistics
  *
  * @param Battle Count Text
+ * @parent ---General---
  * @desc This is the category text for Battle Count.
  * @default Battles Initiated
  *
  * @param Battle Count Format
+ * @parent ---General---
  * @desc This is how the text format will appear.
  * %1 - Actor Battles  %2 - Party Battles  %3 - Percentage
  * @default %1 out of %2 Battles (%3%)
  *
+ * @param ---Ratio---
+ * @default
+ *
  * @param Kill Count Text
+ * @parent ---Ratio---
  * @desc This is the category text for Kill Count.
  * @default Kills
  *
  * @param Kill Count Format
+ * @parent ---Ratio---
  * @desc This is how the text format will appear.
  * %1 - Kill Ratio
  * @default %1 Kills per Battle
  *
  * @param Death Count Text
+ * @parent ---Ratio---
  * @desc This is the category text for Death Count.
  * @default Deaths
  *
  * @param Death Count Format
+ * @parent ---Ratio---
  * @desc This is how the text format will appear.
  * %1 - Death Ratio
  * @default %1 Deaths per Battle
  *
  * @param Assist Count Text
+ * @parent ---Ratio---
  * @desc This is the category text for Assist Count.
  * @default Assists
  *
  * @param Assist Count Format
+ * @parent ---Ratio---
  * @desc This is how the text format will appear.
  * %1 - Assist Ratio
  * @default %1 Assists per Battle
  *
+ * @param ---Totals---
+ * @default
+ *
  * @param Damage Dealt
+ * @parent ---Totals---
  * @desc This is the category text for Damage Dealt.
  * @default Damage Dealt
  *
  * @param Damage Taken
+ * @parent ---Totals---
  * @desc This is the category text for Damage Taken.
  * @default Damage Taken
  *
  * @param Healing Dealt
+ * @parent ---Totals---
  * @desc This is the category text for Healing Dealt.
  * @default Healing Performed
  *
  * @param Healing Taken
+ * @parent ---Totals---
  * @desc This is the category text for Healing Taken.
  * @default Healing Received
  *
@@ -118,6 +140,9 @@ Yanfly.BStats.version = 1.01;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Calculations for recorded HP damage dealt are now calculated based on the

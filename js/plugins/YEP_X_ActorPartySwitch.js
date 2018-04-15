@@ -8,10 +8,11 @@ Imported.YEP_X_ActorPartySwitch = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.PartySwitch = Yanfly.PartySwitch || {};
+Yanfly.PartySwitch.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Req YEP_PartySystem.js and YEP_BattleEngineCore.js)
+ * @plugindesc v1.05 (Req YEP_PartySystem.js and YEP_BattleEngineCore.js)
  * Allow actors to switch with other party members mid-battle.
  * @author Yanfly Engine Plugins
  *
@@ -19,20 +20,31 @@ Yanfly.PartySwitch = Yanfly.PartySwitch || {};
  * @default
  *
  * @param Switch Command
+ * @parent ---General---
  * @desc The text that appears in the actor command window to switch allies.
  * @default Switch
  *
  * @param Switch Cooldown
+ * @parent ---General---
+ * @type number
  * @desc When an actor switches out, how many turns must the actor wait before
  * the actor can switch back in? Use 0 to disable this.
  * @default 1
  *
  * @param Show Command
+ * @parent ---General---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show party switching by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Command
+ * @parent ---General---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable party switching by default?
  * NO - false     YES - true
  * @default true
@@ -41,36 +53,56 @@ Yanfly.PartySwitch = Yanfly.PartySwitch || {};
  * @default
  *
  * @param Window X
+ * @parent ---Window---
  * @desc The x position of the party switch window.
  * This is a formula.
  * @default 0
  *
  * @param Window Y
+ * @parent ---Window---
  * @desc The y position of the party switch window.
  * This is a formula.
  * @default 0
  *
  * @param Window Width
+ * @parent ---Window---
  * @desc The width of the party switch window.
  * This is a formula.
  * @default Graphics.boxWidth / 2
  *
  * @param Window Height
+ * @parent ---Window---
  * @desc The height of the party switch window.
  * This is a formula.
  * @default Graphics.boxHeight - this.fittingHeight(4)
  *
  * @param Actor Graphic
+ * @parent ---Window---
+ * @type select
+ * @option None
+ * @value 0
+ * @option Character
+ * @value 1
+ * @option Face
+ * @value 2
+ * @option Sideview Battler
+ * @value 3
  * @desc What kind of graphic do you wish to associate with actors?
  * 0: None; 1: Character; 2: Face; 3: SV Battler
  * @default 2
  *
  * @param Font Size
+ * @parent ---Window---
+ * @type number
+ * @min 1
  * @desc The font size used for the Actor Party Switch window.
  * Default: 28
  * @default 20
  *
  * @param Rect Height
+ * @parent ---Window---
+ * @type number
+ * @min 0
  * @desc The height for each actor entry's height in pixels.
  * Use 0 for automatic detection.
  * @default 0
@@ -114,6 +146,9 @@ Yanfly.PartySwitch = Yanfly.PartySwitch || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Fixed a bug that caused the on-map party layout to not update if switching

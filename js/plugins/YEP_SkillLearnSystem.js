@@ -8,11 +8,11 @@ Imported.YEP_SkillLearnSystem = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SLS = Yanfly.SLS || {};
-Yanfly.SLS.version = 1.13;
+Yanfly.SLS.version = 1.14;
 
 //=============================================================================
  /*:
- * @plugindesc v1.13 Allows actors to learn skills from the skill menu
+ * @plugindesc v1.14 Allows actors to learn skills from the skill menu
  * through crafting them via items or otherwise.
  * @author Yanfly Engine Plugins
  *
@@ -20,21 +20,34 @@ Yanfly.SLS.version = 1.13;
  * @default
  *
  * @param Learn Command
+ * @parent ---General---
  * @desc How the command for learning skills appear in the skill
  * command window.
  * @default Learn Skills
  *
  * @param Show Command
+ * @parent ---General---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the Learn command in the main menu by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Command
+ * @parent ---General---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable the Learn command in the main menu by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Integrate
+ * @parent ---General---
+ * @type boolean
+ * @on Integrate
+ * @off No Change
  * @desc Integrate Learn Skills into the Skill scene?
  * NO - false     YES - true
  * @default false
@@ -43,20 +56,27 @@ Yanfly.SLS.version = 1.13;
  * @default
  *
  * @param Confirm Window
+ * @parent ---Confirm Learn---
+ * @type boolean
+ * @on Confirmation
+ * @off No Confirmation
  * @desc For non-integrated menu, show a learn confirmation?
  * NO - false     YES - true
  * @default true
  *
  * @param Confirm Text
+ * @parent ---Confirm Learn---
  * @desc If using the confirm window, this is the text used.
  * %1 - Actor     %2 - Skill Name
  * @default Have %1 learn %2?
  *
  * @param Confirm Yes
+ * @parent ---Confirm Learn---
  * @desc Text used to display yes.
  * @default Yes
  *
  * @param Confirm No
+ * @parent ---Confirm Learn---
  * @desc Text used to display no.
  * @default No
  *
@@ -64,24 +84,36 @@ Yanfly.SLS.version = 1.13;
  * @default
  *
  * @param Learned Text
+ * @parent ---Skill Learn---
  * @desc Text showing the skill has been learned.
  * @default Learned
  *
  * @param Learned Size
+ * @parent ---Skill Learn---
+ * @type number
+ * @min 1
  * @desc Font size for the text showing the skill has been learned.
  * Default: 28
  * @default 20
  *
  * @param Learn Cost
+ * @parent ---Skill Learn---
  * @desc Text used to list what are the learn costs for the skill.
  * @default Learn Skill Cost
  *
  * @param Cost Size
+ * @parent ---Skill Learn---
+ * @type number
+ * @min 1
  * @desc Font size used for the cost of learning a skill.
  * Default: 28
  * @default 20
  *
  * @param Show Gold Window
+ * @parent ---Skill Learn---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Shows the gold window when learning a new skill.
  * NO - false     YES - true
  * @default true
@@ -90,10 +122,16 @@ Yanfly.SLS.version = 1.13;
  * @default
  *
  * @param Default Gold Cost
+ * @parent ---Default---
+ * @type number
+ * @min 0
  * @desc Default gold cost of learning new skills.
  * @default 1000
  *
  * @param Default JP Cost
+ * @parent ---Default---
+ * @type number
+ * @min 0
  * @desc Default JP cost of learning new skills.
  * Requires YEP_JobPoints.js
  * @default 100
@@ -244,6 +282,9 @@ Yanfly.SLS.version = 1.13;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.14:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.13:
  * - Lunatic Mode fail safes added.

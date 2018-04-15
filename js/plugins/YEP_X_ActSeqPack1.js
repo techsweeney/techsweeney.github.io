@@ -8,23 +8,32 @@ Imported.YEP_X_ActSeqPack1 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP1 = Yanfly.ASP1 || {};
-Yanfly.ASP1.version = 1.11;
+Yanfly.ASP1.version = 1.12;
 
 //=============================================================================
  /*:
- * @plugindesc v1.11 (Requires YEP_BattleEngineCore.js) Basic functions are
+ * @plugindesc v1.12 (Requires YEP_BattleEngineCore.js) Basic functions are
  * added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
  * @param Default Volume
  * @desc This will be the volume of the BGM played.
+ * @type number
+ * @min 0
+ * @max 100
  * @default 90
  *
  * @param Default Pitch
+ * @type number
+ * @min 0
+ * @max 100
  * @desc This will be the pitch of the BGM played.
  * @default 100
  *
  * @param Default Pan
+ * @type number
+ * @min 0
+ * @max 100
  * @desc This will be the pan of the BGM played.
  * @default 0
  *
@@ -708,6 +717,9 @@ Yanfly.ASP1.version = 1.11;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.12:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.11:
  * - Lunatic Mode fail safes added.

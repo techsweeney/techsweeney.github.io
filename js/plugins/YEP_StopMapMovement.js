@@ -8,19 +8,26 @@ Imported.YEP_StopMapMovement = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Stop = Yanfly.Stop || {};
+Yanfly.Stop.version = 1.02
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 A utility plugin to stop events from automatically
+ * @plugindesc v1.02 A utility plugin to stop events from automatically
  * moving by themselves all across your map.
  * @author Yanfly Engine Plugins
  *
  * @param Stop During Events
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Stop automatic movement during events?
  * NO - false     YES - true
  * @default true
  *
  * @param Stop During Message
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Stop automatic movement during message displaying?
  * NO - false     YES - true
  * @default true
@@ -65,6 +72,9 @@ Yanfly.Stop = Yanfly.Stop || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Optimized updating performance to reduce lag on maps with many events.

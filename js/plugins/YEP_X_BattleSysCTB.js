@@ -8,11 +8,11 @@ Imported.YEP_X_BattleSysCTB = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CTB = Yanfly.CTB || {};
-Yanfly.CTB.versio = 1.15;
+Yanfly.CTB.version = 1.16;
 
 //=============================================================================
  /*:
- * @plugindesc v1.15 (Requires YEP_BattleEngineCore.js) Add CTB (Charge
+ * @plugindesc v1.16 (Requires YEP_BattleEngineCore.js) Add CTB (Charge
  * Turn Battle) into your game using this plugin!
  * @author Yanfly Engine Plugins
  *
@@ -20,25 +20,30 @@ Yanfly.CTB.versio = 1.15;
  * @default
  *
  * @param Per Tick
+ * @parent ---CTB Settings---
  * @desc This is how much speed is gained per tick.
  * @default user.agi
  *
  * @param Initial Speed
+ * @parent ---CTB Settings---
  * @desc The speed position of the battler at the start of battle.
  * This is a formula processed as an eval.
  * @default 0
  *
  * @param Full Gauge
+ * @parent ---CTB Settings---
  * @desc The target speed for an CTB gauge to be full.
  * This is a formula processed as an eval.
  * @default Math.max(7000, BattleManager.highestBaseAgi() * 120)
  *
  * @param Pre-Emptive Bonuses
+ * @parent ---CTB Settings---
  * @desc How much of the CTB bar do you want filled up for an
  * CTB pre-emptive bonus from 0 to 1.
  * @default 0.8
  *
  * @param Surprise Bonuses
+ * @parent ---CTB Settings---
  * @desc How much of the CTB bar do you want filled up for an
  * CTB surprise bonus from 0 to 1.
  * @default 0.8
@@ -47,11 +52,16 @@ Yanfly.CTB.versio = 1.15;
  * @default
  *
  * @param Escape Ratio
+ * @parent ---Escape---
  * @desc How CTB calculates escape ratios.
  * Default: 0.5 * $gameParty.agility() / $gameTroop.agility()
  * @default 0.125 * $gameParty.agility() / $gameTroop.agility()
  *
  * @param Fail Escape Boost
+ * @parent ---Escape---
+ * @type number
+ * @decimals 3
+ * @min 0
  * @desc Each time the player fails escape, increase the success
  * rate by this much. Default: 0.1
  * @default 0.025
@@ -60,6 +70,7 @@ Yanfly.CTB.versio = 1.15;
  * @default
  *
  * @param Full Turn
+ * @parent ---Turn---
  * @desc This is how many ticks to equal a full battle turn.
  * This is a formula processed as an eval.
  * @default Math.min(200, BattleManager.lowestBaseAgi() * 8)
@@ -68,16 +79,22 @@ Yanfly.CTB.versio = 1.15;
  * @default
  *
  * @param Enable Rubberband
+ * @parent ---Rubberband---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc This is an auto-balance mechanic for AGI.
  * Disable - false     Enable - true
  * @default true
  *
  * @param Minimum Speed
+ * @parent ---Rubberband---
  * @desc If rubberbanding is enabled, what is the minimum
  * speed increase? This is a formula.
  * @default 0.5 * BattleManager.highestBaseAgi()
  *
  * @param Maximum Speed
+ * @parent ---Rubberband---
  * @desc If rubberbanding is enabled, what is the maximum
  * speed increase? This is a formula.
  * @default 1.5 * BattleManager.highestBaseAgi()
@@ -86,18 +103,31 @@ Yanfly.CTB.versio = 1.15;
  * @default
  *
  * @param Ready Sound
+ * @parent ---Sound---
+ * @type file
+ * @dir audio/se/
+ * @require 1
  * @desc This is the sound played when the battler is ready.
  * @default Decision1
  *
  * @param Ready Volume
+ * @parent ---Sound---
+ * @type number
+ * @min 0
+ * @max 100
  * @desc This is the volume of the ready sound.
  * @default 90
  *
  * @param Ready Pitch
+ * @parent ---Sound---
+ * @type number
+ * @min 0
  * @desc This is the pitch of the ready sound.
  * @default 120
  *
  * @param Ready Pan
+ * @parent ---Sound---
+ * @type number
  * @desc This is the pan of the ready sound.
  * @default 0
  *
@@ -105,56 +135,97 @@ Yanfly.CTB.versio = 1.15;
  * @default
  *
  * @param Show Turn Order
+ * @parent ---Turn Order---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the battler turn order?
  * NO - false     YES - true
  * @default true
  *
  * @param Icon Size
+ * @parent ---Turn Order---
+ * @type number
+ * @min 1
  * @desc This is the size of the icons displayed for the turn order.
  * Default: 32
  * @default 32
  *
  * @param Position Y
+ * @parent ---Turn Order---
+ * @type number
  * @desc Where do you want to align the Y turn order?
  * @default 54
  *
  * @param Position X
+ * @parent ---Turn Order---
+ * @type number
  * @desc Which side of the screen should the turn order appear?
  * left     center     right
  * @default right
  *
  * @param Turn Direction
+ * @parent ---Turn Order---
+ * @type combo
+ * @option left
+ * @option right
  * @desc Which way do you want the turn icons going?
  * left     right
  * @default left
  *
  * @param Ally Border Color
+ * @parent ---Turn Order---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text Color used for the borders of allies.
  * @default 4
  *
  * @param Ally Back Color
+ * @parent ---Turn Order---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text Color used for the ally background color.
  * @default 22
  *
  * @param Ally Icon
+ * @parent ---Turn Order---
+ * @type number
+ * @min 0
  * @desc Default icon used for allies. If this value is 0,
  * the icon will be the ally's face graphic instead.
  * @default 0
  *
  * @param Enemy Border Color
+ * @parent ---Turn Order---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text Color used for the borders of enemies.
  * @default 2
  *
  * @param Enemy Back Color
+ * @parent ---Turn Order---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Text Color used for the ally background color.
  * @default 19
  *
  * @param Enemy Icon
+ * @parent ---Turn Order---
+ * @type number
+ * @min 0
  * @desc Default icon used for enemies. If this value is 0,
  * the icon will be the enemy's drawn battler instead.
  * @default 0
  *
  * @param Enemy SV Battlers
+ * @parent ---Turn Order---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc If using Animated SV Enemies, draw their battlers if no icon
  * is being used? This can become laggy. NO - false  YES - true
  * @default false
@@ -389,6 +460,9 @@ Yanfly.CTB.versio = 1.15;
  * Changelog
  * ============================================================================
  *
+ * Version 1.16:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
  * Version 1.15:
  * - Lunatic Mode fail safes added.
  *
@@ -477,7 +551,7 @@ Yanfly.Param.CTBPreEmptive = Number(Yanfly.Parameters['Pre-Emptive Bonuses']);
 Yanfly.Param.CTBSurprise = Number(Yanfly.Parameters['Surprise Bonuses']);
 
 Yanfly.Param.CTBEscapeRatio = String(Yanfly.Parameters['Escape Ratio']);
-Yanfly.Param.CTBEscapeBoost = String(Yanfly.Parameters['Fail Escape Boost']);
+Yanfly.Param.CTBEscapeBoost = Number(Yanfly.Parameters['Fail Escape Boost']);
 
 Yanfly.Param.CTBFullTurn = String(Yanfly.Parameters['Full Turn']);
 Yanfly.Param.CTBTurnStructure = false;

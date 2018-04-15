@@ -8,10 +8,11 @@ Imported.YEP_X_AftermathLevelUp = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ALU = Yanfly.ALU || {};
+Yanfly.ALU.version = 1.01
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_VictoryAftermath.js) Adds a level up
+ * @plugindesc v1.01 (Requires YEP_VictoryAftermath.js) Adds a level up
  * portion to the Victory Aftermath sequences.
  * @author Yanfly Engine Plugins
  *
@@ -19,16 +20,24 @@ Yanfly.ALU = Yanfly.ALU || {};
  * @default
  *
  * @param Level Up Title
+ * @parent ---General---
  * @desc This is the text that appears in the title for level up.
  * %1 - Actor's Name    %2 - Level
  * @default %1 has reached Level %2!
  *
  * @param Enable Aftermath
+ * @parent ---General---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enables/disables the level up portion by default.
  * NO - false     YES - true
  * @default true
  *
  * @param Font Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc This is the font size used to display stat comparisons.
  * Default: 28
  * @default 28
@@ -37,14 +46,19 @@ Yanfly.ALU = Yanfly.ALU || {};
  * @default
  *
  * @param Skill Text Singular
+ * @parent ---Skill Learn---
  * @desc Text used to display learned skills singular.
  * @default Acquired Skill
  *
  * @param Skill Text Plural
+ * @parent ---Skill Learn---
  * @desc Text used to display learned skills plural.
  * @default Acquired Skills
  *
  * @param Skill List Width
+ * @parent ---Skill Learn---
+ * @type number
+ * @min 1
  * @desc The pixel width of the skill list if it appears.
  * @default 200
  *
@@ -89,6 +103,16 @@ Yanfly.ALU = Yanfly.ALU || {};
  *   HideVictoryLevelUp
  *   This will cause the level up segment of the Victory Aftermath to not
  *   appear at all regardless of any actors leveling up in that battle.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

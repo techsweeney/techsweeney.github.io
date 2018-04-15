@@ -8,11 +8,11 @@ Imported.YEP_TargetCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Target = Yanfly.Target || {};
-Yanfly.Target.version = 1.03;
+Yanfly.Target.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 Expand the target scope from RPG Maker's default
+ * @plugindesc v1.04 Expand the target scope from RPG Maker's default
  * limitations for better target control.
  * @author Yanfly Engine Plugins
  *
@@ -20,15 +20,18 @@ Yanfly.Target.version = 1.03;
  * @default
  *
  * @param Everybody Text
+ * @parent ---Battle Engine---
  * @desc The help text for Everybody scope.
  * @default All Allies and Enemies
  *
  * @param All But User Text
+ * @parent ---Battle Engine---
  * @desc The help text for all All But User scope.
  * %1 - Allies     %2 - User
  * @default All %1 But %2
  *
  * @param Random Any Text
+ * @parent ---Battle Engine---
  * @desc The help text used for the Random Any scope.
  * %1 - Number
  * @default %1 Random
@@ -37,19 +40,23 @@ Yanfly.Target.version = 1.03;
  * @default
  *
  * @param Multiple Text
+ * @parent ---Multiple Of---
  * @desc The help text used for Multiple of x scope.
  * %1 - Targets   %2 - Parameters   %3 - Number
  * @default %1 with %2 as a Multiple of %3
  *
  * @param Multiple Everybody
+ * @parent ---Multiple Of---
  * @desc The text to use for Everybody in this format.
  * @default Anyone
  *
  * @param Multiple Allies
+ * @parent ---Multiple Of---
  * @desc The text to use for Allies in this format.
  * @default Any Ally
  *
  * @param Multiple Foes
+ * @parent ---Multiple Of---
  * @desc The text to use for Foes in this format.
  * @default Any Foe
  *
@@ -57,30 +64,36 @@ Yanfly.Target.version = 1.03;
  * @default
  *
  * @param Target Row Text
+ * @parent ---Row Formation---
  * @desc The help text used to target the target's row.
  * %1 - Target Name
  * @default %1's Row
  *
  * @param Front Row Text
+ * @parent ---Row Formation---
  * @desc The help text used to target the front row.
  * %1 - Target Type
  * @default %1 Front Row
  *
  * @param Back Row Text
+ * @parent ---Row Formation---
  * @desc The help text used to target the back row.
  * %1 - Target Type
  * @default %1 Back Row
  *
  * @param Specific Row Text
+ * @parent ---Row Formation---
  * @desc The help text used to target specific rows.
  * %1 - Target Type
  * @default Specific %1 Row
  *
  * @param Row Enemies
+ * @parent ---Row Formation---
  * @desc The help text used for enemies for Row Targets.
  * @default Enemy
  *
  * @param Row Allies
+ * @parent ---Row Formation---
  * @desc The help text used for enemies for Row Targets.
  * @default Allied
  *
@@ -238,6 +251,9 @@ Yanfly.Target.version = 1.03;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Lunatic Mode fail safes added.

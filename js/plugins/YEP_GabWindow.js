@@ -8,10 +8,11 @@ Imported.YEP_GabWindow = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Gab = Yanfly.Gab || {};
+Yanfly.Gab.version = 1.06
 
 //=============================================================================
  /*:
- * @plugindesc v1.05 The Gab Window functions as a window for random
+ * @plugindesc v1.06 The Gab Window functions as a window for random
  * jibber jabber that does not require a message window.
  * @author Yanfly Engine Plugins
  *
@@ -19,41 +20,62 @@ Yanfly.Gab = Yanfly.Gab || {};
  * @default
  *
  * @param Gab Font Name
+ * @parent ---General---
  * @desc The font name used for the text of the Gab Window.
  * Default: GameFont
  * @default GameFont
  *
  * @param Gab Font Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc The font size used for the text of the Gab Window.
  * Default: 28
  * @default 28
  *
  * @param Character X Pos
+ * @parent ---General---
+ * @type number
  * @desc X position of the character.
  * Default: 36
  * @default 36
  *
  * @param Character Y Pos
+ * @parent ---General---
+ * @type number
  * @desc Y position of the character.
  * Default: 60
  * @default 60
  *
  * @param Base Wait Time
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Minimum frames the Gab Window stays visible.
  * Default: 90
  * @default 90
  *
  * @param Time Per Character
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Frames added per Text Character.
  * Default: 4
  * @default 4
  *
  * @param Fade Rate
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc Is is how fast the gab window fades away.
  * Default: 16
  * @default 16
  *
  * @param Anti-Repeat
+ * @parent ---General---
+ * @type boolean
+ * @on Anti-Repeat
+ * @off Allow Repeat
  * @desc Stops gabs of the same settings from being queued.
  * NO - false     YES - true
  * @default true
@@ -62,16 +84,20 @@ Yanfly.Gab = Yanfly.Gab || {};
  * @default
  *
  * @param Map Y Location
+ * @parent ---Map---
+ * @type number
  * @desc This is the Y location of the Gab Window.
  * Default: 72
  * @default 72
  *
  * @param Map Dim Color 1
+ * @parent ---Map---
  * @desc This is the dim color 1 used for maps.
  * Default: rgba(0, 0, 0, 0.6)
  * @default rgba(0, 0, 0, 0.6)
  *
  * @param Map Dim Color 2
+ * @parent ---Map---
  * @desc This is the dim color 2 used for maps.
  * Default: rgba(0, 0, 0, 0)
  * @default rgba(0, 0, 0, 0.3)
@@ -80,16 +106,20 @@ Yanfly.Gab = Yanfly.Gab || {};
  * @default
  *
  * @param Battle Y Location
+ * @parent ---Battle---
+ * @type number
  * @desc This is the Y location of the Gab Window.
  * Default: 108
  * @default 108
  *
  * @param Battle Dim Color 1
+ * @parent ---Battle---
  * @desc This is the dim color 1 used for battles.
  * Default: rgba(0, 0, 0, 0.6)
  * @default rgba(0, 0, 0, 0.6)
  *
  * @param Battle Dim Color 2
+ * @parent ---Battle---
  * @desc This is the dim color 2 used for battles.
  * Default: rgba(0, 0, 0, 0)
  * @default rgba(0, 0, 0, 0)
@@ -188,6 +218,9 @@ Yanfly.Gab = Yanfly.Gab || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.06:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.05:
  * - Added 'WaitForGab' plugin command. This plugin command causes the game to

@@ -1,6 +1,6 @@
 //=============================================================================
 // Yanfly Engine Plugins - Animate Tiles Option
-// YEP_StaticTilesOption.js
+// YEP_AnimateTilesOption.js
 //=============================================================================
 
 var Imported = Imported || {};
@@ -8,6 +8,7 @@ Imported.YEP_StaticTilesOption = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.AniTile = Yanfly.AniTile || {};
+Yanfly.AniTile.version = 1.02;
 
 //=============================================================================
  /*:
@@ -20,6 +21,10 @@ Yanfly.AniTile = Yanfly.AniTile || {};
  * @default Animated Tiles
  *
  * @param Default Setting
+ * @type combo
+ * @option true
+ * @option false
+ * @option auto
  * @desc Default setting for this option.
  * ON - true     OFF - false     AUTO - auto
  * @default auto
@@ -44,6 +49,9 @@ Yanfly.AniTile = Yanfly.AniTile || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Updated for RPG Maker MV version 1.3.0.

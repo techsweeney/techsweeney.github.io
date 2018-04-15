@@ -8,10 +8,11 @@ Imported.YEP_DashToggle = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Dash = Yanfly.Dash || {};
+Yanfly.Dash.version = 1.03
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 RPG Maker MV lacks the ability to toggle dashing
+ * @plugindesc v1.03 RPG Maker MV lacks the ability to toggle dashing
  * on and off. This plugin will let you do so~
  * @author Yanfly Engine Plugins
  *
@@ -61,6 +62,9 @@ Yanfly.Dash = Yanfly.Dash || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Added a failsafe to prevent crashes if there are no members in the party.

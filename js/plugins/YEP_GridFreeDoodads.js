@@ -8,11 +8,11 @@ Imported.YEP_GridFreeDoodads = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.GFD = Yanfly.GFD || {};
-Yanfly.GFD.version = 1.03;
+Yanfly.GFD.version = 1.08;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 Place Grid-Free Doodads into your game using an
+ * @plugindesc v1.08 Place Grid-Free Doodads into your game using an
  * in-game editor. Static and animated doodads can be used!
  * @author Yanfly Engine Plugins
  *
@@ -20,15 +20,24 @@ Yanfly.GFD.version = 1.03;
  * @default
  *
  * @param Doodads Folder
+ * @parent ---General---
  * @desc This is the path to your doodads folder.
  * @default img/doodads/
  *
  * @param Doodads Smoothing
+ * @parent ---General---
+ * @type boolean
+ * @on Smooth
+ * @off Hard
  * @desc Default smooth out doodad edges or give them hard edges?
  * SMOOTH - true     HARD - false
  * @default false
  *
  * @param Alphabetical Settings
+ * @parent ---General---
+ * @type boolean
+ * @on Alphabetical
+ * @off By ID
  * @desc List doodad settings in alphabetical order?
  * YES - true     NO - false
  * @default false
@@ -37,15 +46,25 @@ Yanfly.GFD.version = 1.03;
  * @default
  *
  * @param Default Grid Snap
+ * @parent ---Grid Snap---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Do you want Grid Snap enabled by default?
  * YES - true     NO - false
  * @default false
  *
  * @param Grid Snap Width
+ * @parent ---Grid Snap---
+ * @type number
+ * @min 1
  * @desc The default grid snap width.
  * @default 48
  *
  * @param Grid Snap Height
+ * @parent ---Grid Snap---
+ * @type number
+ * @min 1
  * @desc The default grid snap height.
  * @default 48
  *
@@ -297,6 +316,23 @@ Yanfly.GFD.version = 1.03;
  * Changelog
  * ============================================================================
  *
+ * Version 1.08:
+ * - Updated for RPG Maker MV version 1.6.0 again. There was an issue with
+ * newly added doodads not saving properly due to the changed file structure.
+ *
+ * Version 1.07:
+ * - Updated for RPG Maker MV version 1.6.0.
+ *
+ * Version 1.06:
+ * - Added 'Import from Another Map' command to the main doodad menu.
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.04:
+ * - Calculations made for previous version are now rounded upward instead of
+ * rounding down to accomodate for smoother screen scrolling.
+ *
  * Version 1.03:
  * - Adjusted calculations for grid-snapping when graphic resolutions aren't
  * divisible by tile width or height.
@@ -524,7 +560,7 @@ Sprite_Doodad.prototype.screenX = function() {
   if (value + this.width < 0 && $gameMap.isLoopHorizontal()) {
     value += this._mapWidth;
   }
-  return Math.floor(value);
+  return Math.ceil(value);
 };
 
 Sprite_Doodad.prototype.screenY = function() {
@@ -534,7 +570,7 @@ Sprite_Doodad.prototype.screenY = function() {
   if (value + this.height < 0 && $gameMap.isLoopVertical()) {
     value += this._mapHeight;
   }
-  return Math.floor(value);
+  return Math.ceil(value);
 };
 
 Sprite_Doodad.prototype.clear = function() {
@@ -642,14 +678,24 @@ TouchInput._onMouseMove = function(event) {
 StorageManager.saveDoodadSettings = function() {
   var data = JSON.stringify($dataDoodads, null, 2);
   var fs = require('fs');
-  var path = window.location.pathname.replace(/(\/www|)\/[^\/]*$/, '/data/');
-  if (path.match(/^\/([A-Z]\:)/)) {
-    path = path.slice(1);
+  if (Utils.RPGMAKER_VERSION >= "1.6.0") {
+    var path = require('path');
+    var base = path.dirname(process.mainModule.filename);
+    path = path.join(base, 'data/');
+    if (!fs.existsSync(path)) fs.mkdirSync(path);
+    var filePath = path + 'Doodads.json';
+    console.log(filePath)
+    fs.writeFileSync(filePath, data);
+  } else {
+    var path = window.location.pathname.replace(/(\/www|)\/[^\/]*$/, '/data/');
+    if (path.match(/^\/([A-Z]\:)/)) {
+      path = path.slice(1);
+    }
+    var dirPath = decodeURIComponent(path);
+    if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath);
+    var filePath = dirPath + 'Doodads.json';
+    fs.writeFileSync(filePath, data);
   }
-  var dirPath = decodeURIComponent(path);
-  var filePath = dirPath + 'Doodads.json';
-  if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath);
-  fs.writeFileSync(filePath, data);
 };
 
 //=============================================================================
@@ -1154,6 +1200,7 @@ Window_GFD_Menu.prototype.makeCommandList = function() {
   this.addCommand('Place Doodads', 'place');
   this.addCommand('Edit Doodads', 'edit');
   this.addCommand('Clear Doodads', 'clear');
+  this.addCommand('Import from Another Map', 'import');
   this.addCommand('', 'none', false);
   this.addCommand('Toggle Region Overlay', 'regionOverlay');
   this.addCommand('', 'none', false);
@@ -1218,6 +1265,61 @@ Window_GFD_List.prototype.makeCommandList = function() {
   this.addFileList();
 };
 
+if (Utils.RPGMAKER_VERSION >= "1.6.0") {
+
+Window_GFD_List.prototype.getLocalPath = function() {
+  var path = require('path');
+  var base = path.dirname(process.mainModule.filename);
+  return path.join(base, Yanfly.Param.GFDFolder);
+};
+
+Window_GFD_List.prototype.addFolderList = function() {
+  var fs = require('fs');
+  var results = [];
+  var path = this.getLocalPath() + this.folderPath();
+  fs.readdirSync(path).forEach(function(file) {
+    name = file;
+    file = path + '/' + name;
+    var stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results.push(name);
+    }
+  });
+  var length = results.length;
+  for (var i = 0; i < length; ++i) {
+    var folder = results[i];
+    if (folder) {
+      this.addCommand(folder + '/', 'folder', true, folder);
+    }
+  }
+};
+
+Window_GFD_List.prototype.addFileList = function() {
+  var fs = require('fs');
+  var results = [];
+  var path = this.getLocalPath() + this.folderPath();
+  fs.readdirSync(path).forEach(function(file) {
+    name = file;
+    file = path + '/' + name;
+    var stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      // Do nothing
+    } else if (name.match(/.png/g)) {
+      name = name.replace(/.png/g, '');
+      results.push(name);
+    }
+  });
+  var length = results.length;
+  for (var i = 0; i < length; ++i) {
+    var file = results[i];
+    if (file) {
+      this.addCommand(file, 'file', true, file);
+    }
+  }
+};
+
+} else {
+
 Window_GFD_List.prototype.getLocalPath = function() {
   var path = window.location.pathname.replace(/(\/www|)\/[^\/]*$/,
     '/' + Yanfly.Param.GFDFolder + this.folderPath() + '/');
@@ -1272,6 +1374,8 @@ Window_GFD_List.prototype.addFileList = function() {
     }
   }
 };
+
+}; // Utils.RPGMAKER_VERSION >= "1.6.0"
 
 Window_GFD_List.prototype.drawItem = function(index) {
   var rect = this.itemRectForText(index);
@@ -1495,7 +1599,7 @@ Window_GFD_Canvas.prototype.rawDoodadX = function() {
     value = Math.floor(value / w) * w;
     value += Math.floor(this._tileWidth * DoodadManager.current().anchorX);
     var offset = Math.round(this._tileWidth * ($gameMap._displayX -
-      Math.floor($gameMap._displayX)));
+      Math.ceil($gameMap._displayX)));
     value -= offset;
   }
   return Math.floor(value);
@@ -1521,7 +1625,7 @@ Window_GFD_Canvas.prototype.rawDoodadY = function() {
     value = Math.floor(value / h) * h;
     value += Math.floor(this._tileHeight * DoodadManager.current().anchorY);
     var offset = Math.round(this._tileHeight * ($gameMap._displayY -
-      Math.floor($gameMap._displayY)));
+      Math.ceil($gameMap._displayY)));
     value -= offset;
   }
   return Math.floor(value);
@@ -2133,7 +2237,7 @@ Window_GFD_SettingsLayers.prototype.windowWidth = function() {
 
 Window_GFD_SettingsLayers.prototype.makeCommandList = function() {
   this.addCommand('10. Highest Layer', 'layer', true, 8);
-  this.addCommand(' 9. Hgher Layer', 'layer', true, 7);
+  this.addCommand(' 9. Higher Layer', 'layer', true, 7);
   this.addCommand(' 8. High Layer', 'layer', true, 6);
   this.addCommand(' 7. Above Characters', 'layer', true, 5);
   this.addCommand(' 6. Upper Layer', 'layer', true, 4);
@@ -2556,7 +2660,7 @@ Window_GFD_PickDoodadLayer.prototype.makeCommandList = function() {
   this.addCommand('All Doodads', 'edit', true, 100);
   this.addCommand('', 'none', false);
   this.addCommand('10. Highest Layer', 'edit', this._doodadsTotal[8], 8);
-  this.addCommand(' 9. Hgher Layer', 'edit', this._doodadsTotal[7], 7);
+  this.addCommand(' 9. Higher Layer', 'edit', this._doodadsTotal[7], 7);
   this.addCommand(' 8. High Layer', 'edit', this._doodadsTotal[6], 6);
   this.addCommand(' 7. Above Char', 'edit', this._doodadsTotal[5], 5);
   this.addCommand(' 6. Upper Layer', 'edit', this._doodadsTotal[4], 4);
@@ -2843,6 +2947,45 @@ Window_GFD_RegionOverlay.prototype.screenY = function() {
 };
 
 //=============================================================================
+// Window_GFD_Import
+//=============================================================================
+
+function Window_GFD_Import() {
+  this.initialize.apply(this, arguments);
+}
+
+Window_GFD_Import.prototype = Object.create(Window_Command.prototype);
+Window_GFD_Import.prototype.constructor = Window_GFD_Import;
+
+Window_GFD_Import.prototype.initialize = function() {
+  this._doodads = $gameMap.doodads() || [];
+  Window_Command.prototype.initialize.call(this, 400, 0);
+  this.setGFD();
+};
+
+Window_GFD_Import.prototype.windowWidth = function() {
+  return Graphics.boxWidth - 400;
+};
+
+Window_GFD_Import.prototype.windowHeight = function() {
+  return Graphics.boxHeight;
+};
+
+Window_GFD_Import.prototype.makeCommandList = function() {
+  var group = $dataMapInfos;
+  var length = group.length;
+  for (var i = 1; i < length; ++i) {
+    var mapInfo = group[i];
+    if (!mapInfo) continue;
+    var mapId = mapInfo.id.padZero(3);
+    var mapName = mapInfo.name;
+    var fmt = 'M%1: %2';
+    var name = fmt.format(mapId, mapName);
+    this.addCommand(name, 'map', true, mapId);
+  }
+};
+
+//=============================================================================
 // Scene_Base
 //=============================================================================
 
@@ -2901,6 +3044,7 @@ Scene_Map.prototype.createGFDWindows = function() {
   this.createGFDGridMenuWindow();
   this.createGFDPickDoodadLayerWindow();
   this.createGFDPickDoodadListWindow();
+  this.createGFDImportWindow();
 };
 
 Scene_Map.prototype.createGFDMenuWindow = function() {
@@ -2915,6 +3059,7 @@ Scene_Map.prototype.createGFDMenuWindow = function() {
   win.setHandler('revert', this.cmdGFDMenuRevert.bind(this));
   win.setHandler('clear', this.cmdGFDMenuClear.bind(this));
   win.setHandler('regionOverlay', this.cmdGFDMenuRegionOverlay.bind(this));
+  win.setHandler('import', this.cmdGFDMenuImport.bind(this));
 };
 
 Scene_Map.prototype.createGFDListWindow = function() {
@@ -3085,6 +3230,15 @@ Scene_Map.prototype.createGFDPickDoodadListWindow = function() {
   win.setHandler('doodad', this.cmdGFDDoodadListSelect.bind(this));
 };
 
+Scene_Map.prototype.createGFDImportWindow = function() {
+  this._gfdImportWindow = new Window_GFD_Import();
+  this.addChild(this._gfdImportWindow);
+  this._gfdWindows.push(this._gfdImportWindow);
+  var win = this._gfdImportWindow;
+  win.setHandler('cancel', this.cancelGFDImport.bind(this));
+  win.setHandler('map', this.cmdCFDImportMap.bind(this));
+};
+
 Scene_Map.prototype.openGFDWindows = function() {
   $gameTemp._prevDoodadSettings = JsonEx.makeDeepCopy($dataDoodads);
   this._gfdMenuWindow.activate();
@@ -3150,6 +3304,11 @@ Scene_Map.prototype.cmdGFDMenuClear = function() {
 Scene_Map.prototype.cmdGFDMenuRegionOverlay = function() {
   this._gfdMenuWindow.activate();
   this._spriteset.toggleRegionOverlayWindow();
+};
+
+Scene_Map.prototype.cmdGFDMenuImport = function() {
+  this._gfdImportWindow.activate();
+  this._gfdImportWindow.open();
 };
 
 Scene_Map.prototype.cancelGFDList = function() {
@@ -3557,6 +3716,21 @@ Scene_Map.prototype.cmdGFDDoodadListSelect = function() {
   this._gfdPickDoodadListWindow.close();
   var doodad = this._gfdPickDoodadListWindow.currentExt();
   this.openGFDDoodadSettings(doodad);
+};
+
+Scene_Map.prototype.cancelGFDImport = function() {
+  this._gfdImportWindow.close();
+  this._gfdMenuWindow.activate();
+};
+
+Scene_Map.prototype.cmdCFDImportMap = function() {
+  this._gfdImportWindow.close();
+  this._gfdMenuWindow.activate();
+  var mapId = parseInt(this._gfdImportWindow.currentExt());
+  $dataDoodads[mapId] = $dataDoodads[mapId] || [];
+  var data = JsonEx.makeDeepCopy($dataDoodads[mapId]);
+  $dataDoodads[$gameMap.mapId()] = data;
+  DoodadManager.refresh();
 };
 
 Scene_Map.prototype.cmdGFDSettingsDelete = function() {

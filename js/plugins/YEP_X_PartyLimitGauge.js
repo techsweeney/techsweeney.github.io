@@ -8,11 +8,11 @@ Imported.YEP_X_PartyLimitGauge = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.PLG = Yanfly.PLG || {};
-Yanfly.PLG.version = 1.09;
+Yanfly.PLG.version = 1.10;
 
 //=============================================================================
  /*:
- * @plugindesc v1.09 (Requires YEP_SkillCore.js) A party-wide skill
+ * @plugindesc v1.10 (Requires YEP_SkillCore.js) A party-wide skill
  * resource is accessible across all members of a unit.
  * @author Yanfly Engine Plugins
  *
@@ -20,29 +20,47 @@ Yanfly.PLG.version = 1.09;
  * @default
  *
  * @param Gauge Increments
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc How much is each gauge increment?
  * @default 100
  *
  * @param Party Text Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc Text size used for the Party Gauge.
  * Default: 28
  * @default 28
  *
  * @param Draw Cost Icon
+ * @parent ---General---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Draw the cost icon for Party Limit costs?
  * NO - false     YES - true
  * @default true
  *
  * @param Cost Color
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The text color used for Party Limit costs.
  * @default 6
  *
  * @param Cost Format
+ * @parent ---General---
  * @desc The text format used for Party Limit costs.
  * %1 - Cost     %2 - Current     %3 - Max
  * @default %1
  *
  * @param Cost Font Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc The text font size used for Party Limit costs.
  * Default: 28
  * @default 20
@@ -51,54 +69,83 @@ Yanfly.PLG.version = 1.09;
  * @default
  *
  * @param Show Party Gauge
+ * @parent ---Party---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the player's party gauge in battle?
  * NO - false     YES - true
  * @default true
  *
  * @param Per Party Member
+ * @parent ---Party---
  * @desc Amount of Party Limit Gauge Max granted per party member.
  * This is a formula.
  * @default 100
  *
  * @param Party Max Bonus
+ * @parent ---Party---
  * @desc This is a maximum bonus added independent of party size.
  * This is a formula.
  * @default 0
  *
  * @param Party Gauge X
+ * @parent ---Party---
  * @desc Formula for the gauge x position for the player party.
  * @default Graphics.boxWidth - width - 4
  *
  * @param Party Gauge Y
+ * @parent ---Party---
  * @desc Formula for the gauge y position for the player party.
  * @default Graphics.boxHeight - statusHeight - height - 4
  *
  * @param Party Width
+ * @parent ---Party---
  * @desc Formula for the gauge width for the player party.
  * @default max.clamp(100, 400)
  *
  * @param Party Gauge Color 1
+ * @parent ---Party---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Color 1 used for the Party Limit Gauge.
  * @default 14
  *
  * @param Party Gauge Color 2
+ * @parent ---Party---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Color 2 used for the Party Limit Gauge.
  * @default 6
  *
  * @param Party Gauge Icon
+ * @parent ---Party---
+ * @type number
+ * @min 0
  * @desc Icon used for the player party.
  * @default 310
  *
  * @param Party Icon Align
+ * @parent ---Party---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Where do you want the icon to be aligned?
  * left     center     right
  * @default right
  *
  * @param Party Text Buffer X
+ * @parent ---Party---
+ * @type number
  * @desc How much do you want to buffer the text X by?
  * @default 0
  *
  * @param Party Text Buffer Y
+ * @parent ---Party---
+ * @type number
  * @desc How much do you want to buffer the text Y by?
  * @default 8
  *
@@ -106,54 +153,83 @@ Yanfly.PLG.version = 1.09;
  * @default
  *
  * @param Show Troop Gauge
+ * @parent ---Troop---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the enemy's party gauge in battle?
  * NO - false     YES - true
  * @default true
  *
  * @param Per Troop Member
+ * @parent ---Troop---
  * @desc Amount of Party Limit Gauge Max granted per enemy member.
  * This is a formula.
  * @default 100
  *
  * @param Troop Max Bonus
+ * @parent ---Troop---
  * @desc This is a maximum bonus added independent of troop size.
  * This is a formula.
  * @default 0
  *
  * @param Troop Gauge X
+ * @parent ---Troop---
  * @desc Formula for the gauge x position for the enemy party.
  * @default 4
  *
  * @param Troop Gauge Y
+ * @parent ---Troop---
  * @desc Formula for the gauge y position for the enemy party.
  * @default Graphics.boxHeight - statusHeight - height - 4
  *
  * @param Troop Width
+ * @parent ---Troop---
  * @desc Formula for the gauge width for the enemy party.
  * @default max.clamp(100, 400)
  *
  * @param Troop Gauge Color 1
+ * @parent ---Troop---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Color 1 used for the Party Limit Gauge.
  * @default 10
  *
  * @param Troop Gauge Color 2
+ * @parent ---Troop---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc Color 2 used for the Party Limit Gauge.
  * @default 2
  *
  * @param Troop Gauge Icon
+ * @parent ---Troop---
+ * @type number
+ * @min 0
  * @desc Icon used for the player party.
  * @default 309
  *
  * @param Troop Icon Align
+ * @parent ---Troop---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Where do you want the icon to be aligned?
  * left     center     right
  * @default left
  *
  * @param Troop Text Buffer X
+ * @parent ---Troop---
+ * @type number
  * @desc How much do you want to buffer the text X by?
  * @default 0
  *
  * @param Troop Text Buffer Y
+ * @parent ---Troop---
+ * @type number
  * @desc How much do you want to buffer the text Y by?
  * @default 8
  *
@@ -161,76 +237,94 @@ Yanfly.PLG.version = 1.09;
  * @default
  *
  * @param Reset Gauge
+ * @parent ---Limit Gain---
+ * @type boolean
+ * @on Reset
+ * @off Don't
  * @desc Reset the Party Limit Gauge each battle?
  * NO - false     YES - true
  * @default false
  *
  * @param Battle Start
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * at the start of each battle.
  * @default 0
  *
  * @param Take HP Damage
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member takes HP damage.
  * @default Math.floor(25 * damage / user.mhp).clamp(10, 25)
  *
  * @param Deal HP Damage
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member deals HP damage.
  * @default Math.floor(10 * damage / target.mhp).clamp(5, 10)
  *
  * @param Heal HP Damage
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member heals HP.
  * @default Math.floor(-5 * damage / target.mhp).clamp(3, 5)
  *
  * @param Take MP Damage
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member takes MP damage.
  * @default Math.floor(25 * damage / user.mmp).clamp(10, 25)
  *
  * @param Deal MP Damage
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member deals MP damage.
  * @default Math.floor(10 * damage / target.mmp).clamp(5, 10)
  *
  * @param Heal MP Damage
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member heals MP.
  * @default Math.floor(-5 * damage / target.mmp).clamp(3, 5)
  *
  * @param Gain State
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member receives a state from a foe.
  * @default 5
  *
  * @param Deal State
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member inflicts a state on a foe.
  * @default 3
  *
  * @param Killed Ally
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a party member is killed.
  * @default 50
  *
  * @param Killed Foe
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever a foe is killed.
  * @default 5
  *
  * @param Win Battle
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever the player party wins the battle.
  * @default 10
  *
  * @param Flee Battle
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever the player party flees the battle.
  * @default -100
  *
  * @param Lose Battle
+ * @parent ---Limit Gain---
  * @desc Formula for how much Party Limit Gauge is gained
  * whenever the player party loses the battle.
  * @default -1000
@@ -487,6 +581,9 @@ Yanfly.PLG.version = 1.09;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.10:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.09:
  * - Lunatic Mode fail safes added.

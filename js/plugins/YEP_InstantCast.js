@@ -8,15 +8,17 @@ Imported.YEP_InstantCast = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Instant = Yanfly.Instant || {};
-Yanfly.Instant.version = 1.10;
+Yanfly.Instant.version = 1.11;
 
 //=============================================================================
  /*:
- * @plugindesc v1.10 Allows skills/items to be instantly cast after being
+ * @plugindesc v1.11 Allows skills/items to be instantly cast after being
  * selected in the battle menu.
  * @author Yanfly Engine Plugins
  *
  * @param Instant Icon
+ * @type number
+ * @min 0
  * @desc Marks instant cast skills with this icon overlay.
  * Use 0 if you wish to use no icon.
  * @default 0
@@ -149,6 +151,9 @@ Yanfly.Instant.version = 1.10;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.11:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.10:
  * - Compatibility update for future plugins.

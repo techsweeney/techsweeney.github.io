@@ -8,20 +8,24 @@ Imported.YEP_X_ItemPictureImg = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IPI = Yanfly.IPI || {};
-Yanfly.IPI.version = 1.00;
+Yanfly.IPI.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_ItemCore.js) Allows you to use images
+ * @plugindesc v1.01 (Requires YEP_ItemCore.js) Allows you to use images
  * for items inside of the item menu instead of large icons.
  * @author Yanfly Engine Plugins
  *
  * @param Max Image Width
+ * @type number
+ * @min 1
  * @desc Maximum image width for picture if used.
  * Not suggested to go above 144.
  * @default 128
  *
  * @param Max Image Height
+ * @type number
+ * @min 1
  * @desc Maximum image height for picture if used.
  * Not suggested to go above 144.
  * @default 128
@@ -68,6 +72,16 @@ Yanfly.IPI.version = 1.00;
  *   - This will set the item's picture image to use hue x. Altering the hue
  *   will adjust the color hue for the picture image used. Use a value between
  *   0 and 360 for the hue.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 

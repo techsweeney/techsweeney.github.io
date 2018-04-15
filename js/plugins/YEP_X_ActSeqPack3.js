@@ -8,10 +8,11 @@ Imported.YEP_X_ActSeqPack3 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP3 = Yanfly.ASP3 || {};
+Yanfly.ASP3.version = 1.04
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 (Requires YEP_BattleEngineCore.js) Camera control is
+ * @plugindesc v1.04 (Requires YEP_BattleEngineCore.js) Camera control is
  * added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
@@ -313,6 +314,9 @@ Yanfly.ASP3 = Yanfly.ASP3 || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.03:
  * - Restriction on Camera and Zoom action sequences lifted from being Sideview

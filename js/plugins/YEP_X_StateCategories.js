@@ -8,11 +8,11 @@ Imported.YEP_X_StateCategories = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.StC = Yanfly.StC || {};
-Yanfly.StC.version = 1.05;
+Yanfly.StC.version = 1.06;
 
 //=============================================================================
  /*:
- * @plugindesc v1.05 (Requires YEP_BuffsStatesCore.js) Sets up categories
+ * @plugindesc v1.06 (Requires YEP_BuffsStatesCore.js) Sets up categories
  * for your states to make control over them easier.
  * @author Yanfly Engine Plugins
  *
@@ -79,10 +79,10 @@ Yanfly.StC.version = 1.05;
  *
  * Skill and Item Notetags:
  *
- *   <Custom Remove State: category name>
+ *   <Custom Remove State Category: text>
  *    value += user.level;
  *    value -= target.level;
- *   </Custom Remove State: category name>
+ *   </Custom Remove State Category: text>
  *   The 'value' variable is the amount of states to be removed by the action.
  *   If there was a <Remove x State Category: text> in the skill/item notebox,
  *   then the 'value' variable will start off with that amount. If not, the
@@ -122,8 +122,12 @@ Yanfly.StC.version = 1.05;
  * Changelog
  * ============================================================================
  *
- * Version 1.05:
+ * Version 1.06:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.05a:
  * - Lunatic Mode fail safes added.
+ * - Fixed a documentation error with <Custom Remove State Category: text>.
  *
  * Version 1.04:
  * - Compatibility update with Selection Control to not game over the player

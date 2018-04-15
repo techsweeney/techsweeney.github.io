@@ -8,11 +8,11 @@ Imported.YEP_SelfSwVar = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.SSV = Yanfly.SSV || {};
-Yanfly.SSV.version = 1.02;
+Yanfly.SSV.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 Self Switches and Self Variables functionality
+ * @plugindesc v1.03 Self Switches and Self Variables functionality
  * without the need for plugin commands or script calls.
  * @author Yanfly Engine Plugins
  *
@@ -119,12 +119,12 @@ Yanfly.SSV.version = 1.02;
  *
  * Script Call:
  *
- *   this.getSelfSwitchValue(mapId, eventId, switchId)
+ *   this.setSelfSwitchValue(mapId, eventId, switchId)
  *   - Replace mapId with the map ID the event exists on. Replace eventId with
  *   the ID of the event. And replace the switchId with the ID of the switch.
  *   This will get the true/false value of that event's self switch.
  *
- *   this.getSelfVariableValue(mapId, eventId, varId)
+ *   this.setSelfVariableValue(mapId, eventId, varId)
  *   - Replace mapId with the map ID the event exists on. Replace eventId with
  *   the ID of the event. And replace the varId with the ID of the variable.
  *   This will get the value of that event's self variable.
@@ -135,7 +135,7 @@ Yanfly.SSV.version = 1.02;
  *   the ID of the event. And replace the switchId with the ID of the switch.
  *   This will set that self switch to true or false.
  *
- *   this.getSelfVariableValue(mapId, eventId, varId, value)
+ *   this.setSelfVariableValue(mapId, eventId, varId, value)
  *   - Replace mapId with the map ID the event exists on. Replace eventId with
  *   the ID of the event. And replace the varId with the ID of the variable.
  *   This will set that self variable to the value inserted.
@@ -144,8 +144,13 @@ Yanfly.SSV.version = 1.02;
  * Changelog
  * ============================================================================
  *
- * Version 1.02:
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.02a:
  * - Lunatic Mode fail safes added.
+ * - Documentation updated for the script calls. Previously used incorrect
+ * function names. Function names should now be fixed.
  *
  * Version 1.01:
  * - Fixed a conflict that made self variables not work properly with the Input

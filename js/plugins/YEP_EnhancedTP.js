@@ -8,11 +8,11 @@ Imported.YEP_EnhancedTP = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ETP = Yanfly.ETP || {};
-Yanfly.ETP.version = 1.06;
+Yanfly.ETP.version = 1.07;
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 Gives you more control over how TP is handled in
+ * @plugindesc v1.07 Gives you more control over how TP is handled in
  * your game in addition to letting players switch TP modes.
  * @author Yanfly Engine Plugins
  *
@@ -20,47 +20,80 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Command Name
+ * @parent ---General---
  * @desc This is the command name shown in the skill menu.
  * @default TP Mode
  *
  * @param Show Command
+ * @parent ---General---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the TP Mode command by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Enable Command
+ * @parent ---General---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable the TP Mode command by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Change Reset
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Reset TP to 0 whenever the TP mode is changed?
  * NO - false     YES - true
  * @default true
  *
  * @param Equipped Color
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color used for the equipped TP mode.
  * @default 17
  *
  * @param Default Mode
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc This is the default mode everybody starts with unless
  * changed through notetags.
  * @default 1
  *
  * @param Default Unlocks
+ * @parent ---General---
  * @desc These are the TP modes unlocked by default. Separate the
  * modes with a space in between.
  * @default 1 2 3 4
  *
  * @param Crisis HP
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @decimals 2
  * @desc This is the rate for what is considered to be low HP.
  * @default 0.25
  *
  * @param Crisis MP
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @decimals 2
  * @desc This is the rate for what is considered to be low MP.
  * @default 0.25
  *
  * @param Dead TP Gain
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allow dead characters to gain TP from TP modes while dead?
  * NO - false     YES - true
  * @default false
@@ -69,114 +102,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 1 Name
+ * @parent ---Mode 1 Settings---
  * @desc The name used for this TP mode.
  * @default Stoic
  *
  * @param Mode 1 Icon
+ * @parent ---Mode 1 Settings---
  * @desc The icon used for this TP mode.
  * @default 160
  *
  * @param Mode 1 Help Line 1
+ * @parent ---Mode 1 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP by guarding in battle or receiving damage
  *
  * @param Mode 1 Help Line 2
+ * @parent ---Mode 1 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default from attacks.
  *
  * @param Mode 1 Max TP
+ * @parent ---Mode 1 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 1 Preserve
+ * @parent ---Mode 1 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 1 Initial TP
+ * @parent ---Mode 1 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 1 Regen TP
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 1 Take HP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default (50 * value / user.mhp * user.tcr).clamp(5, 20)
  *
  * @param Mode 1 Deal HP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 1 Heal HP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 1 Ally HP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 1 Take MP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 1 Deal MP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 1 Heal MP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 1 Ally MP DMG
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 1 Deal State
+ * @parent ---Mode 1 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 1 Gain State
+ * @parent ---Mode 1 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 1 Kill Ally
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 1 Kill Enemy
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 1 Win Battle
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 1 Flee Battle
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 1 Lose Battle
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 1 Crisis HP
+ * @parent ---Mode 1 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 1 Crisis MP
+ * @parent ---Mode 1 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 1 Only Member
+ * @parent ---Mode 1 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 1 Evasion
+ * @parent ---Mode 1 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -184,114 +244,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 2 Name
+ * @parent ---Mode 2 Settings---
  * @desc The name used for this TP mode.
  * @default Comrade
  *
  * @param Mode 2 Icon
+ * @parent ---Mode 2 Settings---
  * @desc The icon used for this TP mode.
  * @default 84
  *
  * @param Mode 2 Help Line 1
+ * @parent ---Mode 2 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever allies take damage.
  *
  * @param Mode 2 Help Line 2
+ * @parent ---Mode 2 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 2 Max TP
+ * @parent ---Mode 2 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 2 Preserve
+ * @parent ---Mode 2 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 2 Initial TP
+ * @parent ---Mode 2 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 2 Regen TP
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 2 Take HP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 2 Deal HP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 2 Heal HP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 2 Ally HP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 20 * user.tcr
  *
  * @param Mode 2 Take MP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 2 Deal MP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 2 Heal MP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 2 Ally MP DMG
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 2 Deal State
+ * @parent ---Mode 2 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 2 Gain State
+ * @parent ---Mode 2 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 2 Kill Ally
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 2 Kill Enemy
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 2 Win Battle
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 2 Flee Battle
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 2 Lose Battle
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 2 Crisis HP
+ * @parent ---Mode 2 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 2 Crisis MP
+ * @parent ---Mode 2 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 2 Only Member
+ * @parent ---Mode 2 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 2 Evasion
+ * @parent ---Mode 2 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -299,114 +386,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 3 Name
+ * @parent ---Mode 3 Settings---
  * @desc The name used for this TP mode.
  * @default Warrior
  *
  * @param Mode 3 Icon
+ * @parent ---Mode 3 Settings---
  * @desc The icon used for this TP mode.
  * @default 77
  *
  * @param Mode 3 Help Line 1
+ * @parent ---Mode 3 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP by attacking and dealing HP damage.
  *
  * @param Mode 3 Help Line 2
+ * @parent ---Mode 3 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 3 Max TP
+ * @parent ---Mode 3 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 3 Preserve
+ * @parent ---Mode 3 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 3 Initial TP
+ * @parent ---Mode 3 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 3 Regen TP
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 3 Take HP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 3 Deal HP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default Math.min(16, value * 100 / target.mhp) * user.tcr
  *
  * @param Mode 3 Heal HP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 3 Ally HP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 3 Take MP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 3 Deal MP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 3 Heal MP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 3 Ally MP DMG
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 3 Deal State
+ * @parent ---Mode 3 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 3 Gain State
+ * @parent ---Mode 3 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 3 Kill Ally
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 3 Kill Enemy
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 3 Win Battle
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 3 Flee Battle
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 3 Lose Battle
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 3 Crisis HP
+ * @parent ---Mode 3 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 3 Crisis MP
+ * @parent ---Mode 3 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 3 Only Member
+ * @parent ---Mode 3 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 3 Evasion
+ * @parent ---Mode 3 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  * 
@@ -414,114 +528,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 4 Name
+ * @parent ---Mode 4 Settings---
  * @desc The name used for this TP mode.
  * @default Healer
  *
  * @param Mode 4 Icon
+ * @parent ---Mode 4 Settings---
  * @desc The icon used for this TP mode.
  * @default 72
  *
  * @param Mode 4 Help Line 1
+ * @parent ---Mode 4 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP by healing HP.
  *
  * @param Mode 4 Help Line 2
+ * @parent ---Mode 4 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 4 Max TP
+ * @parent ---Mode 4 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 4 Preserve
+ * @parent ---Mode 4 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 4 Initial TP
+ * @parent ---Mode 4 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 4 Regen TP
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 4 Take HP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 4 Deal HP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 4 Heal HP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default Math.min(16, value * -100 / target.mhp) * user.tcr
  *
  * @param Mode 4 Ally HP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 4 Take MP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 4 Deal MP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 4 Heal MP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 4 Ally MP DMG
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 4 Deal State
+ * @parent ---Mode 4 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 4 Gain State
+ * @parent ---Mode 4 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 4 Kill Ally
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 4 Kill Enemy
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 4 Win Battle
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 4 Flee Battle
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 4 Lose Battle
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 4 Crisis HP
+ * @parent ---Mode 4 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 4 Crisis MP
+ * @parent ---Mode 4 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 4 Only Member
+ * @parent ---Mode 4 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 4 Evasion
+ * @parent ---Mode 4 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -529,114 +670,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 5 Name
+ * @parent ---Mode 5 Settings---
  * @desc The name used for this TP mode.
  * @default Breaker
  *
  * @param Mode 5 Icon
+ * @parent ---Mode 5 Settings---
  * @desc The icon used for this TP mode.
  * @default 174
  *
  * @param Mode 5 Help Line 1
+ * @parent ---Mode 5 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user deals MP damage, receives MP damage,
  *
  * @param Mode 5 Help Line 2
+ * @parent ---Mode 5 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default or an ally receives MP damage.
  *
  * @param Mode 5 Max TP
+ * @parent ---Mode 5 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 5 Preserve
+ * @parent ---Mode 5 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 5 Initial TP
+ * @parent ---Mode 5 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 5 Regen TP
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 5 Take HP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 5 Deal HP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 5 Heal HP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 5 Ally HP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 5 Take MP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 50 * damageRate * user.tcr
  *
  * @param Mode 5 Deal MP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default Math.min(16, value / 4) * user.tcr
  *
  * @param Mode 5 Heal MP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 5 Ally MP DMG
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 20 * user.tcr
  *
  * @param Mode 5 Deal State
+ * @parent ---Mode 5 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 5 Gain State
+ * @parent ---Mode 5 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 5 Kill Ally
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 5 Kill Enemy
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 5 Win Battle
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 5 Flee Battle
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 5 Lose Battle
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 5 Crisis HP
+ * @parent ---Mode 5 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 5 Crisis MP
+ * @parent ---Mode 5 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 5 Only Member
+ * @parent ---Mode 5 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 5 Evasion
+ * @parent ---Mode 5 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -644,114 +812,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 6 Name
+ * @parent ---Mode 6 Settings---
  * @desc The name used for this TP mode.
  * @default Booster
  *
  * @param Mode 6 Icon
+ * @parent ---Mode 6 Settings---
  * @desc The icon used for this TP mode.
  * @default 166
  *
  * @param Mode 6 Help Line 1
+ * @parent ---Mode 6 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user recovers MP for an ally.
  *
  * @param Mode 6 Help Line 2
+ * @parent ---Mode 6 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 6 Max TP
+ * @parent ---Mode 6 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 6 Preserve
+ * @parent ---Mode 6 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 6 Initial TP
+ * @parent ---Mode 6 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 6 Regen TP
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 6 Take HP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 6 Deal HP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 6 Heal HP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 6 Ally HP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 6 Take MP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 6 Deal MP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 6 Heal MP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default Math.min(16, value / -4) * user.tcr
  *
  * @param Mode 6 Ally MP DMG
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 6 Deal State
+ * @parent ---Mode 6 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 6 Gain State
+ * @parent ---Mode 6 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 6 Kill Ally
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 6 Kill Enemy
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 6 Win Battle
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 6 Flee Battle
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 6 Lose Battle
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 6 Crisis HP
+ * @parent ---Mode 6 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 6 Crisis MP
+ * @parent ---Mode 6 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 6 Only Member
+ * @parent ---Mode 6 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 6 Evasion
+ * @parent ---Mode 6 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -759,114 +954,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 7 Name
+ * @parent ---Mode 7 Settings---
  * @desc The name used for this TP mode.
  * @default Slayer
  *
  * @param Mode 7 Icon
+ * @parent ---Mode 7 Settings---
  * @desc The icon used for this TP mode.
  * @default 76
  *
  * @param Mode 7 Help Line 1
+ * @parent ---Mode 7 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever an enemy is killed.
  *
  * @param Mode 7 Help Line 2
+ * @parent ---Mode 7 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 7 Max TP
+ * @parent ---Mode 7 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 7 Preserve
+ * @parent ---Mode 7 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 7 Initial TP
+ * @parent ---Mode 7 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 7 Regen TP
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 7 Take HP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 7 Deal HP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 7 Heal HP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 7 Ally HP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 7 Take MP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 7 Deal MP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 7 Heal MP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 7 Ally MP DMG
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 7 Deal State
+ * @parent ---Mode 7 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 7 Gain State
+ * @parent ---Mode 7 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 7 Kill Ally
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 7 Kill Enemy
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 25 * user.tcr
  *
  * @param Mode 7 Win Battle
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 7 Flee Battle
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 7 Lose Battle
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 7 Crisis HP
+ * @parent ---Mode 7 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 7 Crisis MP
+ * @parent ---Mode 7 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 7 Only Member
+ * @parent ---Mode 7 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 7 Evasion
+ * @parent ---Mode 7 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -874,114 +1096,141 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 8 Name
+ * @parent ---Mode 8 Settings---
  * @desc The name used for this TP mode.
  * @default Avenger
  *
  * @param Mode 8 Icon
+ * @parent ---Mode 8 Settings---
  * @desc The icon used for this TP mode.
  * @default 1
  *
  * @param Mode 8 Help Line 1
+ * @parent ---Mode 8 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever an ally is killed.
  *
  * @param Mode 8 Help Line 2
+ * @parent ---Mode 8 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 8 Max TP
+ * @parent ---Mode 8 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 8 Preserve
+ * @parent ---Mode 8 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 8 Initial TP
+ * @parent ---Mode 8 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 8 Regen TP
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 8 Take HP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 8 Deal HP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 8 Heal HP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 8 Ally HP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 8 Take MP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 8 Deal MP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 8 Heal MP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 8 Ally MP DMG
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 8 Deal State
+ * @parent ---Mode 8 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 8 Gain State
+ * @parent ---Mode 8 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 8 Kill Ally
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 50 * user.tcr
  *
  * @param Mode 8 Kill Enemy
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 8 Win Battle
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 8 Flee Battle
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 8 Lose Battle
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 8 Crisis HP
+ * @parent ---Mode 8 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 8 Crisis MP
+ * @parent ---Mode 8 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 8 Only Member
+ * @parent ---Mode 8 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 8 Evasion
+ * @parent ---Mode 8 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -989,1379 +1238,1703 @@ Yanfly.ETP.version = 1.06;
  * @default
  *
  * @param Mode 9 Name
+ * @parent ---Mode 9 Settings---
  * @desc The name used for this TP mode.
  * @default Winner
  *
  * @param Mode 9 Icon
+ * @parent ---Mode 9 Settings---
  * @desc The icon used for this TP mode.
  * @default 73
  *
  * @param Mode 9 Help Line 1
+ * @parent ---Mode 9 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever your party defeats all enemies.
  *
  * @param Mode 9 Help Line 2
+ * @parent ---Mode 9 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 9 Max TP
+ * @parent ---Mode 9 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 9 Preserve
+ * @parent ---Mode 9 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 9 Initial TP
+ * @parent ---Mode 9 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 9 Regen TP
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 9 Take HP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 9 Deal HP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 9 Heal HP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 9 Ally HP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 9 Take MP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 9 Deal MP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 9 Heal MP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 9 Ally MP DMG
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 9 Deal State
+ * @parent ---Mode 9 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 9 Gain State
+ * @parent ---Mode 9 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 9 Kill Ally
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 9 Kill Enemy
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 9 Win Battle
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 20 * user.tcr
  *
  * @param Mode 9 Flee Battle
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 9 Lose Battle
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 9 Crisis HP
+ * @parent ---Mode 9 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 9 Crisis MP
+ * @parent ---Mode 9 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 9 Only Member
+ * @parent ---Mode 9 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 9 Evasion
+ * @parent ---Mode 9 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 10 Settings--
+ * @param ---Mode 10 Settings---
  * @default
  *
  * @param Mode 10 Name
+ * @parent ---Mode 10 Settings---
  * @desc The name used for this TP mode.
  * @default Coward
  *
  * @param Mode 10 Icon
+ * @parent ---Mode 10 Settings---
  * @desc The icon used for this TP mode.
  * @default 74
  *
  * @param Mode 10 Help Line 1
+ * @parent ---Mode 10 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever your party escapes from battle or
  *
  * @param Mode 10 Help Line 2
+ * @parent ---Mode 10 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default lose a battle.
  *
  * @param Mode 10 Max TP
+ * @parent ---Mode 10 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 10 Preserve
+ * @parent ---Mode 10 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 10 Initial TP
+ * @parent ---Mode 10 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 10 Regen TP
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 10 Take HP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 10 Deal HP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 10 Heal HP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 10 Ally HP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 10 Take MP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 10 Deal MP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 10 Heal MP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 10 Ally MP DMG
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 10 Deal State
+ * @parent ---Mode 10 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 10 Gain State
+ * @parent ---Mode 10 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 10 Kill Ally
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 10 Kill Enemy
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 10 Win Battle
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 10 Flee Battle
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 20 * user.tcr
  *
  * @param Mode 10 Lose Battle
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 20 * user.tcr
  *
  * @param Mode 10 Crisis HP
+ * @parent ---Mode 10 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 10 Crisis MP
+ * @parent ---Mode 10 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 10 Only Member
+ * @parent ---Mode 10 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 10 Evasion
+ * @parent ---Mode 10 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 11 Settings--
+ * @param ---Mode 11 Settings---
  * @default
  *
  * @param Mode 11 Name
+ * @parent ---Mode 11 Settings---
  * @desc The name used for this TP mode.
  * @default Daredevil
  *
  * @param Mode 11 Icon
+ * @parent ---Mode 11 Settings---
  * @desc The icon used for this TP mode.
  * @default 48
  *
  * @param Mode 11 Help Line 1
+ * @parent ---Mode 11 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user ends a turn with low HP.
  *
  * @param Mode 11 Help Line 2
+ * @parent ---Mode 11 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 11 Max TP
+ * @parent ---Mode 11 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 11 Preserve
+ * @parent ---Mode 11 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 11 Initial TP
+ * @parent ---Mode 11 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 11 Regen TP
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 11 Take HP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 11 Deal HP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 11 Heal HP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 11 Ally HP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 11 Take MP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 11 Deal MP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 11 Heal MP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 11 Ally MP DMG
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 11 Deal State
+ * @parent ---Mode 11 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 11 Gain State
+ * @parent ---Mode 11 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 11 Kill Ally
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 11 Kill Enemy
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 11 Win Battle
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 11 Flee Battle
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 11 Lose Battle
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 11 Crisis HP
+ * @parent ---Mode 11 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 16 * user.tcr
  *
  * @param Mode 11 Crisis MP
+ * @parent ---Mode 11 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 11 Only Member
+ * @parent ---Mode 11 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 11 Evasion
+ * @parent ---Mode 11 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 12 Settings--
+ * @param ---Mode 12 Settings---
  * @default
  *
  * @param Mode 12 Name
+ * @parent ---Mode 12 Settings---
  * @desc The name used for this TP mode.
  * @default Caster
  *
  * @param Mode 12 Icon
+ * @parent ---Mode 12 Settings---
  * @desc The icon used for this TP mode.
  * @default 49
  *
  * @param Mode 12 Help Line 1
+ * @parent ---Mode 12 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user ends a turn with low MP.
  *
  * @param Mode 12 Help Line 2
+ * @parent ---Mode 12 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 12 Max TP
+ * @parent ---Mode 12 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 12 Preserve
+ * @parent ---Mode 12 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 12 Initial TP
+ * @parent ---Mode 12 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 12 Regen TP
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 12 Take HP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 12 Deal HP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 12 Heal HP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 12 Ally HP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 12 Take MP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 12 Deal MP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 12 Heal MP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 12 Ally MP DMG
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 12 Deal State
+ * @parent ---Mode 12 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 12 Gain State
+ * @parent ---Mode 12 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 12 Kill Ally
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 12 Kill Enemy
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 12 Win Battle
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 12 Flee Battle
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 12 Lose Battle
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 12 Crisis HP
+ * @parent ---Mode 12 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 12 Crisis MP
+ * @parent ---Mode 12 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 16 * user.tcr
  *
  * @param Mode 12 Only Member
+ * @parent ---Mode 12 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 12 Evasion
+ * @parent ---Mode 12 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 13 Settings--
+ * @param ---Mode 13 Settings---
  * @default
  *
  * @param Mode 13 Name
+ * @parent ---Mode 13 Settings---
  * @desc The name used for this TP mode.
  * @default Tactician
  *
  * @param Mode 13 Icon
+ * @parent ---Mode 13 Settings---
  * @desc The icon used for this TP mode.
  * @default 79
  *
  * @param Mode 13 Help Line 1
+ * @parent ---Mode 13 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user inflicts a status effect on a foe.
  *
  * @param Mode 13 Help Line 2
+ * @parent ---Mode 13 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 13 Max TP
+ * @parent ---Mode 13 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 13 Preserve
+ * @parent ---Mode 13 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 13 Initial TP
+ * @parent ---Mode 13 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 13 Regen TP
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 13 Take HP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 13 Deal HP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 13 Heal HP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 13 Ally HP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 13 Take MP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 13 Deal MP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 13 Heal MP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 13 Ally MP DMG
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 13 Deal State
+ * @parent ---Mode 13 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 16 * user.tcr
  *
  * @param Mode 13 Gain State
+ * @parent ---Mode 13 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 13 Kill Ally
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 13 Kill Enemy
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 13 Win Battle
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 13 Flee Battle
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 13 Lose Battle
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 13 Crisis HP
+ * @parent ---Mode 13 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 13 Crisis MP
+ * @parent ---Mode 13 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 13 Only Member
+ * @parent ---Mode 13 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 13 Evasion
+ * @parent ---Mode 13 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  * 
- * @param ---Mode 14 Settings--
+ * @param ---Mode 14 Settings---
  * @default
  *
  * @param Mode 14 Name
+ * @parent ---Mode 14 Settings---
  * @desc The name used for this TP mode.
  * @default Sufferer
  *
  * @param Mode 14 Icon
+ * @parent ---Mode 14 Settings---
  * @desc The icon used for this TP mode.
  * @default 3
  *
  * @param Mode 14 Help Line 1
+ * @parent ---Mode 14 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user receives a status effect from a foe.
  *
  * @param Mode 14 Help Line 2
+ * @parent ---Mode 14 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 14 Max TP
+ * @parent ---Mode 14 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 14 Preserve
+ * @parent ---Mode 14 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 14 Initial TP
+ * @parent ---Mode 14 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 14 Regen TP
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 14 Take HP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 14 Deal HP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 14 Heal HP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 14 Ally HP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 14 Take MP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 14 Deal MP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 14 Heal MP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 14 Ally MP DMG
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 14 Deal State
+ * @parent ---Mode 14 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 14 Gain State
+ * @parent ---Mode 14 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 16 * user.tcr
  *
  * @param Mode 14 Kill Ally
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 14 Kill Enemy
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 14 Win Battle
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 14 Flee Battle
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 14 Lose Battle
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 14 Crisis HP
+ * @parent ---Mode 14 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 14 Crisis MP
+ * @parent ---Mode 14 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 14 Only Member
+ * @parent ---Mode 14 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 14 Evasion
+ * @parent ---Mode 14 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 15 Settings--
+ * @param ---Mode 15 Settings---
  * @default
  *
  * @param Mode 15 Name
+ * @parent ---Mode 15 Settings---
  * @desc The name used for this TP mode.
  * @default Dancer
  *
  * @param Mode 15 Icon
+ * @parent ---Mode 15 Settings---
  * @desc The icon used for this TP mode.
  * @default 82
  *
  * @param Mode 15 Help Line 1
+ * @parent ---Mode 15 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP whenever user successfully evades an attack.
  *
  * @param Mode 15 Help Line 2
+ * @parent ---Mode 15 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default 
  *
  * @param Mode 15 Max TP
+ * @parent ---Mode 15 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 15 Preserve
+ * @parent ---Mode 15 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 15 Initial TP
+ * @parent ---Mode 15 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 15 Regen TP
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 15 Take HP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 15 Deal HP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 15 Heal HP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 15 Ally HP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 15 Take MP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 15 Deal MP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 15 Heal MP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 15 Ally MP DMG
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 15 Deal State
+ * @parent ---Mode 15 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 15 Gain State
+ * @parent ---Mode 15 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 15 Kill Ally
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 15 Kill Enemy
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 15 Win Battle
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 15 Flee Battle
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 15 Lose Battle
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 15 Crisis HP
+ * @parent ---Mode 15 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 15 Crisis MP
+ * @parent ---Mode 15 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 15 Only Member
+ * @parent ---Mode 15 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 15 Evasion
+ * @parent ---Mode 15 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 16 * user.tcr
  *
- * @param ---Mode 16 Settings--
+ * @param ---Mode 16 Settings---
  * @default
  *
  * @param Mode 16 Name
+ * @parent ---Mode 16 Settings---
  * @desc The name used for this TP mode.
  * @default Loner
  *
  * @param Mode 16 Icon
+ * @parent ---Mode 16 Settings---
  * @desc The icon used for this TP mode.
  * @default 13
  *
  * @param Mode 16 Help Line 1
+ * @parent ---Mode 16 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default Raise TP every turn end when the user is the last
  *
  * @param Mode 16 Help Line 2
+ * @parent ---Mode 16 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default remaining alive member.
  *
  * @param Mode 16 Max TP
+ * @parent ---Mode 16 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 16 Preserve
+ * @parent ---Mode 16 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 16 Initial TP
+ * @parent ---Mode 16 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 16 Regen TP
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 16 Take HP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 16 Deal HP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 16 Heal HP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 16 Ally HP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 16 Take MP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 16 Deal MP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 16 Heal MP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 16 Ally MP DMG
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 16 Deal State
+ * @parent ---Mode 16 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 16 Gain State
+ * @parent ---Mode 16 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 16 Kill Ally
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 16 Kill Enemy
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 16 Win Battle
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 16 Flee Battle
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 16 Lose Battle
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 16 Crisis HP
+ * @parent ---Mode 16 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 16 Crisis MP
+ * @parent ---Mode 16 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 16 Only Member
+ * @parent ---Mode 16 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 16 * user.tcr
  *
  * @param Mode 16 Evasion
+ * @parent ---Mode 16 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 17 Settings--
+ * @param ---Mode 17 Settings---
  * @default
  *
  * @param Mode 17 Name
+ * @parent ---Mode 17 Settings---
  * @desc The name used for this TP mode.
  * @default Undefined
  *
  * @param Mode 17 Icon
+ * @parent ---Mode 17 Settings---
  * @desc The icon used for this TP mode.
  * @default 0
  *
  * @param Mode 17 Help Line 1
+ * @parent ---Mode 17 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default -
  *
  * @param Mode 17 Help Line 2
+ * @parent ---Mode 17 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default -
  *
  * @param Mode 17 Max TP
+ * @parent ---Mode 17 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 17 Preserve
+ * @parent ---Mode 17 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 17 Initial TP
+ * @parent ---Mode 17 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 17 Regen TP
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 17 Take HP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 17 Deal HP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 17 Heal HP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 17 Ally HP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 17 Take MP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 17 Deal MP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 17 Heal MP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 17 Ally MP DMG
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 17 Deal State
+ * @parent ---Mode 17 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 17 Gain State
+ * @parent ---Mode 17 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 17 Kill Ally
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 17 Kill Enemy
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 17 Win Battle
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 17 Flee Battle
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 17 Lose Battle
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 17 Crisis HP
+ * @parent ---Mode 17 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 17 Crisis MP
+ * @parent ---Mode 17 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 17 Only Member
+ * @parent ---Mode 17 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 17 Evasion
+ * @parent ---Mode 17 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 18 Settings--
+ * @param ---Mode 18 Settings---
  * @default
  *
  * @param Mode 18 Name
+ * @parent ---Mode 18 Settings---
  * @desc The name used for this TP mode.
  * @default Undefined
  *
  * @param Mode 18 Icon
+ * @parent ---Mode 18 Settings---
  * @desc The icon used for this TP mode.
  * @default 0
  *
  * @param Mode 18 Help Line 1
+ * @parent ---Mode 18 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default -
  *
  * @param Mode 18 Help Line 2
+ * @parent ---Mode 18 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default -
  *
  * @param Mode 18 Max TP
+ * @parent ---Mode 18 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 18 Preserve
+ * @parent ---Mode 18 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 18 Initial TP
+ * @parent ---Mode 18 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 18 Regen TP
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 18 Take HP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 18 Deal HP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 18 Heal HP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 18 Ally HP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 18 Take MP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 18 Deal MP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 18 Heal MP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 18 Ally MP DMG
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 18 Deal State
+ * @parent ---Mode 18 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 18 Gain State
+ * @parent ---Mode 18 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 18 Kill Ally
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 18 Kill Enemy
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 18 Win Battle
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 18 Flee Battle
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 18 Lose Battle
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 18 Crisis HP
+ * @parent ---Mode 18 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 18 Crisis MP
+ * @parent ---Mode 18 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 18 Only Member
+ * @parent ---Mode 18 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 18 Evasion
+ * @parent ---Mode 18 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 19 Settings--
+ * @param ---Mode 19 Settings---
  * @default
  *
  * @param Mode 19 Name
+ * @parent ---Mode 19 Settings---
  * @desc The name used for this TP mode.
  * @default Undefined
  *
  * @param Mode 19 Icon
+ * @parent ---Mode 19 Settings---
  * @desc The icon used for this TP mode.
  * @default 0
  *
  * @param Mode 19 Help Line 1
+ * @parent ---Mode 19 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default -
  *
  * @param Mode 19 Help Line 2
+ * @parent ---Mode 19 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default -
  *
  * @param Mode 19 Max TP
+ * @parent ---Mode 19 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 19 Preserve
+ * @parent ---Mode 19 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 19 Initial TP
+ * @parent ---Mode 19 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 19 Regen TP
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 19 Take HP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 19 Deal HP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 19 Heal HP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 19 Ally HP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 19 Take MP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 19 Deal MP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 19 Heal MP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 19 Ally MP DMG
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 19 Deal State
+ * @parent ---Mode 19 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 19 Gain State
+ * @parent ---Mode 19 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 19 Kill Ally
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 19 Kill Enemy
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 19 Win Battle
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 19 Flee Battle
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 19 Lose Battle
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 19 Crisis HP
+ * @parent ---Mode 19 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 19 Crisis MP
+ * @parent ---Mode 19 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 19 Only Member
+ * @parent ---Mode 19 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 19 Evasion
+ * @parent ---Mode 19 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
- * @param ---Mode 20 Settings--
+ * @param ---Mode 20 Settings---
  * @default
  *
  * @param Mode 20 Name
+ * @parent ---Mode 20 Settings---
  * @desc The name used for this TP mode.
  * @default Undefined
  *
  * @param Mode 20 Icon
+ * @parent ---Mode 20 Settings---
  * @desc The icon used for this TP mode.
  * @default 0
  *
  * @param Mode 20 Help Line 1
+ * @parent ---Mode 20 Settings---
  * @desc The 1st help description line used for this TP mode.
  * @default -
  *
  * @param Mode 20 Help Line 2
+ * @parent ---Mode 20 Settings---
  * @desc The 2nd help description line used for this TP mode.
  * @default -
  *
  * @param Mode 20 Max TP
+ * @parent ---Mode 20 Settings---
  * @desc The formula used to determine the max TP for this mode.
  * @default 100
  *
  * @param Mode 20 Preserve
+ * @parent ---Mode 20 Settings---
  * @desc true - Carry TP from one battle to the next.
  * false - Reset the initial TP count each battle.
  * @default true
  *
  * @param Mode 20 Initial TP
+ * @parent ---Mode 20 Settings---
  * @desc Formula for much TP is gained at the start of battle.
  * @default 0
  *
  * @param Mode 20 Regen TP
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained upon regeneration.
  * @default 100 * user.trg
  *
  * @param Mode 20 Take HP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained taking HP damage.
  * @default 0
  *
  * @param Mode 20 Deal HP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained dealing HP damage.
  * @default 0
  *
  * @param Mode 20 Heal HP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained healing HP damage.
  * @default 0
  *
  * @param Mode 20 Ally HP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained for ally HP damage.
  * @default 0
  *
  * @param Mode 20 Take MP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained taking MP damage.
  * @default 0
  *
  * @param Mode 20 Deal MP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained dealing MP damage.
  * @default 0
  *
  * @param Mode 20 Heal MP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained healing MP damage.
  * @default 0
  *
  * @param Mode 20 Ally MP DMG
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained for ally MP damage.
  * @default 0
  *
  * @param Mode 20 Deal State
+ * @parent ---Mode 20 Settings---
  * @desc Formula TP gained when user inflicts a state on a foe.
  * @default 0
  *
  * @param Mode 20 Gain State
+ * @parent ---Mode 20 Settings---
  * @desc Formula TP gained when user gains a state from a foe.
  * @default 0
  *
  * @param Mode 20 Kill Ally
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained when an ally is killed.
  * @default 0
  *
  * @param Mode 20 Kill Enemy
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained when a foe is killed.
  * @default 0
  *
  * @param Mode 20 Win Battle
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained when a battle is won.
  * @default 0
  *
  * @param Mode 20 Flee Battle
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained when a battle is fled.
  * @default 0
  *
  * @param Mode 20 Lose Battle
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained when a battle is lost.
  * @default 0
  *
  * @param Mode 20 Crisis HP
+ * @parent ---Mode 20 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of HP.
  * @default 0
  *
  * @param Mode 20 Crisis MP
+ * @parent ---Mode 20 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * with crisis amounts of MP.
  * @default 0
  *
  * @param Mode 20 Only Member
+ * @parent ---Mode 20 Settings---
  * @desc Formula for TP gained during the TP regeneration timing
  * as the only ally alive.
  * @default 0
  *
  * @param Mode 20 Evasion
+ * @parent ---Mode 20 Settings---
  * @desc Formula for how much TP is gained when user evades an attack.
  * @default 0
  *
@@ -2599,6 +3172,9 @@ Yanfly.ETP.version = 1.06;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.07:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.06:
  * - Lunatic Mode fail safes added.

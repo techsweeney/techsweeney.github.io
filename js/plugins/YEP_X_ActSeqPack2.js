@@ -8,10 +8,11 @@ Imported.YEP_X_ActSeqPack2 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP2 = Yanfly.ASP2 || {};
+Yanfly.ASP2.version = 1.12;
 
 //=============================================================================
  /*:
- * @plugindesc v1.11 (Requires YEP_BattleEngineCore.js) Visual functions
+ * @plugindesc v1.12 (Requires YEP_BattleEngineCore.js) Visual functions
  * are added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
@@ -317,15 +318,15 @@ Yanfly.ASP2 = Yanfly.ASP2 || {};
  * MOVE target1: FORWARD, (distance), (frames)
  * MOVE target1: BACKWARD, (distance), (frames)
  * MOVE target1: POINT, x coordinate, y coordinate, (frames)
- * MOVE target1: target2, BASE, (frames)
- * MOVE target1: target2, CENTER, (frames)
- * MOVE target1: target2, HEAD, (frames)
- * MOVE target1: target2, FRONT BASE, (frames)
- * MOVE target1: target2, FRONT CENTER, (frames)
- * MOVE target1: target2, FRONT HEAD, (frames)
- * MOVE target1: target2, BACK BASE, (frames)
- * MOVE target1: target2, BACK CENTER, (frames)
- * MOVE target1: target2, BACK HEAD, (frames)
+ * MOVE target1: target2, BASE, (frames), (offset)
+ * MOVE target1: target2, CENTER, (frames), (offset)
+ * MOVE target1: target2, HEAD, (frames), (offset)
+ * MOVE target1: target2, FRONT BASE, (frames), (offset)
+ * MOVE target1: target2, FRONT CENTER, (frames), (offset)
+ * MOVE target1: target2, FRONT HEAD, (frames), (offset)
+ * MOVE target1: target2, BACK BASE, (frames), (offset)
+ * MOVE target1: target2, BACK CENTER, (frames), (offset)
+ * MOVE target1: target2, BACK HEAD, (frames), (offset)
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This is a move command. Arguments can be used in the above formats. This
  * action sequence command will move target1 to any of those locations listed
@@ -333,10 +334,31 @@ Yanfly.ASP2 = Yanfly.ASP2 || {};
  * relative to target2 for target1 to travel to.
  * Note: Moving only works with Sideview.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * You may be curious about the optional (offset) argument there for some of
+ * the entries. You can insert any of the below arguments in place of (offset):
+ *
+ *   offset x +100
+ *   offset x -200
+ *   offset y +300
+ *   offset y -400
+ *
+ * This will allow you to offset the distance to the destination by a flat
+ * amount. Positive numbers would indicate forward while negative numbers will
+ * indicate backward.
+ *
+ *   auto offset x +500
+ *   auto offset x -600
+ *
+ * However, if you use either of the above, depending on if the user is an
+ * actor or enemy and depending on the target (if there is one) is an actor or
+ * an enemy, it will move them into position accordingly.
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: move user: home, 20
  *                move target: forward, 48, 12
  *                move enemy 1: point, 400, 300
- *                move actor 2: front base, 20
+ *                move enemy 2: point, 500, 250, offset x -50, offset y -50
+ *                move actor 3: target, front base, 20
+ *                move user: target, front base, 20, auto offset x -100
  *=============================================================================
  *
  *=============================================================================
@@ -428,6 +450,11 @@ Yanfly.ASP2 = Yanfly.ASP2 || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.12:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added new Offset X, Offset Y, arguments for the Move action sequence.
+ *   Check the helpfile for more information.
  *
  * Version 1.11:
  * - Fixed a bug that caused enemies to not mirror the attack animation.
@@ -798,6 +825,13 @@ BattleManager.actionMotionTarget = function(name, actionArgs) {
         mover.performAttack();
       });
       return false;
+    } else if (['randattack'].contains(cmd)) {
+      var motions = ['thrust', 'swing', 'missile'];
+      movers.forEach(function(mover) {
+        var motion = motions[Math.floor(Math.random() * motions.length)];
+        mover.forceMotion(motion);
+      });
+      return false;
     } else if (['thrust', 'swing', 'missile'].contains(cmd)) {
       motion = cmd;
       movers.forEach(function(mover) {
@@ -864,7 +898,9 @@ BattleManager.actionMove = function(name, actionArgs) {
       var destY = eval(actionArgs[2]) || 0;
       var frames = actionArgs[3] || 12;
       movers.forEach(function(mover) {
-        mover.battler().moveToPoint(destX, destY, frames);
+        var offsetX = BattleManager.actionMoveOffsetX(actionArgs, mover, mover);
+        var offsetY = BattleManager.actionMoveOffsetY(actionArgs, mover, mover);
+        mover.battler().moveToPoint(destX + offsetX, destY + offsetY, frames);
         mover.requestMotion('walk');
         mover.spriteFacePoint(destX, destY);
       });
@@ -906,7 +942,9 @@ BattleManager.actionMove = function(name, actionArgs) {
 	        var destX = this.actionMoveX(mover, targets, 'back');
 	        var destY = this.actionMoveY(mover, targets, 'head');
 	      }
-	      mover.battler().moveToPoint(destX, destY, frames);
+        var offsetX = this.actionMoveOffsetX(actionArgs, mover, targets[0]);
+        var offsetY = this.actionMoveOffsetY(actionArgs, mover, targets[0]);
+	      mover.battler().moveToPoint(destX + offsetX, destY + offsetY, frames);
         mover.spriteFacePoint(destX, destY);
       }
     }
@@ -986,6 +1024,49 @@ BattleManager.actionMoveY = function(mover, targets, value) {
 		}
 		destY = (value === 'center') ? point / max : point;
 		return destY;
+};
+
+BattleManager.actionMoveOffsetX = function(actionArgs, user, target) {
+  if (actionArgs && actionArgs.length > 0) {
+    var length = actionArgs.length;
+    for (var i = 0; i < length; ++i) {
+      var line = actionArgs[i];
+      if (line.match(/AUTO OFFSET X[ ]([\+\-]\d+)/i)) {
+        var value = parseInt(RegExp.$1);
+        if (user.isActor() && !target) {
+          return value * -1;
+        } else if (user.isEnemy() && !target) {
+          return value;
+        } else if (user.isActor() && target.isActor()) {
+          return value;
+        } else if (user.isActor() && target.isEnemy()) {
+          return value * -1;
+        } else if (user.isEnemy() && target.isEnemy()) {
+          return value * -1;
+        } else if (user.isEnemy() && target.isActor()) {
+          return value;
+        }
+      } else if (line.match(/OFFSET X[ ]([\+\-]\d+)/i)) {
+        return parseInt(RegExp.$1);
+      }
+    }
+  }
+  return 0;
+};
+
+BattleManager.actionMoveOffsetY = function(actionArgs, user, target) {
+  if (actionArgs && actionArgs.length > 0) {
+    var length = actionArgs.length;
+    for (var i = 0; i < length; ++i) {
+      var line = actionArgs[i];
+      if (line.match(/AUTO OFFSET Y[ ]([\+\-]\d+)/i)) {
+        return parseInt(RegExp.$1);
+      } else if (line.match(/OFFSET Y[ ]([\+\-]\d+)/i)) {
+        return parseInt(RegExp.$1);
+      }
+    }
+  }
+  return 0;
 };
 
 BattleManager.actionOpacity = function(name, actionArgs) {

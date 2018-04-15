@@ -8,20 +8,25 @@ Imported.YEP_ImprovedBattlebacks = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IBB = Yanfly.IBB || {};
-Yanfly.IBB.version = 1.00;
+Yanfly.IBB.version = 1.02;
 
 //=============================================================================
  /*:
- * @plugindesc vBETA Changes how RPG Maker MV handles battlebacks.
+ * @plugindesc v1.02 Changes how RPG Maker MV handles battlebacks.
  * Battlebacks are now more flexible with what they can do.
  * @author Yanfly Engine Plugins
  *
  * @param Scale Battlebacks
+ * @type boolean
+ * @on Scale
+ * @off Normal
  * @desc Do you wish to scale battlebacks to resolution?
  * NO - false     YES - true
  * @default true
  *
  * @param Battleback Margin
+ * @type number
+ * @min 0
  * @desc Pixel margin of error for battlebacks if non-scaling
  * battlebacks are used. Default: 32
  * @default 32
@@ -220,8 +225,15 @@ Yanfly.IBB.version = 1.00;
  * Changelog
  * ============================================================================
  *
- * Version BETA:
- * - Started Plugin!
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.01:
+ * - Fixed a bug that wasn't returning the proper sequence checks with action
+ * sequences.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -339,8 +351,9 @@ BattleManager.processActionSequence = function(actionName, actionArgs) {
     }
     line += str.trim();
     this.alterBattleback(line);
+    return false;
   } else {
-    Yanfly.IBB.BattleManager_pAS.call(this, actionName, actionArgs);
+    return Yanfly.IBB.BattleManager_pAS.call(this, actionName, actionArgs);
   }
 };
 

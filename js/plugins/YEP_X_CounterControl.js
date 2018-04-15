@@ -8,11 +8,11 @@ Imported.YEP_X_CounterControl = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Counter = Yanfly.Counter || {};
-Yanfly.Counter.version = 1.07;
+Yanfly.Counter.version = 1.08;
 
 //=============================================================================
  /*:
- * @plugindesc v1.07a (Requires YEP_BattleEngineCore.js) Gives you more
+ * @plugindesc v1.08 (Requires YEP_BattleEngineCore.js) Gives you more
  * control over how counters work in RPG Maker MV!
  * @author Yanfly Engine Plugins
  *
@@ -20,6 +20,9 @@ Yanfly.Counter.version = 1.07;
  * @default
  *
  * @param Queue Max
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc What's the maximum size for the counter queue?
  * @default 20
  *
@@ -27,48 +30,76 @@ Yanfly.Counter.version = 1.07;
  * @default
  *
  * @param Counter Skill
+ * @parent ---Default Traits---
+ * @type number
+ * @min 1
  * @desc This is the default skill used for counterattacks.
  * Insert the skill ID here. Use 0 for the MV default.
  * @default 1
  *
  * @param Evade Counter
- * @desc Counter skills to evade,then counter by default?
+ * @parent ---Default Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
+ * @desc Counter skills to evade, then counter by default?
  * NO - false     YES - true
  * @default false
  *
  * @param Counter Name
+ * @parent ---Default Traits---
  * @desc The default counter skill name used per skill.
  * %1 - Skill Name
  * @default Counter-%1
  *
  * @param Counter Icon
+ * @parent ---Default Traits---
+ * @type number
+ * @min 0
  * @desc The icon ID used for counter attacks. Leave at 0
  * to use the default skill's icon.
  * @default 78
  *
  * @param Counter Total
+ * @parent ---Default Traits---
  * @desc Default amount of counters per actor and enemy.
  * @default 1
  *
  * @param Ally Counter
+ * @parent ---Default Traits---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Allow allies to counter the actions of other allies?
  * NO - false     YES - true
  * @default false
  *
- * @param --Default Conditions-
+ * @param ---Default Conditions---
  * @default
  *
  * @param Physical
+ * @parent ---Default Conditions---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Require the countered action to be physical?
  * NO - false     YES - true
  * @default true
  *
  * @param Single Target
+ * @parent ---Default Conditions---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Require the countered action scope to be single target?
  * NO - false     YES - true
  * @default true
  *
  * @param Not Counter
+ * @parent ---Default Conditions---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Require the countered action to not be a counter?
  * NO - false     YES - true
  * @default false
@@ -669,6 +700,9 @@ Yanfly.Counter.version = 1.07;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.08:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.07a:
  * - Lunatic Mode fail safes added.

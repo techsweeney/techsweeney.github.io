@@ -8,11 +8,11 @@ Imported.YEP_ExtraParamFormula = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.XParam = Yanfly.XParam || {};
-Yanfly.XParam.version = 1.03;
+Yanfly.XParam.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.03 Control the formulas of the extra parameters for
+ * @plugindesc v1.04 Control the formulas of the extra parameters for
  * HIT, EVA, CRI, CEV, MEV, MRF, CNT, HRG, MRG, and TRG.
  * @author Yanfly Engine Plugins
  *
@@ -57,12 +57,12 @@ Yanfly.XParam.version = 1.03;
  * @default (base + plus) * rate + flat
  *
  * @param MRG Formula
- * @desc The formula used to determine HRG: MP% Regen
+ * @desc The formula used to determine MRG: MP% Regen
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
  * @param TRG Formula
- * @desc The formula used to determine HRG: TP% Regen
+ * @desc The formula used to determine TRG: Target Rate
  * This is a formula.
  * @default (base + plus) * rate + flat
  *
@@ -359,8 +359,12 @@ Yanfly.XParam.version = 1.03;
  * Changelog
  * ============================================================================
  *
- * Version 1.03:
+ * Version 1.04:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.03a:
  * - Lunatic Mode fail safe added.
+ * - Documentation update to fix typos.
  *
  * Version 1.02:
  * - Fixed an issue with the battler.setXParam functions that made them take 

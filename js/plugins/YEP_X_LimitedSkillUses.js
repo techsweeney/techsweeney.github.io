@@ -8,11 +8,11 @@ Imported.YEP_X_LimitedSkillUses = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.LSU = Yanfly.LSU || {};
-Yanfly.LSU.version = 1.04;
+Yanfly.LSU.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_SkillCore.js) Make certain skills have
+ * @plugindesc v1.05 (Requires YEP_SkillCore.js) Make certain skills have
  * a limited amount of times they can be used in battle.
  * @author Yanfly Engine Plugins
  *
@@ -20,67 +20,111 @@ Yanfly.LSU.version = 1.04;
  * @default
  *
  * @param Limited Use Icon
+ * @parent ---General---
  * @desc The icon used for limited uses. Set 0 to hide.
  * @default 160
  *
  * @param Font Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc Font size used for limited uses.
  * Default: 28
  * @default 20
  *
  * @param Text Color
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The text color used for limited uses.
  * @default 0
  *
  * @param Cost Format
+ * @parent ---General---
  * @desc The text format for limited uses. Leave empty to hide.
  * %1 - Current     %2 - Maximum
  * @default %1/%2
  *
  * @param Empty Icon
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc The icon used for empty limited uses. Set 0 to hide.
  * @default 168
  *
  * @param Empty Text
+ * @parent ---General---
  * @desc The text displayed when a skill's uses are used up.
  * @default Empty
  *
  * @param Absolute Max
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc This is the absolute maximum value Limited Uses can
  * go up to and cannot go past.
  * @default 100
  *
  * @param Bypass Limits
+ * @parent ---General---
  * @desc This is a list of skills that cannot be limited.
  * Separate each skill ID with a space.
  * @default 1 2 3 4 5 6 7
+ *
+ * @param Bypass List
+ * @parent ---Bypass---
+ * @type skill[]
+ * @desc This is a list of skills that cannot be limited so that
+ * way, skills like Attack, Guard. Requires RPG Maker MV 1.5.0+
+ * @default []
  *
  * @param ---Defaults---
  * @default
  *
  * @param Limit All Skills
+ * @parent ---Defaults---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Give limits to all skills by default?
  * NO - false     YES - true
  * @default false
  *
  * @param Limit Charges
+ * @parent ---Defaults---
+ * @type number
+ * @min 1
  * @desc The default amount of limit charges for skills.
  * @default 2
  *
  * @param Recover All
+ * @parent ---Defaults---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Restore all charges when using Recover All event?
  * NO - false     YES - true
  * @default true
  *
  * @param Victory Recover
+ * @parent ---Defaults---
+ * @type number
+ * @min 0
  * @desc How many uses are recovered after winning a battle.
  * @default 10
  *
  * @param Escape Recover
+ * @parent ---Defaults---
+ * @type number
+ * @min 0
  * @desc How many uses are recovered after escaping a battle.
  * @default 5
  *
  * @param Lose Recover
+ * @parent ---Defaults---
+ * @type number
+ * @min 0
  * @desc How many uses are recovered after losing a battle.
  * @default 5
  *
@@ -274,6 +318,10 @@ Yanfly.LSU.version = 1.04;
  * Changelog
  * ============================================================================
  *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added new 'Bypass List' plugin parameter.
+ *
  * Version 1.04:
  * - Lunatic Mode fail safes added.
  *
@@ -314,9 +362,19 @@ Yanfly.Param.LSUEmpty = String(Yanfly.Parameters['Empty Text']);
 Yanfly.Param.LimitedAbsMax = Number(Yanfly.Parameters['Absolute Max']);
 Yanfly.Param.LSUBypass = String(Yanfly.Parameters['Bypass Limits']);
 Yanfly.Param.LSUBypass = Yanfly.Param.LSUBypass.split(' ');
-for (Yanfly.i = 0; Yanfly.i < Yanfly.Param.LSUBypass.length; ++Yanfly.i) {
-  Yanfly.Param.LSUBypass[Yanfly.i] = parseInt(Yanfly.Param.LSUBypass[Yanfly.i]);
-};
+Yanfly.SetupParameters = function() {
+  for (var i = 0; i < Yanfly.Param.LSUBypass.length; ++i) {
+    Yanfly.Param.LSUBypass[i] = parseInt(Yanfly.Param.LSUBypass[i]);
+  };
+  var data = JSON.parse(Yanfly.Parameters['Bypass List'] || '[]');
+  for (var i = 0; i < data.length; ++i) {
+    var id = parseInt(data[i]);
+    if (id <= 0) continue;
+    if (Yanfly.Param.LSUBypass.contains(id)) continue;
+    Yanfly.Param.LSUBypass.push(id);
+  }
+}
+Yanfly.SetupParameters();
 
 Yanfly.Param.LSUDefLimitAll = String(Yanfly.Parameters['Limit All Skills']);
 Yanfly.Param.LSUDefLimitAll = eval(Yanfly.Param.LSUDefLimitAll);

@@ -8,11 +8,11 @@ Imported.YEP_BattleStatusWindow = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BSW = Yanfly.BSW || {};
-Yanfly.BSW.version = 1.08;
+Yanfly.BSW.version = 1.09;
 
 //=============================================================================
  /*:
- * @plugindesc v1.08 A simple battle status window that shows the
+ * @plugindesc v1.09 A simple battle status window that shows the
  * faces of your party members in horizontal format.
  * @author Yanfly Engine Plugins
  *
@@ -20,35 +20,59 @@ Yanfly.BSW.version = 1.08;
  * @default
  *
  * @param No Action Icon
+ * @parent ---Visual---
+ * @type number
+ * @min 0
  * @desc This is the icon used when no action is selected.
  * @default 16
  *
  * @param Name Font Size
+ * @parent ---Visual---
+ * @type number
+ * @min 1
  * @desc This is the font size used to draw the actor's name.
  * Default: 28
  * @default 20
  *
  * @param Param Font Size
+ * @parent ---Visual---
+ * @type number
+ * @min 1
  * @desc This is the font size used to draw the actor's params.
  * Default: 28
  * @default 20
  *
  * @param Param Y Buffer
+ * @parent ---Visual---
+ * @type number
+ * @min 0
  * @desc This is how much further the text drawn for params is
  * lowered by.
  * @default 7
  *
  * @param Param Current Max
+ * @parent ---Visual---
+ * @type boolean
+ * @on Current/Max
+ * @off Current Only
  * @desc Draw current / max format?
  * NO - false     YES - true
  * @default false
  *
  * @param Adjust Columns
+ * @parent ---Visual---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Adjust column amount to party size?
  * NO - false     YES - true
  * @default false
  *
  * @param State Icons Row
+ * @parent ---Visual---
+ * @type number
+ * @min 0
+ * @max 3
  * @desc Which row do you wish to display the state icons?
  * Default: 1
  * @default 1
@@ -57,16 +81,28 @@ Yanfly.BSW.version = 1.08;
  * @default
  *
  * @param Left / Right
+ * @parent ---Actor Switching---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Use 'left' and 'right' for switching actors?
  * NO - false     YES - true
  * @default true
  *
  * @param PageUp / PageDown
+ * @parent ---Actor Switching---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Use 'page up' and 'page down' for switching actors?
  * NO - false     YES - true
  * @default true
  *
  * @param Allow Turn Skip
+ * @parent ---Actor Switching---
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Allow turn skipping for Tick-Based battle systems?
  * NO - false     YES - true
  * @default true
@@ -75,25 +111,41 @@ Yanfly.BSW.version = 1.08;
  * @default
  *
  * @param Show Animations
+ * @parent ---Front View---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Reveal actors and show their animations in front view?
  * NO - false     YES - true
  * @default true
  *
  * @param Show Sprites
+ * @parent ---Front View---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the sprites of the actors in front view?
  * NO - false     YES - true
  * @default false
  *
  * @param Align Animations
+ * @parent ---Front View---
+ * @type boolean
+ * @on Align
+ * @off Don't Align
  * @desc If using front view, align battle animations to window?
  * NO - false     YES - true
  * @default true
  *
  * @param X Offset
+ * @parent ---Front View---
+ * @type number
  * @desc How much do you wish to offset the actor X position by?
  * @default 24
  *
  * @param Y Offset
+ * @parent ---Front View---
+ * @type number
  * @desc How much do you wish to offset the actor Y position by?
  * @default -16
  *
@@ -112,6 +164,9 @@ Yanfly.BSW.version = 1.08;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.09:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.08:
  * - Added 'State Icons Row' plugin parameter. This plugin parameter allows you

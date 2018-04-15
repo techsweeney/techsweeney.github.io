@@ -8,43 +8,63 @@ Imported.YEP_MapSelectSkill = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.MSS = Yanfly.MSS || {};
-Yanfly.MSS.version = 1.02;
+Yanfly.MSS.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 Open up a window similar to the Select Item Window,
+ * @plugindesc v1.03 Open up a window similar to the Select Item Window,
  * but instead, returns Skill ID's to a variable.
  * @author Yanfly Engine Plugins
  *
  * @param Default Columns
+ * @type number
+ * @min 1
  * @desc Default number of columns for the window.
  * @default 2
  *
  * @param Default Rows
+ * @type number
+ * @min 1
  * @desc Default number of rows for the window.
  * @default 4
  *
  * @param Default X Position
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc Default X Position of the window.
  * left     center     right
  * @default right
  *
  * @param Default Y Position
+ * @type combo
+ * @option top
+ * @option middle
+ * @option bottom
  * @desc Default Y Position of the window.
  * top     middle     bottom
  * @default bottom
  *
  * @param Default Width
+ * @type number
+ * @min 0
  * @desc Default width of the window.
  * If set to 0, window width will be the screen width.
  * @default 0
  *
  * @param Default Enable
+ * @type boolean
+ * @on Enable
+ * @off Disable
  * @desc Enable all skills by default?
  * NO - false     YES - true
  * @default true
  *
  * @param Default Cost
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show the costs of the skills by default?
  * NO - false     YES - true
  * @default true
@@ -113,6 +133,9 @@ Yanfly.MSS.version = 1.02;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.02:
  * - Optimization update.

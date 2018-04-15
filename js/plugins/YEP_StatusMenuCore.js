@@ -8,10 +8,11 @@ Imported.YEP_StatusMenuCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Status = Yanfly.Status || {};
+Yanfly.Status.version = 1.04;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01a Changes the Status menu for your characters into
+ * @plugindesc v1.04 Changes the Status menu for your characters into
  * a hub that displays more character information.
  * @author Yanfly Engine Plugins
  *
@@ -19,19 +20,31 @@ Yanfly.Status = Yanfly.Status || {};
  * @default
  *
  * @param Command Order
+ * @parent ---Settings---
  * @desc This is the order in which the command menu will appear. Use
  * a space to separate the individual commands.
  * @default General Parameters Elements States Attributes Custom Cancel
  *
  * @param Command Window Width
+ * @parent ---Settings---
+ * @type number
+ * @min 1
  * @desc This is the window width for the Command Window.
  * @default 240
  *
  * @param Command Window Rows
+ * @parent ---Settings---
+ * @type number
+ * @min 1
  * @desc This is the number of rows for the Command Window.
  * @default 4
  *
  * @param Command Alignment
+ * @parent ---Settings---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc This is the text alignment for the Command Window.
  * left     center     right
  * @default center
@@ -40,27 +53,39 @@ Yanfly.Status = Yanfly.Status || {};
  * @default
  *
  * @param General Command
+ * @parent ---General---
  * @desc This is how the command for 'General' will appear.
  * @default General
  *
  * @param Parameters Text
+ * @parent ---General---
  * @desc This is how the word 'Parameters' will appear.
  * @default Parameters
  *
  * @param Experience Text
+ * @parent ---General---
  * @desc This is how the word 'Experience' will appear.
  * @default Experience
  *
  * @param Total Format
+ * @parent ---General---
  * @desc This is the word total experience.
  * @default Total %1 for Next %2
  *
  * @param EXP Gauge Color 1
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The skin color used in EXP Gauge Color 1 shown in the
  * status window.
  * @default 30
  *
  * @param EXP Gauge Color 2
+ * @parent ---General---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The skin color used in EXP Gauge Color 2 shown in the
  * status window.
  * @default 31
@@ -69,39 +94,47 @@ Yanfly.Status = Yanfly.Status || {};
  * @default
  *
  * @param Parameters Command
+ * @parent ---Parameters---
  * @desc This is how the command for 'Parameters' will appear.
  * @default Parameters
  *
  * @param Graph Text
+ * @parent ---Parameters---
  * @desc This is how the words for 'Parameter Graph' appear.
  * @default Parameter Graph
  *
  * @param ATK Color
+ * @parent ---Parameters---
  * @desc This is the gauge color for ATK.
  * #Color1 #Color2
  * @default #ed1c24 #f26c4f
  *
  * @param DEF Color
+ * @parent ---Parameters---
  * @desc This is the gauge color for DEF.
  * #Color1 #Color2
  * @default #f7941d #fdc689
  *
  * @param MAT Color
+ * @parent ---Parameters---
  * @desc This is the gauge color for MAT.
  * #Color1 #Color2
  * @default #605ca8 #bd8cbf
  *
  * @param MDF Color
+ * @parent ---Parameters---
  * @desc This is the gauge color for MDF.
  * #Color1 #Color2
  * @default #448ccb #a6caf4
  *
  * @param AGI Color
+ * @parent ---Parameters---
  * @desc This is the gauge color for AGI.
  * #Color1 #Color2
  * @default #39b54a #82ca9c
  *
  * @param LUK Color
+ * @parent ---Parameters---
  * @desc This is the gauge color for LUK.
  * #Color1 #Color2
  * @default #fff568 #fffac3
@@ -110,42 +143,82 @@ Yanfly.Status = Yanfly.Status || {};
  * @default
  *
  * @param Above 300%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 300%.
  * @default 10
  *
  * @param 200% to 300%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 200%.
  * @default 20
  *
  * @param 150% to 200%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 150%.
  * @default 14
  *
  * @param 120% to 150%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 120%.
  * @default 6
  *
  * @param 100% to 120%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 100%.
  * @default 0
  *
  * @param 80% to 100%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 80%.
  * @default 24
  *
  * @param 50% to 80%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 50%.
  * @default 29
  *
  * @param 1% to 50%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates over 1%.
  * @default 23
  *
  * @param Exactly 0%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates exactly 0%.
  * @default 31
  *
  * @param Below 0%
+ * @parent ---Resist Colors---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc This is the text color for rates below 0%.
  * @default 27
  *
@@ -153,60 +226,76 @@ Yanfly.Status = Yanfly.Status || {};
  * @default
  *
  * @param Elements Command
+ * @parent ---Elements---
  * @desc This is how the command for 'Elements' will appear.
  * @default Elements
  *
  * @param Elements Decimal
+ * @parent ---Elements---
+ * @type number
+ * @min 0
  * @desc How many decimal places to display for rates.
  * @default 2
  *
  * @param Element Column 1
+ * @parent ---Elements---
  * @desc These are the element ID's drawn in column 1.
  * Separate these element ID's with a space.
  * @default 1
  *
  * @param Element Column 2
+ * @parent ---Elements---
  * @desc These are the element ID's drawn in column 2.
  * Separate these element ID's with a space.
  * @default 2 3 4 5 6 7 8 9
  *
  * @param Element Column 3
+ * @parent ---Elements---
  * @desc These are the element ID's drawn in column 3.
  * Separate these element ID's with a space.
  * @default
  *
  * @param Element Column 4
+ * @parent ---Elements---
  * @desc These are the element ID's drawn in column 4.
  * Separate these element ID's with a space.
  * @default
  *
- * @param ---State---
+ * @param ---States---
  * @default
  *
  * @param States Command
+ * @parent ---States---
  * @desc This is how the command for 'States' will appear.
  * @default States
  *
  * @param States Decimal
+ * @parent ---States---
+ * @type number
+ * @min 0
  * @desc How many decimal places to display for rates.
  * @default 2
  *
  * @param States Column 1
+ * @parent ---States---
  * @desc These are the state ID's drawn in column 1.
  * Separate these state ID's with a space.
  * @default 1 4 5 6
  *
  * @param States Column 2
+ * @parent ---States---
  * @desc These are the state ID's drawn in column 2.
  * Separate these state ID's with a space.
  * @default 7 8 9 10
  *
  * @param States Column 3
+ * @parent ---States---
  * @desc These are the state ID's drawn in column 3.
  * Separate these state ID's with a space.
  * @default
  *
  * @param States Column 4
+ * @parent ---States---
  * @desc These are the state ID's drawn in column 4.
  * Separate these state ID's with a space.
  * @default
@@ -215,115 +304,151 @@ Yanfly.Status = Yanfly.Status || {};
  * @default
  *
  * @param Attributes Command
+ * @parent ---Attributes---
  * @desc This is how the command for 'Attributes' will appear.
  * @default Attributes
  *
  * @param Attribute Font Size
+ * @text Attributes Font Size
+ * @parent ---Attributes---
+ * @type number
+ * @min 1
  * @desc The font size used to display attributes.
  * Default: 28
  * @default 20
  *
  * @param Attribute Decimal
+ * @text Attributes Decimal
+ * @parent ---Attributes---
+ * @type number
+ * @min 0
  * @desc How many decimal places to display for rates.
  * @default 0
  *
  * @param Attributes Column 1
+ * @parent ---Attributes---
  * @desc These are the attributes drawn in column 1.
  * Separate these attributes with a space.
  * @default exr hit eva cri cev mev mrf cnt
  *
  * @param Attributes Column 2
+ * @parent ---Attributes---
  * @desc These are the attributes drawn in column 2.
  * Separate these attributes with a space.
  * @default mcr tcr pdr mdr fdr grd rec pha
  *
  * @param Attributes Column 3
+ * @parent ---Attributes---
  * @desc These are the attributes drawn in column 3.
  * Separate these attributes with a space.
  * @default hrg mrg trg tgr
  *
  * @param Attributes Column 4
+ * @parent ---Attributes---
  * @desc These are the attributes drawn in column 4.
  * Separate these attributes with a space.
  * @default
  *
+ * @param ---XParam Names---
+ * @default
+ *
  * @param hit Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Hit Rate
  *
  * @param eva Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Evasion Rate
  *
  * @param cri Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Critical Hit Rate
  *
  * @param cev Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Critical Evasion Rate
  *
  * @param mev Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Magic Evasion Rate
  *
  * @param mrf Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Magic Reflect Rate
  *
  * @param cnt Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Counter Rate
  *
  * @param hrg Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default HP Regen Rate
  *
  * @param mrg Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default MP Regen Rate
  *
  * @param trg Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default TP Regen Rate
  *
  * @param tgr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Aggro Rate
  *
  * @param grd Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Guard Effect
  *
  * @param rec Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Recovery Effect
  *
  * @param pha Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Pharmacology Effect
  *
  * @param mcr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default MP Cost Rate
  *
  * @param tcr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default TP Charge Rate
  *
  * @param pdr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Physical Damage Rate
  *
  * @param mdr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Magical Damage Rate
  *
  * @param fdr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Floor Damage Rate
  *
  * @param exr Name
+ * @parent ---XParam Names---
  * @desc The text name used for this attribute.
  * @default Experience Rate
  *
@@ -395,6 +520,16 @@ Yanfly.Status = Yanfly.Status || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.04:
+ * - Added a function to split the icon and text for Attribute names so that
+ * icons will be centered properly if icons are used for the Attribute names.
+ *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.02:
+ * - Compatibility update made for other plugins.
  *
  * Version 1.01a:
  * - Converted Window_StatusInfo to Window_Selectable for those who would like
@@ -891,6 +1026,16 @@ Window_StatusInfo.prototype.setRateColor = function(rate) {
     this.changeTextColor(this.textColor(colorId));
 };
 
+Window_StatusInfo.prototype.drawSplitIcon = function(name, dx, dy) {
+  if (name.match(/\\I\[(\d+)\]/i)) {
+    var icon = parseInt(RegExp.$1) || 0;
+    this.drawIcon(icon, dx, dy + 2);
+    return true;
+  } else {
+    return false;
+  }
+};
+
 Window_StatusInfo.prototype.drawElements = function() {
     this.drawElementColumnRects();
     this.drawElementInfo();
@@ -1175,6 +1320,11 @@ Window_StatusInfo.prototype.drawAttributeName = function(name, dx, dy, dw) {
     this.changeTextColor(this.systemColor());
     dx += this.textPadding();
     dw -= this.textPadding() * 2;
+    if (this.drawSplitIcon(name, dx, dy, dw)) {
+      dx += Window_Base._iconWidth + 4;
+      dw -= Window_Base._iconWidth + 4;
+      name = name.replace(/\\I\[(\d+)\]/i, '');
+    }
     dy += Math.floor((this.standardFontSize() - this.contents.fontSize) / 2);
     this._bypassResetText = true;
     this.changeTextColor(this.systemColor());
@@ -1232,6 +1382,7 @@ Scene_Status.prototype.create = function() {
 Scene_Status.prototype.refreshActor = function() {
 		var actor = this.actor();
 		this._statusWindow.setActor(actor);
+    this._commandWindow.setActor(actor);
 		this._helpWindow.setText(actor.profile());
 		this._infoWindow.setActor(actor);
 };

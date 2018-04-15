@@ -8,28 +8,58 @@ Imported.YEP_AutoPassiveStates = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.APS = Yanfly.APS || {};
-Yanfly.APS.version = 1.13;
+Yanfly.APS.version = 1.15;
 
 //=============================================================================
  /*:
- * @plugindesc v1.13 This plugin allows for some states to function as
+ * @plugindesc v1.15 This plugin allows for some states to function as
  * passives for actors, enemies, skills, and equips.
  * @author Yanfly Engine Plugins
  *
+ * @param ---Basic---
+ * @default
+ *
  * @param Actor Passives
+ * @parent ---Basic---
  * @desc These states will always appear on actors as passives.
  * Place a space in between each state ID.
  * @default 0
  *
  * @param Enemy Passives
+ * @parent ---Basic---
  * @desc These states will always appear on enemies as passives.
  * Place a space in between each state ID.
  * @default 0
  *
  * @param Global Passives
+ * @parent ---Basic---
  * @desc These states will always appear on all battlers as passives.
  * Place a space in between each state ID.
  * @default 0
+ *
+ * @param ---List---
+ * @default ...Requires RPG Maker MV 1.5.0+...
+ *
+ * @param Actor Passives List
+ * @parent ---List---
+ * @type state[]
+ * @desc These states will always appear on actors as passives.
+ * Use with RPG Maker MV 1.5.0+.
+ * @default []
+ *
+ * @param Enemy Passives List
+ * @parent ---List---
+ * @type state[]
+ * @desc These states will always appear on enemies as passives.
+ * Use with RPG Maker MV 1.5.0+.
+ * @default []
+ *
+ * @param Global Passives List
+ * @parent ---List---
+ * @type state[]
+ * @desc These states will always appear on all battlers as passives.
+ * Use with RPG Maker MV 1.5.0+.
+ * @default []
  *
  * @help
  * ============================================================================
@@ -117,6 +147,14 @@ Yanfly.APS.version = 1.13;
  * Changelog
  * ============================================================================
  *
+ * Version 1.15:
+ * - Bug fixed that made global passives not apply to actors.
+ *
+ * Version 1.14:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Added parameters: Actor Passives List, Enemy Passives List, and
+ *   Global Passives List
+ *
  * Version 1.13:
  * - Lunatic Mode fail safes added.
  *
@@ -184,11 +222,25 @@ Yanfly.SetupParameters = function() {
     Yanfly.Param.APSActorPas[i] = parseInt(Yanfly.Param.APSActorPas[i]);
     Yanfly.Param.APSActorPas[i] = Yanfly.Param.APSActorPas[i] || 0;
   }
+  var data = JSON.parse(Yanfly.Parameters['Actor Passives List']);
+  for (var i = 0; i < data.length; ++i) {
+    var stateId = parseInt(data[i]);
+    if (stateId <= 0) continue;
+    if (Yanfly.Param.APSActorPas.contains(stateId)) continue;
+    Yanfly.Param.APSActorPas.push(stateId);
+  }
   Yanfly.Param.APSEnemyPas = String(Yanfly.Parameters['Enemy Passives']);
   Yanfly.Param.APSEnemyPas = Yanfly.Param.APSEnemyPas.split(' ');
   for (var i = 0; i < Yanfly.Param.APSEnemyPas.length; ++i) {
     Yanfly.Param.APSEnemyPas[i] = parseInt(Yanfly.Param.APSEnemyPas[i]);
     Yanfly.Param.APSEnemyPas[i] = Yanfly.Param.APSEnemyPas[i] || 0;
+  }
+  var data = JSON.parse(Yanfly.Parameters['Enemy Passives List']);
+  for (var i = 0; i < data.length; ++i) {
+    var stateId = parseInt(data[i]);
+    if (stateId <= 0) continue;
+    if (Yanfly.Param.APSEnemyPas.contains(stateId)) continue;
+    Yanfly.Param.APSEnemyPas.push(stateId);
   }
   Yanfly.Param.APSGlobalPas = String(Yanfly.Parameters['Global Passives']);
   Yanfly.Param.APSGlobalPas = Yanfly.Param.APSGlobalPas.split(' ');
@@ -196,6 +248,17 @@ Yanfly.SetupParameters = function() {
     id = parseInt(Yanfly.Param.APSGlobalPas[i]);
     Yanfly.Param.APSActorPas.push(id);
     Yanfly.Param.APSEnemyPas.push(id);
+  }
+  var data = JSON.parse(Yanfly.Parameters['Global Passives List']);
+  for (var i = 0; i < data.length; ++i) {
+    var stateId = parseInt(data[i]);
+    if (stateId <= 0) continue;
+    if (!Yanfly.Param.APSActorPas.contains(stateId)) {
+      Yanfly.Param.APSActorPas.push(stateId);
+    }
+    if (!Yanfly.Param.APSEnemyPas.contains(stateId)) {
+      Yanfly.Param.APSEnemyPas.push(stateId);
+    }
   }
 };
 Yanfly.SetupParameters();

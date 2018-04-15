@@ -8,10 +8,11 @@ Imported.YEP_X_MoreCurrencies = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.MC = Yanfly.MC || {};
+Yanfly.MC.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_ShopMenuCore.js) This plugin adds
+ * @plugindesc v1.05 (Requires YEP_ShopMenuCore.js) This plugin adds
  * functionality for your shops to have multiple currencies.
  * @author Yanfly Engine Plugins
  *
@@ -19,10 +20,16 @@ Yanfly.MC = Yanfly.MC || {};
  * @default
  *
  * @param Currency Padding
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc The padding used for multiple currencies in pixels.
  * @default 10
  *
  * @param Font Size
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc The font size used for currency in shops.
  * Default: 28
  * @default 20
@@ -31,26 +38,46 @@ Yanfly.MC = Yanfly.MC || {};
  * @default
  *
  * @param Copy Name
+ * @parent ---Proxies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Copy name of original item for proxy items?
  * NO - false     YES - true
  * @default true
  *
  * @param Copy Icon
+ * @parent ---Proxies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Copy icon of original item for proxy items?
  * NO - false     YES - true
  * @default true
  *
  * @param Copy Help
+ * @parent ---Proxies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Copy help descriptions of original item for proxy items?
  * NO - false     YES - true
  * @default true
  *
  * @param Copy Traits
+ * @parent ---Proxies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Copy traits of original item for proxy items?
  * NO - false     YES - true
  * @default true
  *
  * @param Copy Parameters
+ * @parent ---Proxies---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Copy stat parameters of original item for proxy items?
  * NO - false     YES - true
  * @default true
@@ -59,11 +86,18 @@ Yanfly.MC = Yanfly.MC || {};
  * @default
  *
  * @param Gold as Item
+ * @parent ---Aftermath---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Do you wish to draw gold as an item drop?
  * NO - false     YES - true
  * @default true
  *
  * @param Gold Icon
+ * @parent ---Aftermath---
+ * @type number
+ * @min 0
  * @desc The icon used for gold. If you are using the Core Engine,
  * this will automatically change to the icon used there.
  * @default 314
@@ -220,6 +254,9 @@ Yanfly.MC = Yanfly.MC || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.04:
  * - Fixed a typo within the code. Please update Item Core, Item Disassemble,

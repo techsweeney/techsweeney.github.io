@@ -8,11 +8,11 @@ Imported.YEP_BuffsStatesCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BSC = Yanfly.BSC || {};
-Yanfly.BSC.version = 1.12;
+Yanfly.BSC.version = 1.14;
 
 //=============================================================================
  /*:
- * @plugindesc v1.12a Alter the basic mechanics behind buffs and states
+ * @plugindesc v1.14 Alter the basic mechanics behind buffs and states
  * that aren't adjustable within the RPG Maker editor.
  * @author Yanfly Engine Plugins
  *
@@ -20,37 +20,63 @@ Yanfly.BSC.version = 1.12;
  * @default
  *
  * @param Show Turns
+ * @parent ---Turn Indicator---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Show turns remaining for buffs and states?
  * NO - false     YES - true
  * @default true
  *
  * @param Font Size
+ * @parent ---Turn Indicator---
+ * @type number
+ * @min 1
  * @desc The default font size used for turn count.
  * Default: 28
  * @default 16
  *
  * @param Turn Alignment
+ * @parent ---Turn Indicator---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc How do you want to align the turns?
  * left     center     right
  * @default right
  *
  * @param Turn Buffer X
+ * @parent ---Turn Indicator---
  * @desc Buffer the x position of the turn by this much.
  * @default -3
  *
  * @param Turn Buffer Y
+ * @parent ---Turn Indicator---
  * @desc Buffer the y position of the turn by this much.
  * @default -6
  *
  * @param State Color
+ * @parent ---Turn Indicator---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The default text color used for state turns.
  * @default 0
  *
  * @param Buff Color
+ * @parent ---Turn Indicator---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The default text color used for buffs.
  * @default 24
  *
  * @param Debuff Color
+ * @parent ---Turn Indicator---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The default text color used for debuffs.
  * @default 2
  *
@@ -58,21 +84,37 @@ Yanfly.BSC.version = 1.12;
  * @default
  *
  * @param Show Enemy Icons
+ * @parent ---Enemy Icons---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Do you wish to show enemy state icons?
  * NO - false     YES - true
  * @default true
  *
  * @param Enemy Buff Turn
+ * @parent ---Enemy Icons---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Do you wish to show enemy buff turns remaining?
  * NO - false     YES - true
  * @default true
  *
  * @param Enemy State Turn
+ * @parent ---Enemy Icons---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Do you wish to show enemy state turns remaining?
  * NO - false     YES - true
  * @default true
  *
  * @param Enemy State Counter
+ * @parent ---Enemy Icons---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Do you wish to show enemy state counters?
  * NO - false     YES - true
  * @default true
@@ -81,20 +123,31 @@ Yanfly.BSC.version = 1.12;
  * @default
  *
  * @param Default Limit
+ * @parent ---Buff Settings---
+ * @type number
+ * @min 1
  * @desc The default number of times you can stack buff/debuff.
  * Default: 2
  * @default 4
  *
  * @param Maximum Limit
+ * @parent ---Buff Settings---
+ * @type number
+ * @min 1
  * @desc The maximum number of times you can stack buff/debuff.
  * @default 8
  *
  * @param Buff Formula
+ * @parent ---Buff Settings---
  * @desc The formula used for buff rate calculation.
  * Default: this._buffs[paramId] * 0.25 + 1.0
  * @default this._buffs[paramId] * 0.25 + 1.0
  *
  * @param Show Buff Rate
+ * @parent ---Buff Settings---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc Shows the buff/debuff rate for buffs and debuffs.
  * YES - true     NO - false
  * @default false
@@ -103,11 +156,23 @@ Yanfly.BSC.version = 1.12;
  * @default
  *
  * @param Reapply Rules
+ * @parent ---State Settings---
+ * @type select
+ * @option Ignore
+ * @value 0
+ * @option Reset
+ * @value 1
+ * @option Add
+ * @value 2
  * @desc The rules when reapplying an already existing state:
  * 0 - Ignore     1 - Reset     2 - Add
  * @default 1
  *
  * @param Show Enemy Turns
+ * @parent ---State Settings---
+ * @type boolean
+ * @on Show
+ * @off Hide
  * @desc If using Battle Engine Core, show turns in help window?
  * NO - false     YES - true
  * @default true
@@ -116,24 +181,38 @@ Yanfly.BSC.version = 1.12;
  * @default
  *
  * @param Counter Font Size
+ * @parent ---Counter Settings---
+ * @type number
+ * @min 1
  * @desc The default font size used for state counters.
  * Default: 28
  * @default 16
  *
  * @param Counter Alignment
+ * @parent ---Counter Settings---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc How do you want to align the counter?
  * left     center     right
  * @default center
  *
  * @param Counter Buffer X
+ * @parent ---Counter Settings---
  * @desc Buffer the x position of the counter by this much.
  * @default 0
  *
  * @param Counter Buffer Y
+ * @parent ---Counter Settings---
  * @desc Buffer the y position of the counter by this much.
  * @default 8
  *
  * @param Counter Color
+ * @parent ---Counter Settings---
+ * @type number
+ * @min 0
+ * @max 31
  * @desc The default text color used for state counters.
  * @default 0
  *
@@ -513,7 +592,7 @@ Yanfly.BSC.version = 1.12;
  *
  * There are a couple of notetags you can use for states:
  *
- *   <Counter Font Size>
+ *   <Counter Font Size: x>
  *   This adjusts the font size of the counter.
  *
  *   <Counter Alignment: left>
@@ -559,6 +638,13 @@ Yanfly.BSC.version = 1.12;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.14:
+ * - Updated for RPG Maker MV version 1.5.0.
+ * - Fixed documentation error.
+ *
+ * Version 1.13:
+ * - Custom Turn End effects will no longer occur outside of battle.
  *
  * Version 1.12a:
  * - Lunatic Mode fail safes added.
@@ -1364,6 +1450,7 @@ Game_Battler.prototype.onTurnEnd = function() {
 };
 
 Game_Battler.prototype.meetTurnEndStateEffectsConditions = function() {
+    if (!$gameParty.inBattle()) return false;
     if (Imported.YEP_BattleEngineCore) {
       if (BattleManager.isTurnBased()) {
         return true;
@@ -1398,8 +1485,8 @@ Game_Battler.prototype.regenerateStateEffects = function(stateId) {
 
 Yanfly.BSC.Game_Battler_regenerateAll = Game_Battler.prototype.regenerateAll;
 Game_Battler.prototype.regenerateAll = function() {
-    this.onRegenerateStateEffects();
-    Yanfly.BSC.Game_Battler_regenerateAll.call(this);
+  this.onRegenerateStateEffects();
+  Yanfly.BSC.Game_Battler_regenerateAll.call(this);
 };
 
 if (Imported.YEP_BattleEngineCore) {

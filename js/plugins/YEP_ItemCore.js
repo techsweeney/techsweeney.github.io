@@ -8,11 +8,11 @@ Imported.YEP_ItemCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Item = Yanfly.Item || {};
-Yanfly.Item.version = 1.26;
+Yanfly.Item.version = 1.29;
 
 //=============================================================================
  /*:
- * @plugindesc v1.26 Changes the way Items are handled for your game
+ * @plugindesc v1.29 Changes the way Items are handled for your game
  * and the Item Scene, too.
  * @author Yanfly Engine Plugins
  *
@@ -20,46 +20,70 @@ Yanfly.Item.version = 1.26;
  * @default
  *
  * @param Max Items
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Maximum number of items. If this is set to 0, then there
  * will be no independent items.
  * @default 0
  *
  * @param Max Weapons
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Maximum number of weapons. If this is set to 0, then there
  * will be no independent weapons.
  * @default 100
  *
  * @param Max Armors
+ * @parent ---General---
+ * @type number
+ * @min 0
  * @desc Maximum number of armors. If this is set to 0, then there
  * will be no independent armors.
  * @default 100
  *
  * @param Starting ID
+ * @parent ---General---
+ * @type number
+ * @min 1
  * @desc This will be the starting ID number for independent items
  * so that they don't interfere with default items.
  * @default 3000
  *
  * @param Random Variance
+ * @parent ---General---
+ * @type number
  * @desc Randomize the stats found for non shop items by this value
  * either positive or negative. Set as 0 for no random.
  * @default 0
  *
  * @param Negative Variance
+ * @parent ---General---
+ * @type boolean
+ * @on Allow
+ * @off Disallow
  * @desc If using random variance, allow random variance equipment
  * stats to go under 0? NO - false     YES - true
  * @default false
  *
  * @param Name Format
+ * @parent ---General---
  * @desc How item names will be ordered and structured.
  * %1 - Prefix, %2 - Base Name, %3 - Suffix, %4 Boost
  * @default %1%2%3%4
  *
  * @param Name Spacing
+ * @parent ---General---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Place a space between name prefixes and suffixes?
  * NO - false     YES - true
  * @default true
  *
  * @param Boost Format
+ * @parent ---General---
  * @desc This is the text format for a boosted independent item.
  * %1 - Boost Amount
  * @default (+%1)
@@ -68,65 +92,98 @@ Yanfly.Item.version = 1.26;
  * @default
  *
  * @param Updated Scene Item
+ * @parent ---Item Scene---
+ * @type boolean
+ * @on Updated (Recommended)
+ * @off Normal
  * @desc Enabling this will change Scene Item's visual appearance.
  * NO - false     YES - true (recommended)
  * @default true
  *
  * @param List Equipped Items
+ * @parent ---Item Scene---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show equipped independent items in the item lists?
  * NO - false     YES - true
  * @default true
  *
  * @param Show Icon
+ * @parent ---Item Scene---
+ * @type boolean
+ * @on YES
+ * @off NO
  * @desc Show the icon in the status window?
  * NO - false     YES - true
  * @default true
  *
  * @param Icon Size
+ * @parent ---Item Scene---
+ * @type number
+ * @min 0
  * @desc This will be the width and height of the icon to be drawn.
  * This is normally 4x the default Icon Width and Icon Height.
  * @default 128
  *
  * @param Font Size
+ * @parent ---Item Scene---
+ * @type number
+ * @min 1
  * @desc This changes the font size for description items.
  * Default: 28
  * @default 20
  *
  * @param Command Alignment
+ * @parent ---Item Scene---
+ * @type combo
+ * @option left
+ * @option center
+ * @option right
  * @desc This is the text alignment for the command windows.
  * left     center     right
  * @default center
  *
  * @param Recovery Format
+ * @parent ---Item Scene---
  * @desc This is the text format for HP/MP Recovery.
  * @default %1 Heal
  *
  * @param Add State
+ * @parent ---Item Scene---
  * @desc This is the text for adding states.
  * @default +State
  *
  * @param Add Buff
+ * @parent ---Item Scene---
  * @desc This is the text for adding buffs.
  * @default +Buff
  *
  * @param Remove State
+ * @parent ---Item Scene---
  * @desc This is the text for remove states.
  * @default -State
  *
  * @param Remove Buff
+ * @parent ---Item Scene---
  * @desc This is the text for remove buffs.
  * @default -Buff
  *
  * @param Maximum Icons
+ * @parent ---Item Scene---
+ * @type number
+ * @min 0
  * @desc Maximum number of icons drawn for states and buffs.
  * @default 4
  *
  * @param Use Command
+ * @parent ---Item Scene---
  * @desc Command text for using the selected item.
  * %1 - Item Icon and Name
  * @default Use %1
  *
  * @param Carry Format
+ * @parent ---Item Scene---
  * @desc This is the visual text format for independent item ID.
  * %1 - Item Index     %2 - Maximum
  * @default %1/%2
@@ -135,6 +192,10 @@ Yanfly.Item.version = 1.26;
  * @default
  *
  * @param Midgame Note Parsing
+ * @parent ---Independent Items---
+ * @type boolean
+ * @on YES
+ * @off NO (Recommended)
  * @desc Allow midgame note parsing or do it at beginning?
  * NO - false     YES - true    Recommended: false
  * @default false
@@ -335,6 +396,16 @@ Yanfly.Item.version = 1.26;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.29:
+ * - Updated for RPG Maker MV version 1.6.0:
+ *   Removal of the destructive code in Scene_Item.update function.
+ *
+ * Version 1.28:
+ * - Updated for RPG Maker MV version 1.5.0.
+ *
+ * Version 1.27:
+ * - Compatibility update for future plugins.
  *
  * Version 1.26:
  * - Lunatic Mode fail safes added.
@@ -1450,6 +1521,18 @@ Scene_Shop.prototype.doSell = function(number) {
 };
 
 //=============================================================================
+// Scene_Item 1.6.0 Code Suppress
+//=============================================================================
+
+if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.6.0") {
+
+Scene_Item.prototype.update = function() {
+  Scene_ItemBase.prototype.update.call(this);
+};
+
+}; // Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.6.0"
+
+//=============================================================================
 // Scene_Item Update
 //=============================================================================
 
@@ -1939,6 +2022,10 @@ Window_ItemActionCommand.prototype.initialize = function(x, y) {
 
 Window_ItemActionCommand.prototype.windowWidth = function() {
     return Graphics.boxWidth / 2;
+};
+
+Window_ItemActionCommand.prototype.update = function() {
+  Window_Command.prototype.update.call(this);
 };
 
 Window_ItemActionCommand.prototype.setItem = function(item) {

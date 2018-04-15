@@ -8,10 +8,11 @@ Imported.YEP_Taunt = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Taunt = Yanfly.Taunt || {};
+Yanfly.Taunt.version = 1.02
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 Adds a Taunt mechanic to battle. Battlers with a
+ * @plugindesc v1.02 Adds a Taunt mechanic to battle. Battlers with a
  * taunt property become the target of enemy focus.
  * @author Yanfly Engine Plugins
  *
@@ -70,6 +71,9 @@ Yanfly.Taunt = Yanfly.Taunt || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.02:
+ * - Updated for RPG Maker MV version 1.5.0.
  *
  * Version 1.01:
  * - Updated for RPG Maker MV version 1.1.0.
