@@ -8,11 +8,11 @@ Imported.YEP_X_MapQuestWindow = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.AMQW = Yanfly.AMQW || {};
-Yanfly.AMQW.version = 1.00;
+Yanfly.AMQW.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 (Requires YEP_QuestJournal.js) Adds a window on the
+ * @plugindesc v1.01 (Requires YEP_QuestJournal.js) Adds a window on the
  * map scene to display an active quest.
  * @author Yanfly Engine Plugins
  *
@@ -93,8 +93,84 @@ Yanfly.AMQW.version = 1.00;
  *   override the player's Options Menu's setting to hide the window.
  *
  * ============================================================================
+ * Options Core Settings - Adding the New Options
+ * ============================================================================
+ *
+ * If you are using YEP_OptionsCore.js, you can add a new Option using this
+ * plugin. Here's the following code/parameter settings you can use with it.
+ *
+ * ---------
+ * Settings:
+ * ---------
+ * 
+ * Name:
+ * \i[87]Quest Window
+ *
+ * Help Description:
+ * Show a window displaying the currently active
+ * quest on the screen while exploring.
+ *
+ * Symbol:
+ * mapQuestWindow
+ *
+ * Show/Hide:
+ * show = Imported.YEP_X_MapQuestWindow;
+ *
+ * Enable:
+ * enabled = true;
+ *
+ * Ext:
+ * ext = 0;
+ *
+ * ----------
+ * Functions:
+ * ----------
+ * 
+ * Make Option Code:
+ * this.addCommand(name, symbol, enabled, ext);
+ *
+ * Draw Option Code:
+ * var rect = this.itemRectForText(index);
+ * var statusWidth = this.statusWidth();
+ * var titleWidth = rect.width - statusWidth;
+ * this.resetTextColor();
+ * this.changePaintOpacity(this.isCommandEnabled(index));
+ * this.drawOptionsName(index);
+ * this.drawOptionsOnOff(index);
+ *
+ * Process OK Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, !value);
+ *
+ * Cursor Right Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, true);
+ * 
+ * Cursor Left Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, false);
+ *
+ * Default Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Save Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Load Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.01:
+ * - Compatibility update for YEP_OptionsCore.js.
  *
  * Version 1.00:
  * - Finished Plugin!
@@ -597,6 +673,7 @@ Yanfly.AMQW.Window_Options_addGeneralOptions =
   Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function() {
   Yanfly.AMQW.Window_Options_addGeneralOptions.call(this);
+  if (Imported.YEP_OptionsCore) return;
   this.addCommand(Yanfly.Param.MQWOptionCmd, 'mapQuestWindow');
 };
 

@@ -8,11 +8,11 @@ Imported.YEP_SynchFpsOption = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.FpsSynch = Yanfly.FpsSynch || {};
-Yanfly.FpsSynch.version = 1.02;
+Yanfly.FpsSynch.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 Adds a new command to Options menu for synching
+ * @plugindesc v1.03 Adds a new command to Options menu for synching
  * the FPS of moniters with higher FPS rates.
  * @author Yanfly Engine Plugins
  *
@@ -59,8 +59,84 @@ Yanfly.FpsSynch.version = 1.02;
  * to handle it.
  *
  * ============================================================================
+ * Options Core Settings - Adding the New Options
+ * ============================================================================
+ *
+ * If you are using YEP_OptionsCore.js, you can add a new Option using this
+ * plugin. Here's the following code/parameter settings you can use with it.
+ *
+ * ---------
+ * Settings:
+ * ---------
+ * 
+ * Name:
+ * \i[302]Synch Monitor FPS
+ *
+ * Help Description:
+ * Turn this ON if your monitor runs above 60 FPS
+ * to synchronize the game to run at 60 FPS.
+ *
+ * Symbol:
+ * synchFps
+ *
+ * Show/Hide:
+ * show = Imported.YEP_SynchFpsOption;
+ *
+ * Enable:
+ * enabled = true;
+ *
+ * Ext:
+ * ext = 0;
+ *
+ * ----------
+ * Functions:
+ * ----------
+ * 
+ * Make Option Code:
+ * this.addCommand(name, symbol, enabled, ext);
+ *
+ * Draw Option Code:
+ * var rect = this.itemRectForText(index);
+ * var statusWidth = this.statusWidth();
+ * var titleWidth = rect.width - statusWidth;
+ * this.resetTextColor();
+ * this.changePaintOpacity(this.isCommandEnabled(index));
+ * this.drawOptionsName(index);
+ * this.drawOptionsOnOff(index);
+ *
+ * Process OK Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, !value);
+ *
+ * Cursor Right Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, true);
+ * 
+ * Cursor Left Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, false);
+ *
+ * Default Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Save Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Load Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Compatibility update with YEP_OptionsCore.js.
  *
  * Version 1.02:
  * - Updated for RPG Maker MV version 1.5.0.
@@ -144,7 +220,9 @@ Yanfly.FpsSynch.Window_Options_addGeneralOptions =
     Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function() {
     Yanfly.FpsSynch.Window_Options_addGeneralOptions.call(this);
-    this.addCommand(Yanfly.Param.FpsSynchCmd, 'synchFps');
+    if (!Imported.YEP_OptionsCore) {
+      this.addCommand(Yanfly.Param.FpsSynchCmd, 'synchFps');
+    }
 };
 
 //=============================================================================

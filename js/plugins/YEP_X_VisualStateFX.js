@@ -331,6 +331,7 @@ Game_Battler.prototype.stateAnimationId = function() {
 
 Game_Battler.prototype.refreshStateAnimation = function() {
   if (!this.battler()) return;
+  if (!$gameParty.inBattle()) return;
   this.battler().startStateAnimation(this.stateAnimationId());
 };
 

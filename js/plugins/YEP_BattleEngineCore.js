@@ -8,11 +8,11 @@ Imported.YEP_BattleEngineCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BEC = Yanfly.BEC || {};
-Yanfly.BEC.version = 1.45;
+Yanfly.BEC.version = 1.46;
 
 //=============================================================================
  /*:
- * @plugindesc v1.45 Have more control over the flow of the battle system
+ * @plugindesc v1.46 Have more control over the flow of the battle system
  * with this plugin and alter various aspects to your liking.
  * @author Yanfly Engine Plugins
  *
@@ -881,6 +881,9 @@ Yanfly.BEC.version = 1.45;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.46:
+ * - Updated for RPG Maker MV version 1.6.1.
  *
  * Version 1.45:
  * - Updated for RPG Maker MV version 1.5.0.
@@ -3735,15 +3738,17 @@ Game_Battler.prototype.regenerateAll = function() {
     this.clearResult();
     var lifeState = this.isAlive();
     Yanfly.BEC.Game_Battler_regenerateAll.call(this);
-    if (!BattleManager.timeBasedStates()) this.updateStateTurns();
-    if (!BattleManager.timeBasedBuffs()) {
-      this.updateBuffTurns();
-      this.removeBuffsAuto();
+    if ($gameParty.inBattle()) {
+      if (!BattleManager.timeBasedStates()) this.updateStateTurns();
+      if (!BattleManager.timeBasedBuffs()) {
+        this.updateBuffTurns();
+        this.removeBuffsAuto();
+      }
+      if (this.isDead() && lifeState === true) {
+        this.performCollapse();
+      }
+      this.startDamagePopup();
     }
-    if (this.isDead() && lifeState === true) {
-      this.performCollapse();
-    }
-    if ($gameParty.inBattle()) this.startDamagePopup();
 };
 
 Game_Battler.prototype.addImmortal = function() {

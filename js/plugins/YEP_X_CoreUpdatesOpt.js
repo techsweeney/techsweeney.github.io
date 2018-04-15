@@ -8,11 +8,11 @@ Imported.YEP_X_CoreUpdatesOpt = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Updates = Yanfly.Updates || {};
-Yanfly.Updates.version = 1.52;
+Yanfly.Updates.version = 1.61;
 
 //=============================================================================
  /*:
- * @plugindesc v1.52 (Req YEP_CoreEngine.js) Update your game without needing
+ * @plugindesc v1.61 (Req YEP_CoreEngine.js) Update your game without needing
  * to change your base rpg_x.js files and optimize it for desktop.
  * @author Yanfly Engine Plugins
  *
@@ -585,6 +585,17 @@ Yanfly.Updates.version = 1.52;
  * return no backdrop if an empty string is determined
  *
  * ============================================================================
+ * RPG Maker MV 1.6.1 Changelog
+ * ============================================================================
+ *
+ * rpg_core.js
+ * Utils.isOptionValid function updated with fail saves
+ * WebAudio.prototype._startPlaying function updated for loopLength variable
+ * 
+ * rpg_objects.js
+ * Game_Interpreter.prototype.command113 (break loop) function updated
+ *
+ * ============================================================================
  * End of Helpfile
  * ============================================================================
  *
@@ -701,6 +712,16 @@ Yanfly.Updates.version = 1.52;
  * disabled if a higher version is detected.
  * @default true
  *
+ * @param 162_Updates
+ * @text 1.5.2 to 1.6.1
+ * @parent ---Official Updates---
+ * @type boolean
+ * @on YES
+ * @off NO
+ * @desc Add the 1.5.2 to 1.6.1 updates? This will be automatically
+ * disabled if a higher version is detected.
+ * @default true
+ *
  * @param ---Custom---
  * @default
  *
@@ -753,6 +774,7 @@ Yanfly.SetupParameters = function() {
   Yanfly.ParameterVersionCheck('1.5.0', 'Update150', '150_Updates');
   Yanfly.ParameterVersionCheck('1.5.1', 'Update151', '151_Updates');
   Yanfly.ParameterVersionCheck('1.5.2', 'Update152', '152_Updates');
+  Yanfly.ParameterVersionCheck('1.6.1', 'Update161', '161_Updates');
   // Desktop Optimization
   Yanfly.Param.UpdateDesktop = eval(String(Yanfly.Parameters['Desktop_Updates']));
 };
@@ -7665,6 +7687,74 @@ Spriteset_Battle.prototype.overworldBattleback2Name = function() {
 
 //=============================================================================
 // Version 1.5.1 to 1.5.2 Changes End
+//=============================================================================
+
+}; // Yanfly.Param.Update152
+
+//-----------------------------------------------------------------------------
+
+//=============================================================================
+// Version 1.5.2 to 1.6.1 Changes
+//=============================================================================
+
+if (Yanfly.Param.Update161) {
+
+//-----------------------------------------------------------------------------
+// 1.6.1 rpg_core.js changes
+//-----------------------------------------------------------------------------
+
+// Treat the version for the rest of the plugins in the list as version 1.5.2.
+Utils.RPGMAKER_VERSION = '1.6.1';
+console.log('RPG Maker Version ' + Utils.RPGMAKER_VERSION + ' updates loaded');
+
+Utils.isOptionValid = function(name) {
+    if (location.search.slice(1).split('&').contains(name)) {return 1;};
+    if (typeof nw !== "undefined" && nw.App.argv.length > 0 && nw.App.argv[0].split('&').contains(name)) {return 1;};
+    return 0;
+};
+
+WebAudio.prototype._startPlaying = function(loop, offset) {
+    if (this._loopLength > 0) {
+     while (offset >= this._loopStart + this._loopLength) {
+     offset -= this._loopLength;
+     }
+    }
+    this._removeEndTimer();
+    this._removeNodes();
+    this._createNodes();
+    this._connectNodes();
+    this._sourceNode.loop = loop;
+    this._sourceNode.start(0, offset);
+    this._startTime = WebAudio._context.currentTime - offset / this._pitch;
+    this._createEndTimer();
+};
+
+//-----------------------------------------------------------------------------
+// 1.6.1 rpg_objects.js changes
+//-----------------------------------------------------------------------------
+
+// Break Loop
+Game_Interpreter.prototype.command113 = function() {
+    var depth = 0;
+    while (this._index < this._list.length - 1) {
+        this._index++;
+        var command = this.currentCommand();
+
+        if (command.code === 112)
+            depth++;
+
+        if (command.code === 413) {
+            if (depth > 0)
+                depth--;
+            else
+                break;
+        }
+    }
+    return true;
+};
+
+//=============================================================================
+// Version 1.5.2 to 1.6.1 Changes End
 //=============================================================================
 
 }; // Yanfly.Param.Update152

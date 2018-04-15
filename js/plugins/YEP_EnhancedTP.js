@@ -8,7 +8,7 @@ Imported.YEP_EnhancedTP = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ETP = Yanfly.ETP || {};
-Yanfly.ETP.version = 1.07;
+Yanfly.ETP.version = 1.08;
 
 //=============================================================================
  /*:
@@ -3173,6 +3173,9 @@ Yanfly.ETP.version = 1.07;
  * Changelog
  * ============================================================================
  *
+ * Version 1.08:
+ * - Updated for RPG Maker MV version 1.6.1.
+ *
  * Version 1.07:
  * - Updated for RPG Maker MV version 1.5.0.
  *
@@ -3601,7 +3604,7 @@ Game_Battler.prototype.gainBattleStartTp = function() {
 
 Yanfly.ETP.Game_Battler_regenerateTp = Game_Battler.prototype.regenerateTp;
 Game_Battler.prototype.regenerateTp = function() {
-    if (this.tpMode()) {
+    if ($gameParty.inBattle() && this.tpMode()) {
       this.regularRegenTp();
       this.crisisRegenTp();
       this.onlyMemberRegenTp();

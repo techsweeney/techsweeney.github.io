@@ -10,11 +10,11 @@ Imported.YEP_X_ExtDoT = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.EDoT = Yanfly.EDoT || {};
-Yanfly.EDoT.version = 1.02;
+Yanfly.EDoT.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 (Req YEP_BattleEngineCore & YEP_BuffsStatesCore)
+ * @plugindesc v1.03 (Req YEP_BattleEngineCore & YEP_BuffsStatesCore)
  * Create custom DoT formulas and effects with ease.
  * @author Yanfly Engine Plugins + Tigress Collaboration
  *
@@ -186,6 +186,9 @@ Yanfly.EDoT.version = 1.02;
  * Changelog
  * ============================================================================
  *
+ * Version 1.03:
+ * - Updated for RPG Maker MV version 1.6.1.
+ *
  * Version 1.02:
  * - Made DoT effects battle only to prevent errors and crashes.
  *
@@ -285,7 +288,9 @@ DataManager.processEDoTNotetags1 = function(group) {
 
 Yanfly.EDoT.Game_Battler_regenerateAll = Game_Battler.prototype.regenerateAll;
 Game_Battler.prototype.regenerateAll = function() {
-  if (this.isAlive()) this.processDamageOverTimeStates();
+  if (this.isAlive() && $gameParty.inBattle()) {
+    this.processDamageOverTimeStates();
+  }
   Yanfly.EDoT.Game_Battler_regenerateAll.call(this);
 };
 

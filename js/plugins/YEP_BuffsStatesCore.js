@@ -8,11 +8,11 @@ Imported.YEP_BuffsStatesCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BSC = Yanfly.BSC || {};
-Yanfly.BSC.version = 1.14;
+Yanfly.BSC.version = 1.15;
 
 //=============================================================================
  /*:
- * @plugindesc v1.14 Alter the basic mechanics behind buffs and states
+ * @plugindesc v1.15 Alter the basic mechanics behind buffs and states
  * that aren't adjustable within the RPG Maker editor.
  * @author Yanfly Engine Plugins
  *
@@ -638,6 +638,9 @@ Yanfly.BSC.version = 1.14;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.15:
+ * - Updated for RPG Maker MV version 1.6.1.
  *
  * Version 1.14:
  * - Updated for RPG Maker MV version 1.5.0.
@@ -1485,7 +1488,7 @@ Game_Battler.prototype.regenerateStateEffects = function(stateId) {
 
 Yanfly.BSC.Game_Battler_regenerateAll = Game_Battler.prototype.regenerateAll;
 Game_Battler.prototype.regenerateAll = function() {
-  this.onRegenerateStateEffects();
+  if ($gameParty.inBattle()) this.onRegenerateStateEffects();
   Yanfly.BSC.Game_Battler_regenerateAll.call(this);
 };
 

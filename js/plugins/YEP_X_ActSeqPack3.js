@@ -8,11 +8,11 @@ Imported.YEP_X_ActSeqPack3 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP3 = Yanfly.ASP3 || {};
-Yanfly.ASP3.version = 1.04
+Yanfly.ASP3.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_BattleEngineCore.js) Camera control is
+ * @plugindesc v1.05 (Requires YEP_BattleEngineCore.js) Camera control is
  * added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
@@ -312,8 +312,84 @@ Yanfly.ASP3.version = 1.04
  *=============================================================================
  *
  * ============================================================================
+ * Options Core Settings - Adding the New Options
+ * ============================================================================
+ *
+ * If you are using YEP_OptionsCore.js, you can add a new Option using this
+ * plugin. Here's the following code/parameter settings you can use with it.
+ *
+ * ---------
+ * Settings:
+ * ---------
+ * 
+ * Name:
+ * \i[302]Battle Camera
+ *
+ * Help Description:
+ * If ON, the camera in battle will move around.
+ * If OFF, the camera in battle will be locked in place.
+ *
+ * Symbol:
+ * battleCamera
+ *
+ * Show/Hide:
+ * show = Imported.YEP_X_ActSeqPack3;
+ *
+ * Enable:
+ * enabled = true;
+ *
+ * Ext:
+ * ext = 0;
+ *
+ * ----------
+ * Functions:
+ * ----------
+ * 
+ * Make Option Code:
+ * this.addCommand(name, symbol, enabled, ext);
+ *
+ * Draw Option Code:
+ * var rect = this.itemRectForText(index);
+ * var statusWidth = this.statusWidth();
+ * var titleWidth = rect.width - statusWidth;
+ * this.resetTextColor();
+ * this.changePaintOpacity(this.isCommandEnabled(index));
+ * this.drawOptionsName(index);
+ * this.drawOptionsOnOff(index);
+ *
+ * Process OK Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, !value);
+ *
+ * Cursor Right Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, true);
+ * 
+ * Cursor Left Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changeValue(symbol, false);
+ *
+ * Default Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Save Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Load Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.05:
+ * - Compatibility update with YEP_OptionsCore.js.
  *
  * Version 1.04:
  * - Updated for RPG Maker MV version 1.5.0.
@@ -858,7 +934,9 @@ Yanfly.ASP3.Window_Options_addGeneralOptions =
     Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function() {
     Yanfly.ASP3.Window_Options_addGeneralOptions.call(this);
-    this.addCommand(Yanfly.Param.ASP3CameraOption, 'battleCamera');
+    if (!Imported.YEP_OptionsCore) {
+      this.addCommand(Yanfly.Param.ASP3CameraOption, 'battleCamera');
+    }
 };
 
 //=============================================================================

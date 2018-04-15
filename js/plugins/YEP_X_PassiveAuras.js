@@ -12,7 +12,7 @@ Yanfly.Aura.version = 1.05;
 
 //=============================================================================
  /*:
- * @plugindesc v1.04 (Requires YEP_AutoPassiveStates.js) Add aura effects
+ * @plugindesc v1.05 (Requires YEP_AutoPassiveStates.js) Add aura effects
  * to various database objects.
  * @author Yanfly Engine Plugins
  *
@@ -179,6 +179,9 @@ Yanfly.Aura.version = 1.05;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.06:
+ * - Updated for RPG Maker MV version 1.6.1.
  *
  * Version 1.05:
  * - Updated for RPG Maker MV version 1.5.0.
@@ -524,7 +527,7 @@ Game_BattlerBase.prototype.updateAuras = function(stateId) {
 
 Yanfly.Aura.Game_Battler_onTurnEnd = Game_Battler.prototype.onTurnEnd;
 Game_Battler.prototype.onTurnEnd = function() {
-  this.refresh();
+  if ($gameParty.inBattle()) this.refresh();
   Yanfly.Aura.Game_Battler_onTurnEnd.call(this);
 };
 

@@ -8,11 +8,11 @@ Imported.YEP_BattleAniSpeedOpt = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BASO = Yanfly.BASO || {};
-Yanfly.BASO.version = 1.00;
+Yanfly.BASO.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Add battle animation speed options for your game so your
+ * @plugindesc v1.01 Add battle animation speed options for your game so your
  * players can choose the speed setting they want.
  * @author Yanfly Engine Plugins
  *
@@ -47,6 +47,109 @@ Yanfly.BASO.version = 1.00;
  * plugins in the Plugin Manager list for maximum compatibility. This is to
  * ensure the action sequences are working properly with the battle animation
  * speed options.
+ *
+ * ============================================================================
+ * Options Core Settings - Adding the New Options
+ * ============================================================================
+ *
+ * If you are using YEP_OptionsCore.js, you can add a new Option using this
+ * plugin. Here's the following code/parameter settings you can use with it.
+ *
+ * ---------
+ * Settings:
+ * ---------
+ * 
+ * Name:
+ * \i[302]Battle Animation Speed
+ *
+ * Help Description:
+ * Changes the speed of battle animations.
+ *
+ * Symbol:
+ * battleAniSpeed
+ *
+ * Show/Hide:
+ * show = Imported.YEP_BattleAniSpeedOpt;
+ *
+ * Enable:
+ * enabled = true;
+ *
+ * Ext:
+ * ext = 0;
+ *
+ * ----------
+ * Functions:
+ * ----------
+ * 
+ * Make Option Code:
+ * this.addCommand(name, symbol, enabled, ext);
+ *
+ * Draw Option Code:
+ * var rect = this.itemRectForText(index);
+ * var statusWidth = this.statusWidth();
+ * var quarterWidth = statusWidth / 4;
+ * var titleWidth = rect.width - statusWidth;
+ * this.resetTextColor();
+ * this.changePaintOpacity(this.isCommandEnabled(index));
+ * this.drawOptionsName(index);
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * this.changePaintOpacity(value === 4);
+ * var text = this.battleAnimationSpeedText(4);
+ * this.drawText(text, titleWidth + quarterWidth * 0, rect.y, quarterWidth, 'center');
+ * this.changePaintOpacity(value === 3);
+ * var text = this.battleAnimationSpeedText(3);
+ * this.drawText(text, titleWidth + quarterWidth * 1, rect.y, quarterWidth, 'center');
+ * this.changePaintOpacity(value === 2);
+ * var text = this.battleAnimationSpeedText(2);
+ * this.drawText(text, titleWidth + quarterWidth * 2, rect.y, quarterWidth, 'center');
+ * this.changePaintOpacity(value === 1);
+ * var text = this.battleAnimationSpeedText(1);
+ * this.drawText(text, titleWidth + quarterWidth * 3, rect.y, quarterWidth, 'center');
+ *
+ * Process OK Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * value -= 1;
+ * if (value <= 0) value = 4;
+ * value = value.clamp(1, 4);
+ * this.changeValue(symbol, value);
+ *
+ * Cursor Right Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * value -= 1;
+ * value = value.clamp(1, 4);
+ * this.changeValue(symbol, value);
+ * 
+ * Cursor Left Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * value += 1;
+ * value = value.clamp(1, 4);
+ * this.changeValue(symbol, value);
+ *
+ * Default Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Save Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Load Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Compatibility update with YEP_OptionsCore.js.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  *
  * ============================================================================
  * End of Helpfile
@@ -195,7 +298,7 @@ Sprite_Battler.prototype.startMove = function(x, y, duration) {
 Yanfly.BASO.Window_Options_addVolumeOptions =
   Window_Options.prototype.addVolumeOptions;
 Window_Options.prototype.addVolumeOptions = function() {
-  this.addBattleAnimationSpeedOptions();
+  if (!Imported.YEP_OptionsCore) this.addBattleAnimationSpeedOptions();
   Yanfly.BASO.Window_Options_addVolumeOptions.call(this);
 };
 
@@ -218,6 +321,8 @@ Window_Options.prototype.statusText = function(index) {
 Window_Options.prototype.battleAnimationSpeedText = function(value) {
   return Yanfly.Param.BattleAniOptVocab[value] || '';
 };
+
+if (!Imported.YEP_OptionsCore) {
 
 Yanfly.BASO.Window_Options_processOk = Window_Options.prototype.processOk;
 Window_Options.prototype.processOk = function() {
@@ -261,6 +366,9 @@ Window_Options.prototype.cursorLeft = function(wrap) {
     Yanfly.BASO.Window_Options_cursorLeft.call(this, wrap);
   }
 };
+
+}; // Imported.YEP_OptionsCore
+
 
 //=============================================================================
 // Compatibility Additions

@@ -8,11 +8,11 @@ Imported.YEP_X_SelectionControl = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Sel = Yanfly.Sel || {};
-Yanfly.Sel.version = 1.13;
+Yanfly.Sel.version = 1.14;
 
 //=============================================================================
  /*:
- * @plugindesc v1.13 (Requires YEP_BattleEngineCore & YEP_TargetCore.js)
+ * @plugindesc v1.14 (Requires YEP_BattleEngineCore & YEP_TargetCore.js)
  * Control what targets can and can't be selected for actions.
  * @author Yanfly Engine Plugins
  *
@@ -419,6 +419,9 @@ Yanfly.Sel.version = 1.13;
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.14:
+ * - Updated for RPG Maker MV version 1.6.1.
  *
  * Version 1.13:
  * - Fixed a bug for the cached items.
@@ -954,7 +957,7 @@ Game_Battler.prototype.isWeaponRanged = function() {
 
 Yanfly.Sel.Game_Battler_gainSilentTp = Game_Battler.prototype.gainSilentTp;
 Game_Battler.prototype.gainSilentTp = function(value) {
-    if ($gameTemp._selectedDmgMod !== undefined) {
+    if ($gameParty.inBattle() && $gameTemp._selectedDmgMod !== undefined) {
       value = Math.floor(value * $gameTemp._selectedDmgMod);
     }
     Yanfly.Sel.Game_Battler_gainSilentTp.call(this, value);

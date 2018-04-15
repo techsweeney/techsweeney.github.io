@@ -1,7 +1,7 @@
 //=============================================================================
 // Yanfly Engine Plugins - Gamepad Config
 // GamepadConfig.js
-// Version: 1.00
+// Version: 1.01
 //=============================================================================
 
 var Imported = Imported || {};
@@ -9,10 +9,11 @@ Imported.GamepadConfig = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.GamepadConfig = Yanfly.GamepadConfig || {};
+Yanfly.GamepadConfig.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.00 Allows players to adjust their button configuration
+ * @plugindesc v1.01 Allows players to adjust their button configuration
  * for gamepads.
  * @author Yanfly Engine Plugins
  *
@@ -96,6 +97,83 @@ Yanfly.GamepadConfig = Yanfly.GamepadConfig || {};
  * at any point where a Gamepad is not detected inside of the Option or Gamepad
  * Config menu, the game will automatically eject the player out the prevent
  * the player from being locked inside.
+ *
+ * ============================================================================
+ * Options Core Settings - Adding the New Options
+ * ============================================================================
+ *
+ * If you are using YEP_OptionsCore.js, you can add a new Option using this
+ * plugin. Here's the following code/parameter settings you can use with it.
+ *
+ * ---------
+ * Settings:
+ * ---------
+ * 
+ * Name:
+ * \i[83]Gamepad Config
+ *
+ * Help Description:
+ * Configure the game's gamepad settings.
+ *
+ * Symbol:
+ * gamepadConfig
+ *
+ * Show/Hide:
+ * if (Imported.GamepadConfig && Input.isControllerConnected()) {
+ *   show = !Utils.isMobileDevice();
+ * } else {
+ *   show = false;
+ * }
+ *
+ * Enable:
+ * enabled = true;
+ *
+ * Ext:
+ * ext = 0;
+ *
+ * ----------
+ * Functions:
+ * ----------
+ * 
+ * Make Option Code:
+ * this.addCommand(name, symbol, enabled, ext);
+ *
+ * Draw Option Code:
+ * var rect = this.itemRectForText(index);
+ * var statusWidth = this.statusWidth();
+ * var titleWidth = rect.width - statusWidth;
+ * this.resetTextColor();
+ * this.changePaintOpacity(this.isCommandEnabled(index));
+ * this.drawOptionsName(index);
+ *
+ * Process OK Code:
+ * this.playOkSound();
+ * SceneManager.push(Scene_GamepadConfig);
+ *
+ * Cursor Right Code:
+ * // Empty. Provided by this plugin.
+ * 
+ * Cursor Left Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Default Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Save Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Load Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.01:
+ * - Compatibility update with YEP_OptionsCore.js!
+ *
+ * Version 1.00:
+ * - Finished Plugin!
  */
 //=============================================================================
 
@@ -234,14 +312,14 @@ ConfigManager.readGamepadConfig = function(config, name) {
 };
 
 //=============================================================================
-// Window_MenuCommand
+// Window_Options
 //=============================================================================
 
 Yanfly.GamepadConfig.Window_Options_addGeneralOptions =
 	Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function() {
   Yanfly.GamepadConfig.Window_Options_addGeneralOptions.call(this);
-	this.addGameConfigCommand();
+  if (!Imported.YEP_OptionsCore) this.addGameConfigCommand();
 };
 
 Window_Options.prototype.addGameConfigCommand = function() {
@@ -261,6 +339,8 @@ Window_Options.prototype.update = function() {
 		this.updatePlacement();
 	}
 };
+
+if (!Imported.YEP_OptionsCore) {
 
 Yanfly.GamepadConfig.Window_Options_drawItem =
 	Window_Options.prototype.drawItem;
@@ -285,6 +365,9 @@ Window_Options.prototype.processOk = function() {
 		Yanfly.GamepadConfig.Window_Options_processOk.call(this);
 	}
 };
+
+}; // Imported.YEP_OptionsCore
+
 
 //=============================================================================
 // Window_GamepadConfig

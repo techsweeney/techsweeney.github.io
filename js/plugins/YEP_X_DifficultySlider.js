@@ -8,11 +8,11 @@ Imported.YEP_X_DifficultySlider = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.DSlider = Yanfly.DSlider || {};
-Yanfly.DSlider.version = 1.02;
+Yanfly.DSlider.version = 1.03;
 
 //=============================================================================
  /*:
- * @plugindesc v1.02 (Requires YEP_EnemyLevels.js) Give your players
+ * @plugindesc v1.03 (Requires YEP_EnemyLevels.js) Give your players
  * access to an option that allows them to change difficulty.
  * @author Yanfly Engine Plugins
  *
@@ -152,8 +152,100 @@ Yanfly.DSlider.version = 1.02;
  * Have fun!
  *
  * ============================================================================
+ * Options Core Settings - Adding the New Options
+ * ============================================================================
+ *
+ * If you are using YEP_OptionsCore.js, you can add a new Option using this
+ * plugin. Here's the following code/parameter settings you can use with it.
+ *
+ * ---------
+ * Settings:
+ * ---------
+ * 
+ * Name:
+ * \i[87]Enemy Difficulty
+ *
+ * Help Description:
+ * Determines the level strength of enemies.
+ *
+ * Symbol:
+ * difficultySlider
+ *
+ * Show/Hide:
+ * if (Imported.YEP_X_DifficultySlider) {
+ *   show = $gameSystem.showDifficultySlider();
+ * } else {
+ *   show = false;
+ * }
+ *
+ * Enable:
+ * enabled = true;
+ *
+ * Ext:
+ * ext = 0;
+ *
+ * ----------
+ * Functions:
+ * ----------
+ * 
+ * Make Option Code:
+ * this.addCommand(name, symbol, enabled, ext);
+ *
+ * Draw Option Code:
+ * var rect = this.itemRectForText(index);
+ * var statusWidth = this.statusWidth();
+ * var titleWidth = rect.width - statusWidth;
+ * this.resetTextColor();
+ * this.changePaintOpacity(this.isCommandEnabled(index));
+ * this.drawOptionsName(index);
+ * var value = this.getConfigValue(symbol);
+ * var rate = value / Yanfly.Param.DSliderMaxDif;
+ * var gaugeColor1 = this.textColor(28);
+ * var gaugeColor2 = this.textColor(29);
+ * this.drawOptionsGauge(index, rate, gaugeColor1, gaugeColor2);
+ * this.drawText(this.statusText(index), titleWidth, rect.y, statusWidth, 'center');
+ *
+ * Process OK Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * value += Yanfly.Param.DSliderChange;
+ * if (value > Yanfly.Param.DSliderMaxDif) value = Yanfly.Param.DSliderMinDif;
+ * value = value.clamp(Yanfly.Param.DSliderMinDif, Yanfly.Param.DSliderMaxDif);
+ * this.changeValue(symbol, value);
+ *
+ * Cursor Right Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * value += Yanfly.Param.DSliderChange;
+ * value = value.clamp(Yanfly.Param.DSliderMinDif, Yanfly.Param.DSliderMaxDif);
+ * this.changeValue(symbol, value);
+ * 
+ * Cursor Left Code:
+ * var index = this.index();
+ * var symbol = this.commandSymbol(index);
+ * var value = this.getConfigValue(symbol);
+ * value -= Yanfly.Param.DSliderChange;
+ * value = value.clamp(Yanfly.Param.DSliderMinDif,
+ * Yanfly.Param.DSliderMaxDif);
+ * this.changeValue(symbol, value);
+ *
+ * Default Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Save Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * Load Config Code:
+ * // Empty. Provided by this plugin.
+ *
+ * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.03:
+ * - Compatibility update for YEP_OptionsCore.js.
  *
  * Version 1.02:
  * - Updated for RPG Maker MV version 1.5.0.
@@ -364,6 +456,7 @@ Yanfly.DSlider.Window_Options_addGeneralOptions =
   Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function() {
   Yanfly.DSlider.Window_Options_addGeneralOptions.call(this);
+  if (Imported.YEP_OptionsCore) return;
   if ($gameSystem.showDifficultySlider()) this.addDifficultySliderOptions();
 };
 
@@ -381,6 +474,8 @@ Window_Options.prototype.statusText = function(index) {
     return Yanfly.DSlider.Window_Options_statusText.call(this, index);
   }
 };
+
+if (!Imported.YEP_OptionsCore) {
 
 Yanfly.DSlider.Window_Options_processOk = Window_Options.prototype.processOk;
 Window_Options.prototype.processOk = function() {
@@ -428,6 +523,9 @@ Window_Options.prototype.cursorLeft = function(wrap) {
     Yanfly.DSlider.Window_Options_cursorLeft.call(this, wrap);
   }
 };
+
+}; // Imported.YEP_OptionsCore
+
 
 //=============================================================================
 // Utilities
